@@ -35,7 +35,7 @@
                             <div class="input-field">
                                 <label for="name">Tên</label>
                                 <input name="name" type="text" class="input @error('name')is-invalid @enderror"
-                                    id="email">
+                                    id="">
                                 @error('name')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror

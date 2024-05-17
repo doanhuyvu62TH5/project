@@ -1,0 +1,71 @@
+
+.navbar{
+    height: 50px;
+    background-color: white;
+}
+/* .cart, .login{
+    font-size: 30px;
+    padding: 0px 5px;
+    color: rgb(108, 26, 108);
+} */
+.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+.slide{
+    margin-top: 80px;
+}
+
+
+/* banner */
+.banner, .banner1, .banner2, .banner3{
+    padding-top: 80px;
+}
+
+/* new product */
+.newproduct,.viewallproduct, .top-seller{
+    padding-top: 80px;
+}
+
+
+.figure1 img, .figure3 img{
+    width: 100%;
+}
+
+
+/* top seller */
+.goodmaxim{
+    padding-top: 80px;
+}
+.goodmaximcontent{
+    padding-top: 30px;
+}
+
+.blog{
+    padding-top: 80px;
+}
+
+.image-instagram{
+    padding-top: 80px;
+}
+
+.homecart{
+    padding: 20px 0px;
+    margin-top: 130px;
+    background-image: url("../images/home/images/bg/breadcrumb.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+.scroll{
+    max-height: 200px; /* Đặt chiều cao tối đa cho phần tử */
+    overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
+}
+
+
+
+
+
+
+
+
+
+

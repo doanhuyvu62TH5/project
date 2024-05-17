@@ -60,8 +60,8 @@ class AdminController extends Controller
         return redirect()->back()->with('error','Email or Password is no match');
     }
 
-    // public function logout(){
-    //     auth()->logout();
-    //     return redirect()->route('admin.login')->with('success','logouted');
-    // }
+    public function logout(){
+        auth()->logout();
+        return redirect()->route('admin.login')->with('success','logouted');
+    }
 }

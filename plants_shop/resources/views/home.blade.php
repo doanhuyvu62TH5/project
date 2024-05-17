@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    Trang home ne
+    
 </body>
 </html>
