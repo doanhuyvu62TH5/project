@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -68,7 +69,7 @@
                                     <a class="nav-link active" aria-current="page" href="{{ route('home.index') }}">Trang chủ</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => 0]) }}" id="navbarDropdown"
+                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         Cây
@@ -83,7 +84,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => 1]) }}" id="navbarDropdown"
+                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         Hoa

@@ -35,7 +35,8 @@
                     </div>
                     <div class="category_tree">
                         <div class="row mb-3 mt-3 border-bottom">
-                            <a href="{{ route('products.byType', ['type' => 0]) }}" class="text-decoration-none text-dark">
+                            <a href="{{ route('products.byType', ['type' => 0]) }}" 
+                               class="text-decoration-none text-dark {{ request()->is('products/type/0') ? 'selected' : '' }}">
                                 <h5>Cây cảnh</h5>
                             </a>
                         </div>
@@ -57,9 +58,10 @@
                     </div>
                     <div class="category_flower">
                         <div class="row mb-3 mt-3 border-bottom">
-                            <a href="{{ route('products.byType', ['type' => 1]) }}" class="text-decoration-none text-dark">
-                                <h5>Hoa</h5>
-                            </a>
+                            <a href="{{ route('products.byType', ['type' => 1]) }}" 
+                                class="text-decoration-none text-dark {{ request()->is('products/type/1') ? 'selected' : '' }}">
+                                 <h5>Hoa</h5>
+                             </a>
                         </div>
                         <div class="scroll">
                             <ul class="list-group list-group-flush">
@@ -86,7 +88,7 @@
                                 <div class="col-5">
                                     <a href="{{ route('home.product', $newp->id) }}">
                                         <img src="{{ asset($newp->image) }}" height="130px" width="120px" class=""
-                                        alt="...">
+                                            alt="...">
                                     </a>
                                 </div>
                                 <div class="col-7 text-start">
@@ -107,13 +109,17 @@
                 <div class="col-lg-9 order-1 order-lg-2 border">
                     <div class="container">
                         <div class="row justify-content-center mt-3 text-center">
-                            <div class="col-md-4">
-                                <form action="" class="">
-                                    <select class="form-select-lg mb-3" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                            <div class="col-md-4 mb-3">
+                                <!-- Thêm dropdown menu -->
+                                <form action="{{ request()->fullUrl() }}" method="GET">
+                                    <select name="sort_by" onchange="this.form.submit()">
+                                        <option value="" selected disabled hidden>Sắp xếp theo</option>
+                                        <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
+                                        <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
+                                        <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên A-Z</option>
+                                        <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên Z-A</option>
+                                        <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Ngày tạo cũ nhất</option>
+                                        <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Ngày tạo mới nhất</option>
                                     </select>
                                 </form>
                             </div>

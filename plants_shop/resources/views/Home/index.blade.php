@@ -1,5 +1,6 @@
 @extends('Home.master.main')
 @section('content')
+
     <div class="slide">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-inner">
@@ -161,30 +162,29 @@
             <div class="product">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
                     <div class="carousel-inner">
-                        @php $count = 0 @endphp
-                        @foreach ($new_products as $index => $new)
-                            @if ($count % 4 == 0)
-                                <div class="carousel-item{{ $count == 0 ? ' active' : '' }}">
-                                    <div class="container">
-                                        <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                            @endif
-                                            <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $new->id) }}"><img src="{{ asset($new->image) }}" height="290px" class="card-img-top" alt="..."></a>      
-                                                    <div class="card-body">
-                                                        <a href="{{ route('home.product', $new->id) }}" class="text-decoration-none text-dark"><h5 class="card-title mt-3">{{ $new->name }}</h5></a>    
-                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
-                                                    </div>
+                        @foreach ($new_products->chunk(4) as $chunk)
+                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                            <div class="container">
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                    @foreach ($chunk as $newp)
+                                        <div class="col">
+                                            <div class="p-0 text-center">
+                                                <a href="{{ route('home.product', $newp->id) }}">
+                                                    <img src="{{ asset($newp->image) }}" height="290px" class="card-img-top" alt="...">
+                                                </a>
+                                                <div class="card-body">
+                                                    <a href="{{ route('home.product', $newp->id) }}" class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $newp->name }}</h5>
+                                                    </a>
+                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
                                                 </div>
                                             </div>
-                                            
-                            @php $count++ @endphp
-                            @if ($count % 4 == 0 || $index == count($new_products) - 1)
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            @endif
-                        @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
@@ -215,29 +215,29 @@
             <div class="product">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
                     <div class="carousel-inner">
-                        @php $count = 0 @endphp
-                        @foreach ($tree as $index => $tr)
-                            @if ($count % 4 == 0)
-                                <div class="carousel-item{{ $count == 0 ? ' active' : '' }}">
-                                    <div class="container">
-                                        <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                            @endif
-                                            <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $tr->id) }}"><img src="{{ asset($tr->image) }}" height="290px" class="card-img-top" alt="..."></a>      
-                                                    <div class="card-body">
-                                                        <a href="{{ route('home.product', $tr->id) }}" class="text-decoration-none text-dark"><h5 class="card-title mt-3">{{ $tr->name }}</h5></a>    
-                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
-                                                    </div>
+                        @foreach ($tree->chunk(4) as $chunk)
+                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                            <div class="container">
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                    @foreach ($chunk as $tr)
+                                        <div class="col">
+                                            <div class="p-0 text-center">
+                                                <a href="{{ route('home.product', $tr->id) }}">
+                                                    <img src="{{ asset($tr->image) }}" height="290px" class="card-img-top" alt="...">
+                                                </a>
+                                                <div class="card-body">
+                                                    <a href="{{ route('home.product', $tr->id) }}" class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                                                    </a>
+                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
                                                 </div>
                                             </div>
-                            @php $count++ @endphp
-                            @if ($count % 4 == 0 || $index == count($tree) - 1)
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            @endif
-                        @endforeach
+                            </div>
+                        </div>
+                    @endforeach                    
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
@@ -263,29 +263,29 @@
             <div class="product">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
                     <div class="carousel-inner">
-                        @php $count = 0 @endphp
-                        @foreach ($flower as $index => $fl)
-                            @if ($count % 4 == 0)
-                                <div class="carousel-item{{ $count == 0 ? ' active' : '' }}">
-                                    <div class="container">
-                                        <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                            @endif
-                                            <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $fl->id) }}"><img src="{{ asset($fl->image) }}" height="290px" class="card-img-top" alt="..."></a>      
-                                                    <div class="card-body">
-                                                        <a href="{{ route('home.product', $fl->id) }}" class="text-decoration-none text-dark"><h5 class="card-title mt-3">{{ $fl->name }}</h5></a>    
-                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
-                                                    </div>
+                        @foreach ($flower->chunk(4) as $chunk)
+                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                            <div class="container">
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                    @foreach ($chunk as $fl)
+                                        <div class="col">
+                                            <div class="p-0 text-center">
+                                                <a href="{{ route('home.product', $fl->id) }}">
+                                                    <img src="{{ asset($fl->image) }}" height="290px" class="card-img-top" alt="...">
+                                                </a>
+                                                <div class="card-body">
+                                                    <a href="{{ route('home.product', $fl->id) }}" class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $fl->name }}</h5>
+                                                    </a>
+                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
                                                 </div>
                                             </div>
-                            @php $count++ @endphp
-                            @if ($count % 4 == 0 || $index == count($flower) - 1)
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            @endif
-                        @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>

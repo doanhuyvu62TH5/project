@@ -60,6 +60,13 @@
     overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
 }
 
+.selected h5 {
+    color: red !important;
+}
+
+
+
+
 
 
 
