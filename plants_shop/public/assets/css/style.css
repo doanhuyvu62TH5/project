@@ -1,8 +1,22 @@
 
-.navbar{
-    height: 50px;
+.nav1{
+    height: 45px;
     background-color: white;
 }
+.navbar{
+    height: 70px;
+    background-color: rgb(238, 191, 220);
+}
+.offcanvas-body .navbar-nav .nav-link,
+    .offcanvas-body .navbar-nav .dropdown-menu .dropdown-item {
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+    }
+
+    .offcanvas-body .navbar-nav .nav-link:hover,
+    .offcanvas-body .navbar-nav .dropdown-menu .dropdown-item:hover {
+      color: #861919; /* Màu khi hover, tùy chỉnh theo ý bạn */
+    }
 /* .cart, .login{
     font-size: 30px;
     padding: 0px 5px;
@@ -59,8 +73,11 @@
     max-height: 200px; /* Đặt chiều cao tối đa cho phần tử */
     overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
 }
-
-.selected h5 {
+.scroll-cart{
+    max-height: 400px; /* Đặt chiều cao tối đa cho phần tử */
+    overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
+}
+.selected h4, .selected h5 {
     color: red !important;
 }
 

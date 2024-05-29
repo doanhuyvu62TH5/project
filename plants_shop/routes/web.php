@@ -5,7 +5,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Home\AccountController;
+use App\Http\Controllers\Home\CartController;
 
 
 /*
@@ -23,6 +24,7 @@ Route::get('/', [HomeController::class,'index'])->name('home.index');
 Route::group(['prefix' => 'account'], function(){
 
     Route::get('/login', [AccountController::class, 'login'])->name('account.login');
+    Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     Route::get('verify-account/{email}',[AccountController::class,'verify'])->name('account.verify');
     Route::post('/login', [AccountController::class,'check_login'])->name('account.check_login');
 
@@ -76,6 +78,16 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::resource('/category',CategoryController::class);
     Route::resource('/product',ProductController::class);
 });
+
+
+Route::group(['prefix' => 'cart', 'middleware' => 'customer'], function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index'); // Hiển thị giỏ hàng
+    Route::post('/add/{product}', [CartController::class, 'add'])->name('cart.add'); // Thêm sản phẩm vào giỏ hàng
+    Route::patch('/update/{product}', [CartController::class, 'update'])->name('cart.update'); // Cập nhật sản phẩm trong giỏ hàng
+    Route::delete('/delete/{product}', [CartController::class, 'delete'])->name('cart.delete'); // Xóa sản phẩm khỏi giỏ hàng
+    Route::delete('/clear', [CartController::class, 'clear'])->name('cart.clear'); // Xóa toàn bộ giỏ hàng
+});
+
 
 
 

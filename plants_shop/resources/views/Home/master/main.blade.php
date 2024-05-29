@@ -24,34 +24,110 @@
         body {
             font-family: "Great Vibes", cursive;
         }
-    
+
         /* Thêm các quy tắc CSS khác ở đây nếu cần */
     </style>
     <header>
         <div class="fixed-top">
-            <ul class="nav justify-content-end bg-warning align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="" href="#"><button class="btn" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">giỏ hàng</button>
-
+            <ul class="nav nav1 justify-content-end align-items-center">
+                @if (auth('cus')->check())
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                                id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                Hi, {{ auth('cus')->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('account.logout') }}">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('account.login') }}">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('account.register') }}">Đăng kí</a>
+                    </li>
+                @endif
+                @if (auth('cus')->check())
+                    <li class="nav-item">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
+                                class="fa-solid fa-cart-shopping"></i></button>
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+                                <h5 class="offcanvas-title" id="offcanvasRightLabel">Giỏ hàng</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
-                                <h2>aaaaaaaaaa</h2>
-                                <h2>aaaaaaaaaa</h2>
-                                <h2>aaaaaaaaaa</h2>
+                                <div class="container">
+                                    <div class="recent_product">
+                                        <div class="scroll-cart">
+                                            <div>
+                                                @foreach ($carts as $item)
+                                                    <div class="row text-center align-items-center mb-3 border-bottom">
+                                                        <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
+                                                        <div class="col-5">
+                                                            <a href="{{ route('home.product', $item->product->id) }}">
+                                                                <img src="{{ asset($item->product->image) }}"
+                                                                    height="90" width="80" alt="...">
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-5 text-start">
+                                                            <div class="mb-3">
+                                                                <a href=""
+                                                                    class="text-decoration-none text-dark">
+                                                                    <h6>{{ $item->product->name }}</h6>
+                                                                </a>
+                                                            </div>
+                                                            <div class="mt-3 d-flex align-items-center">
+                                                                <h6><span>{{ $item->quantity }}</span>
+                                                                    <strong>x</strong></h6>
+                                                                <a href=""
+                                                                    class="text-decoration-none text-dark">
+                                                                    <h6 class="text-warning">{{ $item->product->price }}
+                                                                    </h6>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-2">
+                                                            <form action="{{ route('cart.delete', $item->product_id) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm('Are you sure want to delete product?')">
+                                                                </button>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="row">
+                                        <a class="btn btn-success" href="{{ route('cart.index') }}">ViewCart</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </a>
-                </li>
+                    </li>
+                @else
+                    <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}"
+                        onclick="alert('vui lòng đăng nhập để xem giỏ hàng')"><i
+                            class="fa-solid fa-cart-shopping"></i></a>
+                @endif
+
             </ul>
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
@@ -63,13 +139,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body">
+                        <div class="offcanvas-body offcanvas">
                             <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ route('home.index') }}">Trang chủ</a>
+                                    <a class="nav-link" aria-current="page" href="{{ route('home.index') }}">Trang
+                                        chủ</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
+                                    <a class="nav-link dropdown-toggle"
+                                        href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         Cây
@@ -77,14 +155,16 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
                                             @if ($cath->type == '0')
-                                                <a class="dropdown-item" href="{{ route('home.category',$cath->id) }}">{{ $cath->name }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('home.category', $cath->id) }}">{{ $cath->name }}</a>
                                             @endif
                                         @endforeach
 
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
+                                    <a class="nav-link dropdown-toggle"
+                                        href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         Hoa
@@ -92,7 +172,8 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
                                             @if ($cath->type == '1')
-                                                <a class="dropdown-item" href="{{ route('home.category',$cath->id) }}">{{ $cath->name }}</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('home.category', $cath->id) }}">{{ $cath->name }}</a>
                                             @endif
                                         @endforeach
 
@@ -123,7 +204,6 @@
     <main>
         @yield('content')
     </main>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">

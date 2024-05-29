@@ -1,6 +1,5 @@
 @extends('Home.master.main')
 @section('content')
-
     <div class="slide">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-inner">
@@ -160,48 +159,70 @@
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                    data-bs-interval="5000">
                     <div class="carousel-inner">
                         @foreach ($new_products->chunk(4) as $chunk)
-                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    @foreach ($chunk as $newp)
-                                        <div class="col">
-                                            <div class="p-0 text-center">
-                                                <a href="{{ route('home.product', $newp->id) }}">
-                                                    <img src="{{ asset($newp->image) }}" height="290px" class="card-img-top" alt="...">
-                                                </a>
-                                                <div class="card-body">
-                                                    <a href="{{ route('home.product', $newp->id) }}" class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $newp->name }}</h5>
+                            <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                                <div class="container">
+                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                        @foreach ($chunk as $newp)
+                                            <div class="col">
+                                                <div class="p-0 text-center">
+                                                    <a href="{{ route('home.product', $newp->id) }}">
+                                                        <img src="{{ asset($newp->image) }}" height="290px"
+                                                            class="card-img-top" alt="...">
                                                     </a>
-                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    <div class="card-body">
+                                                       <!-- Button trigger modal -->
+                                                        <a href="{{ route('home.product', $newp->id) }}"
+                                                            class="text-decoration-none text-dark">
+                                                            <h5 class="card-title mt-3">{{ $newp->name }}</h5>
+                                                        </a>
+                                                        
+
+                                                        @if (auth('cus')->check())
+                                                            <form action="{{ route('cart.add',$newp->id) }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="quantity" value="1">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                                </button>
+                                                            </form>
+                                                        @else
+                                                            <form action="{{ route('account.login') }}" method="GET">
+                                                                <button type="submit" class="btn btn-primary" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                    <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                                </button>
+                                                            </form>
+                                                        @endif
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     </div>
-                    <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <button class="carousel-control-prev" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <button class="carousel-control-next" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                </div><!-- This closing div is added -->
-                
-                
-            </div>
-            <div class="viewallproduct text-center">
-                <a class="btn btn-warning" href="{{ route("products.all") }}" role="button">View All Product</a>
-            </div>
+            </div><!-- This closing div is added -->
+
+
+        </div>
+        <div class="viewallproduct text-center">
+            <a class="btn btn-warning" href="{{ route('products.all') }}" role="button">View All Product</a>
         </div>
     </div>
 
@@ -213,43 +234,47 @@
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                    data-bs-interval="5000">
                     <div class="carousel-inner">
                         @foreach ($tree->chunk(4) as $chunk)
-                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    @foreach ($chunk as $tr)
-                                        <div class="col">
-                                            <div class="p-0 text-center">
-                                                <a href="{{ route('home.product', $tr->id) }}">
-                                                    <img src="{{ asset($tr->image) }}" height="290px" class="card-img-top" alt="...">
-                                                </a>
-                                                <div class="card-body">
-                                                    <a href="{{ route('home.product', $tr->id) }}" class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                            <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                                <div class="container">
+                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                        @foreach ($chunk as $tr)
+                                            <div class="col">
+                                                <div class="p-0 text-center">
+                                                    <a href="{{ route('home.product', $tr->id) }}">
+                                                        <img src="{{ asset($tr->image) }}" height="290px"
+                                                            class="card-img-top" alt="...">
                                                     </a>
-                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    <div class="card-body">
+                                                        <a href="{{ route('home.product', $tr->id) }}"
+                                                            class="text-decoration-none text-dark">
+                                                            <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach                    
+                        @endforeach
                     </div>
-                    <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <button class="carousel-control-prev" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <button class="carousel-control-next" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                </div><!-- This closing div is added -->
-            </div>
+            </div><!-- This closing div is added -->
         </div>
     </div>
 
@@ -261,43 +286,47 @@
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                    data-bs-interval="5000">
                     <div class="carousel-inner">
                         @foreach ($flower->chunk(4) as $chunk)
-                        <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    @foreach ($chunk as $fl)
-                                        <div class="col">
-                                            <div class="p-0 text-center">
-                                                <a href="{{ route('home.product', $fl->id) }}">
-                                                    <img src="{{ asset($fl->image) }}" height="290px" class="card-img-top" alt="...">
-                                                </a>
-                                                <div class="card-body">
-                                                    <a href="{{ route('home.product', $fl->id) }}" class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $fl->name }}</h5>
+                            <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                                <div class="container">
+                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                        @foreach ($chunk as $fl)
+                                            <div class="col">
+                                                <div class="p-0 text-center">
+                                                    <a href="{{ route('home.product', $fl->id) }}">
+                                                        <img src="{{ asset($fl->image) }}" height="290px"
+                                                            class="card-img-top" alt="...">
                                                     </a>
-                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    <div class="card-body">
+                                                        <a href="{{ route('home.product', $fl->id) }}"
+                                                            class="text-decoration-none text-dark">
+                                                            <h5 class="card-title mt-3">{{ $fl->name }}</h5>
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     </div>
-                    <button class="carousel-control-prev" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <button class="carousel-control-prev" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" style="width: 30px;" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <button class="carousel-control-next" style="width: 30px;" type="button"
+                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                </div><!-- This closing div is added -->
-            </div>
+            </div><!-- This closing div is added -->
         </div>
     </div>
 

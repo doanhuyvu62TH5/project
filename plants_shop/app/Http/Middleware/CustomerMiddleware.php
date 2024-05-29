@@ -18,7 +18,6 @@ class CustomerMiddleware
         if (auth('cus')->check()) {
             return $next($request);
         }
-
         return redirect()->route('account.login');
     }
 }

@@ -29,8 +29,8 @@
                         <h5>DANH MỤC SẢN PHẨM</h5>
                     </div>
                     <div class="row mb-3 mt-3 border-bottom text-center">
-                        <a href="{{ route('products.all') }}" class="text-decoration-none text-dark">
-                            <h4>Tất cả sản phẩm</h4>
+                        <a href="{{ route('products.all') }}" class="text-decoration-none text-dark {{ request()->is('products/all') ? 'selected' : '' }}">
+                            <h5>Tất cả sản phẩm</h5>
                         </a>
                     </div>
                     <div class="category_tree">
@@ -46,7 +46,7 @@
                                     @if ($cat->type == '0')
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <a href="{{ route('home.category', $cat->id) }}"
-                                                class="text-decoration-none text-dark">{{ $cat->name }}</a>
+                                                class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}"><h5>{{ $cat->name }}</h5></a>
                                             <span class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
                                         </li>
                                     @endif
@@ -76,7 +76,6 @@
                                 @endforeach
                             </ul>
                         </div>
-
                     </div>
                     <div class="recent_product">
                         <div class="row mb-3 mt-3 border-bottom">
@@ -136,9 +135,24 @@
                                                 <div class="card-body">
                                                     <a
                                                         href="{{ route('home.product', $pro->id) }}"class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $pro->price }}</h5>
                                                         <h5 class="card-title mt-3">{{ $pro->name }}</h5>
                                                     </a>
-                                                    <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
+                                                    @if (auth('cus')->check())
+                                                        <form action="{{ route('cart.add',$pro->id) }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('account.login') }}" method="GET">
+                                                            <button type="submit" class="btn btn-primary" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
