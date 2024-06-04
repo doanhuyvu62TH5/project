@@ -42,11 +42,12 @@
                                     dictumst.</h6>
                             </div>
                             <div class="row mb-3">
-                                <h1>80000</h1>
+                                <h1>Giá: {{ $product->price }}</h1>
                             </div>
                             @if (auth('cus')->check())
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="redirect" value="product-detail">
                                     <div class="row mb-3">
                                         <div class="col-auto d-flex align-items-center">
                                             <label for="quantity" class="form-label mb-0 me-2">Số lượng:</label>
@@ -54,6 +55,16 @@
                                                 oninput="validity.valid||(value='1' );" onblur="if(!value) value='1';"
                                                 min="1" value="1" style="width: 100px;">
                                         </div>
+                                        @if (Session::has('no'))
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <i class="fas fa-check"></i>
+                                                {{ Session::get('no') }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="row mb-3">
+                                        <h6>Số lượng trong kho: {{ $product->quantity }}</h6>
                                     </div>
                                     <div class="row mb-3">
                                         <button type="submit" class="btn btn-warning" style="width: 200px;">Thêm vào giỏ
@@ -70,12 +81,16 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
+                                    <h6>Số lượng trong kho: {{ $product->quantity }}</h6>
+                                </div>
+                                <div class="row mb-3">
                                     <a title="Thêm vào giỏ hàng" href="{{ route('account.login') }}"
                                         onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')">
                                         <button class="btn btn-warning" style="width: 200px;">Thêm vào giỏ hàng</button>
                                     </a>
                                 </div>
                             @endif
+                            
                         </div>
                     </div>
                     <div class="row mt-3">

@@ -29,33 +29,6 @@ class HomeController extends Controller
 
     }
 
-    // public function showProducts(Category $cat = null, $type = null)
-    // {
-    //     if (!is_null($cat)) {
-    //         // Hiển thị sản phẩm theo danh mục
-    //         $products = $cat->products()->paginate(12);
-    //         $headerTitle = $cat->type == '0' ? 'Cây cảnh' : ($cat->type == '1' ? 'Hoa' : 'Sản phẩm');
-    //     } elseif (!is_null($type)) {
-    //         // Hiển thị sản phẩm theo loại
-    //         $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-    //             ->where('categories.type', $type)
-    //             ->select('products.*')
-    //             ->paginate(12);
-    //         $headerTitle = $type == '0' ? 'Cây cảnh' : ($type == '1' ? 'Hoa' : 'Sản phẩm');
-    //     } else {
-    //         // Hiển thị tất cả sản phẩm
-    //         $products = Product::paginate(12);
-    //         $headerTitle = 'Tất cả sản phẩm';
-    //         $cat = null;
-    //     }
-
-    //     $new_products = Product::orderBy('created_at', 'DESC')
-    //         ->where('status', '1')
-    //         ->limit(3)
-    //         ->get();
-    //     return view('Home.category', compact('cat', 'products', 'new_products', 'headerTitle'));
-    // }
-
     public function showAllProducts(Request $request)
     {
         $productsQuery = Product::where('status', '1');
@@ -79,7 +52,7 @@ class HomeController extends Controller
         return view('Home.category', compact('products', 'headerTitle', 'new_products', 'cat'));
     }
 
-   
+
 
     public function showProductsByType(Request $request, $type)
     {
@@ -140,48 +113,31 @@ class HomeController extends Controller
         $products = Product::where('category_id', $product->category_id)->limit(12)->get();
         return view('Home.product', compact('product', 'products'));
     }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
 
+        // Tìm kiếm theo tên sản phẩm hoặc nội dung sản phẩm
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('content', 'LIKE', "%{$query}%")
+            ->where('status', 1)
+            ->select('products.*'); // Chọn các cột cần thiết
 
+        // Tìm kiếm theo tên danh mục
+        $productsInCategory = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->where('categories.name', 'LIKE', "%{$query}%")
+            ->where('products.status', 1)
+            ->select('products.*'); // Chọn các cột cần thiết
 
+        // Kết hợp kết quả của hai câu truy vấn bằng union()
+        $products = $products->union($productsInCategory->getQuery());
 
+        // Áp dụng sắp xếp
+        $products = $this->applySort($products, $request->sort_by);
 
+        // Lấy kết quả phân trang
+        $products = $products->paginate(12);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // public function category(Category $cat = null){
-    //     $products = $cat->products()->paginate(12);
-    //     $new_products = Product::orderBy('created_at','DESC')
-    //                             ->where('status',1)
-    //                             ->limit(8)->get();
-    //     $new_products = Product::orderBy('created_at','DESC')
-    //                             ->where('status',1)
-    //                             ->limit(3)->get();
-    //     return view('Home.category', compact('cat','products','new_products'));
-    // }
-
-    // public function showAllProducts(){
-    //     $products = Product::paginate(12); // Paginate nếu bạn muốn chia trang, nếu không có thể dùng Product::all()
-    //     $cat = null; // Đặt cat là null để biểu thị không có danh mục cụ thể
-    //     return view('Home.category', compact('cat', 'products'));
-    // }
-
-    // public function showProductsByType($type)
-    // {
-    //     $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
-    //                         ->where('categories.type', $type)
-    //                         ->paginate(12);
-    //     return view('Home.category', compact('products'));
-    // }
+        return view('Home.search_products', compact('products', 'query'));
+    }
 }

@@ -3,10 +3,12 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\AccountController;
 use App\Http\Controllers\Home\CartController;
+use App\Http\Controllers\Home\CheckoutController;
 
 
 /*
@@ -22,7 +24,6 @@ use App\Http\Controllers\Home\CartController;
 
 Route::get('/', [HomeController::class,'index'])->name('home.index');
 Route::group(['prefix' => 'account'], function(){
-
     Route::get('/login', [AccountController::class, 'login'])->name('account.login');
     Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     Route::get('verify-account/{email}',[AccountController::class,'verify'])->name('account.verify');
@@ -50,10 +51,9 @@ Route::group(['prefix' => 'account'], function(){
 Route::get('/products/category/{cat}', [HomeController::class, 'showProductsByCategory'])->name('home.category');
 Route::get('/products/all', [HomeController::class, 'showAllProducts'])->name('products.all');
 Route::get('/products/type/{type}', [HomeController::class, 'showProductsByType'])->name('products.byType');
-
 Route::get('/product/{product}',[HomeController::class, 'showProduct'])->name('home.product');
 
-
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 
 
@@ -74,9 +74,17 @@ Route::controller(AdminController::class)->group(function(){
 Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::get('/',[AdminController::class, 'index'])->name('admin.index');
     Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
     Route::resource('/category',CategoryController::class);
     Route::resource('/product',ProductController::class);
+
+
+    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+    Route::post('orders/{order}/confirm', [OrderController::class, 'confirm'])->name('admin.orders.confirm');
+    Route::post('orders/{order}/mark-as-packed', [OrderController::class, 'markAsPacked'])->name('admin.orders.markAsPacked');
+    Route::post('orders/{order}/mark-as-shipping', [OrderController::class, 'markAsShipping'])->name('admin.orders.markAsShipping');
+    Route::post('orders/{order}/mark-as-delivered', [OrderController::class, 'markAsDelivered'])->name('admin.orders.markAsDelivered');
+    Route::delete('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
 });
 
 
@@ -88,6 +96,14 @@ Route::group(['prefix' => 'cart', 'middleware' => 'customer'], function () {
     Route::delete('/clear', [CartController::class, 'clear'])->name('cart.clear'); // Xóa toàn bộ giỏ hàng
 });
 
+Route::group(['prefix' => 'order','middleware' => 'customer'], function() {
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('order.checkout');
+    Route::get('/history', [CheckoutController::class, 'history'])->name('order.history');
+    Route::get('/detail/{order}', [CheckoutController::class, 'detail'])->name('order.detail');
+    Route::post('/checkout', [CheckoutController::class, 'post_checkout']);
+    Route::get('/verify/{token}', [CheckoutController::class, 'verify'])->name('order.verify');
+    Route::get('/order/{order}/cancel', [CheckoutController::class, 'cancel'])->name('order.cancel');
+});
 
 
 

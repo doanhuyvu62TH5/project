@@ -40,6 +40,7 @@
                             </a>
                             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('order.history') }}">Đơn hàng</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -136,17 +137,16 @@
                         aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body offcanvas">
+                        <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ route('home.index') }}">Trang
+                                    <a class="nav-link active" aria-current="page" href="{{ route('home.index') }}">Trang
                                         chủ</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle"
+                                    <a class="nav-link active dropdown-toggle"
                                         href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -163,7 +163,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle"
+                                    <a class="nav-link active dropdown-toggle"
                                         href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -176,26 +176,26 @@
                                                     href="{{ route('home.category', $cath->id) }}">{{ $cath->name }}</a>
                                             @endif
                                         @endforeach
-
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('products.all') }}">Sản Phẩm</a>
+                                    <a class="nav-link active" href="{{ route('products.all') }}">Sản Phẩm</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Blog</a>
+                                    <a class="nav-link active" href="#">Blog</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Liên hệ</a>
+                                    <a class="nav-link active" href="#">Liên hệ</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <form class="d-flex" role="search" action="{{ route('search') }}" method="GET">
+                        <input class="form-control me-2" type="search" name="query" required placeholder="Tìm kiếm" aria-label="Search"
+                        oninvalid="this.setCustomValidity('Vui lòng nhập từ khóa tìm kiếm!')"
+                        oninput="setCustomValidity('')">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>                    
                 </div>
             </nav>
         </div>
@@ -208,7 +208,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-
 </body>
-
 </html>

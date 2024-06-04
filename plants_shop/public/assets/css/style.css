@@ -7,6 +7,7 @@
     height: 70px;
     background-color: rgb(238, 191, 220);
 }
+
 .offcanvas-body .navbar-nav .nav-link,
     .offcanvas-body .navbar-nav .dropdown-menu .dropdown-item {
       color: rgb(0, 0, 0);

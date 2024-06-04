@@ -20,6 +20,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Quantity</th>
                 <th>Category</th>
                 <th>Image</th>
                 <th>Status</th>
@@ -33,6 +34,7 @@
                         <td class="align-middle">{{ ($product->currentPage() - 1) * $product->perPage() + $loop->index + 1 }}</td>
                         <td class="align-middle">{{ $pro->name}}</td>
                         <td class="align-middle">{{ $pro->price}}</td>
+                        <td class="align-middle">{{ $pro->quantity}}</td>
                         <td class="align-middle">{{ $pro->category->name }}</td>
                         <td class="align-middle">
                             <img src="{{ asset($pro->image)}}" width="100" height="100" alt="">
@@ -55,7 +57,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="text-center" colspan="7">Product not found</td>
+                    <td class="text-center" colspan="8">Product not found</td>
                 </tr>
             @endif
         </tbody>

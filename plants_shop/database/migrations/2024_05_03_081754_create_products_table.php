@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('sale_price', 10, 2);
             $table->text('content');
+            $table->integer('quantity');
             $table->unsignedInteger('category_id');
             $table->tinyInteger('status')->default(0);
             $table->foreign('category_id')->references('id')->on('categories');

@@ -38,6 +38,7 @@ class ProductController extends Controller
             'sale_price' => 'numeric|lte:price',
             'image' => 'required|file|mimes:jpg,jpeg,png,gif',
             'content' =>'required',
+            'quantity' =>'required|numeric|gte:0',
             'category_id' => 'required|exists:categories,id'
         ],
         [
@@ -49,6 +50,8 @@ class ProductController extends Controller
             'sale_price.lte' => 'Giá sale phải nhỏ hơn giá mặc định!',
             'image.file' => 'File ảnh không hợp lệ!',
             'image.required' => 'Vui lòng chọn ảnh!',
+            'quantity.numeric' => 'Số lượng sản phẩm không hợp lệ!',
+            'quantity.gte' => 'âm!',
             'content.required' => 'Vui lòng nhập nội dung',
             'category_id.required' => 'Vui lòng chọn danh mục'
         ]);
@@ -69,12 +72,15 @@ class ProductController extends Controller
 
             $path = 'uploads/product/';
             $file->move($path, $filename);
+            session()->put('image_name', $filename);
         }
+    
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'sale_price' =>$request->sale_price,
             'content' =>$request->content,
+            'quantity' =>$request->quantity,
             'image' => $path.$filename,
             'category_id' => $request->category_id,
             'status' => $request->status,
@@ -110,6 +116,7 @@ class ProductController extends Controller
             'sale_price' => 'numeric|lte:price',
             'image' => 'file|mimes:jpg,jpeg,png,gif',
             'content' =>'required',
+            'quantity' =>'required|numeric|gte:0',
             'category_id' => 'required|exists:categories,id'
         ],
         [
@@ -120,6 +127,8 @@ class ProductController extends Controller
             'sale_price.numeric' => 'Giá sale sản phẩm không hợp lệ!',
             'sale_price.lte' => 'Giá sale phải nhỏ hơn giá mặc định!',
             'image.file' => 'File ảnh không hợp lệ!',
+            'quantity.numeric' => 'Số lượng sản phẩm không hợp lệ!',
+            'quantity.gte' => 'âm!',
             'content.required' => 'Vui lòng nhập nội dung',
             'category_id.required' => 'Vui lòng chọn danh mục'
         ]);
@@ -158,6 +167,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'sale_price' =>$request->sale_price,
             'content' =>$request->content,
+            'quantity' =>$request->quantity,
             'category_id' => $request->category_id,
             'status' => $request->status,
         ]);

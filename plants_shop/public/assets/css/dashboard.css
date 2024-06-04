@@ -1,8 +1,8 @@
 :root {
     --main-bg-color: #009d63;
     --main-text-color: #009d63;
-    --second-text-color: #bbbec5;
-    --second-bg-color: #c1efde;
+    --second-text-color: #c2c2cb;
+    --second-bg-color: #94a3a3;
   }
   
   .primary-text {
@@ -29,11 +29,10 @@
     overflow-x: hidden;
     background-image: linear-gradient(
       to right,
-      #baf3d7,
-      #c2f5de,
-      #cbf7e4,
-      #d4f8ea,
-      #ddfaef
+      #b9c1bd,
+      #b9c1bd,
+      #b9c1bd,
+      
     );
   }
   
@@ -69,7 +68,7 @@
   
   .list-group-item {
     border: none;
-    padding: 20px 30px;
+    padding: 10px 30px;
   }
   
   .list-group-item.active {

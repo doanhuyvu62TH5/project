@@ -23,6 +23,20 @@
     <div class="cartmain" style="margin-top: 100px;">
         <div class="container">
             <div class="row">
+                @if (Session::has('yes'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check"></i>
+                        {{ Session::get('yes') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (Session::has('no'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check"></i>
+                        {{ Session::get('no') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="col-lg-12">
                     <div class="carttable">
                         <div class="cart-table table-responsive">
@@ -48,7 +62,9 @@
                                             <td>{{ $item->product->name }}</td>
                                             <td>{{ $item->price }}</td>
                                             <td>
-                                                <form action="{{ route('cart.update', $item->product_id) }}" method="get">
+                                                <form action="{{ route('cart.update', $item->product_id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
                                                     <input type="number" value="{{ $item->quantity }}" name="quantity"
                                                         style="width: 60px; text-align:center"
                                                         oninput="validity.valid||(value='1' );"
@@ -76,6 +92,7 @@
                         </div>
                         <div class="d-block d-flex justify-content-between">
                             <div>
+                                <a href="{{ route('order.checkout') }}" class="btn btn-success">Place Order</a>
                                 <form action="#" method="post" class="d-block d-md-flex">
                                     <input type="text" placeholder="Enter Your Coupon Code" required />
                                     <button class="btn btn-warning">Apply Coupon</button>

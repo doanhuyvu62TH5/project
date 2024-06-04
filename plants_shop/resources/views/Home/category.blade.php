@@ -86,7 +86,7 @@
                                 <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
                                 <div class="col-5">
                                     <a href="{{ route('home.product', $newp->id) }}">
-                                        <img src="{{ asset($newp->image) }}" height="130px" width="120px" class=""
+                                        <img src="{{ asset($newp->image) }}" height=125 width=110 class=""
                                             alt="...">
                                     </a>
                                 </div>
