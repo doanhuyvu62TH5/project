@@ -53,7 +53,6 @@ class HomeController extends Controller
     }
 
 
-
     public function showProductsByType(Request $request, $type)
     {
         $productsQuery = Product::join('categories', 'products.category_id', '=', 'categories.id')

@@ -164,47 +164,45 @@
                     <div class="carousel-inner">
                         @foreach ($new_products->chunk(4) as $chunk)
                             <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
-                                <div class="container">
-                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                        @foreach ($chunk as $newp)
-                                            <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $newp->id) }}">
-                                                        <img src="{{ asset($newp->image) }}" height="290px"
-                                                            class="card-img-top" alt="...">
-                                                    </a>
-                                                    <div class="card-body">
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                    @foreach ($chunk as $newp)
+                                        <div class="col">
+                                            <div class="p-0 text-center">
+                                                <a href="{{ route('home.product', $newp->id) }}">
+                                                    <img src="{{ asset($newp->image) }}" height="290px"
+                                                        class="card-img-top" alt="...">
+                                                </a>
+                                                <div class="card-body">
                                                        <!-- Button trigger modal -->
-                                                        <a href="{{ route('home.product', $newp->id) }}"
-                                                            class="text-decoration-none text-dark">
-                                                            <h5 class="card-title mt-3">{{ $newp->name }}</h5>
-                                                        </a>
+                                                    <a href="{{ route('home.product', $newp->id) }}"
+                                                        class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $newp->name }}</h5>
+                                                    </a>
                                                         
 
-                                                        @if (auth('cus')->check())
-                                                            <form action="{{ route('cart.add',$newp->id) }}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="quantity" value="1">
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    <i class="fa fa-shopping-cart"></i> ADD TO CART
-                                                                </button>
-                                                            </form>
-                                                        @else
-                                                            <form action="{{ route('account.login') }}" method="GET">
-                                                                <button type="submit" class="btn btn-primary" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                                                    <i class="fa fa-shopping-cart"></i> ADD TO CART
-                                                                </button>
-                                                            </form>
-                                                        @endif
-
-                                                    </div>
+                                                    @if (auth('cus')->check())
+                                                        <form action="{{ route('cart.add',$newp->id) }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('account.login') }}" method="GET">
+                                                            <button type="submit" class="btn btn-primary" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button"
                         data-bs-target="#carouselExampleDark" data-bs-slide="prev">
@@ -218,8 +216,6 @@
                     </button>
                 </div>
             </div><!-- This closing div is added -->
-
-
         </div>
         <div class="viewallproduct text-center">
             <a class="btn btn-warning" href="{{ route('products.all') }}" role="button">View All Product</a>

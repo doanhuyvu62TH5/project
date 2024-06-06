@@ -29,26 +29,30 @@ class AccountController extends Controller
             'password' => 'required',
         ],[
             'email.required' => 'Email không được để trống!',
+            'email.exists' => 'Tài khoản không tồn tại!',
             'password.required' => 'Vui lòng nhập mật khẩu',
-            
         ]);
-
-        $data = $req->only('email','password');
-
-        $check = auth('cus')->attempt($data);
-
-        if ($check) {
-            if (auth('cus')->user()->email_verified_at == '') {
-                auth('cus')->logout();
-                return redirect()->back()->with('no','You account is not verify, please check email again');
+    
+        $data = $req->only('email', 'password');
+    
+        // Find customer by email
+        $customer = Customer::where('email', $data['email'])->first();
+    
+        // Check if customer exists and password is correct
+        if ($customer && Hash::check($data['password'], $customer->password)) {
+            if ($customer->email_verified_at == null) {
+                return redirect()->back()->with('no', 'Tài khoản của bạn chưa được xác thực, vui lòng kiểm tra lại Email');
             }
-
-            return redirect()->route('home.index')->with('ok','Welcome back');
+    
+            // Perform login
+            auth('cus')->login($customer);
+    
+            return redirect()->route('home.index')->with('ok', 'Đăng nhập thành công!');
         }
-
-        return redirect()->back()->with('no','Tài khoản mật khẩu không chính xác!.');
-
+    
+        return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác!']);
     }
+    
     public function register()
     {
         return view('Account.register');

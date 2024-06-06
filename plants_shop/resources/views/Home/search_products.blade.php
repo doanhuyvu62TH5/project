@@ -50,7 +50,7 @@
                 <div class="col">
                     <div class="p-4 text-center">
                         <div class="card">
-                            <img src="{{ asset($product->image) }}" class="card-img-top" alt="...">
+                            <img src="{{ asset($product->image) }}" height=230 class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->name }}</h5>
                                 <a href="#" class="btn btn-primary">Go somewhere</a>

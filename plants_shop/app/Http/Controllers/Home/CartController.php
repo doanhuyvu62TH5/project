@@ -31,24 +31,23 @@ class CartController extends Controller
             if ($newQuantity > $product->quantity) {
                 // Chuyển hướng dựa vào trang hiện tại
                 if ($redirectPage === 'product-detail') {
-                    return redirect()->back()->with('no', 'Không thể thêm vào giỏ hàng! 
-                                                        Vui lòng kiểm tra lại số lượng của sản phẩm bạn đã thêm vào giỏ hàng với số lượng bạn vừa nhập đã vượt mức số lượng sản phẩm của cửa hàng!');
+                    return redirect()->back()->with('error', 'Số lượng sản phẩm bạn vừa nhập với số lượng sản phẩm trong giỏ hàng đã LỚN HƠN số lượng sản phẩm đang có trong cửa hàng!');
                 } else {
-                    $message = "Không thể thêm số lượng sản phẩm $productName vào giỏ hàng VÌ số lượng sảng phẩm $productName trong giỏ hàng đã đạt tới mức tối đa số lượng sản phẩm của cửa hàng!";
-                    return redirect()->route('cart.index')->with('no', $message);
+                    $message = "Số lượng sản phẩm $productName trong giỏ hàng của bạn đã đạt mức tối đa số lượng sản phẩm của cửa hàng!";
+                    return redirect()->back()->with('error', $message);
                 }
             }
             Cart::where([
                 'customer_id' => $cus_id,
                 'product_id' => $product->id
             ])->increment('quantity', $quantity);
-            return redirect()->route('cart.index')->with('ok', 'Thêm vào giỏ hàng thành công!');
+            return redirect()->route('cart.index')->with('success', 'Thêm vào giỏ hàng thành công!');
 
         } else {
             if ($quantity > $product->quantity) {
                 // Nếu số lượng yêu cầu vượt quá số lượng tồn kho, trả về thông báo lỗi
                 if ($redirectPage === 'product-detail') {
-                    return redirect()->back()->with('no', 'Không thể thêm vào giỏ hàng! Số lượng sản phẩm bạn đặt LỚN HƠN số lượng sản phẩm của của hàng!');
+                    return redirect()->back()->with('error', 'Số lượng sản phẩm bạn nhập LỚN HƠN số lượng sản phẩm sẵn có của cửa hàng!');
                 }
             }
             $data = [
@@ -59,10 +58,10 @@ class CartController extends Controller
             ];
 
             if (Cart::create($data)) {
-                return redirect()->route('cart.index')->with('ok', 'Thêm vào giỏ hàng');
+                return redirect()->route('cart.index')->with('success', 'Đã thêm vào giỏ hàng');
             }
         }
-        return redirect()->back()->with('no', 'Something error, please try again');
+        return redirect()->back()->with('error', 'Something error, please try again');
     }
 
     public function update(Product $product, Request $req)
@@ -70,22 +69,25 @@ class CartController extends Controller
         $quantity = $req->quantity ? floor($req->quantity) : 1;
 
         $cus_id = auth('cus')->id();
-
+        $productName = $product->name;
         $cartExist = Cart::where([
             'customer_id' => $cus_id,
             'product_id' => $product->id
         ])->first();
 
         if ($cartExist) {
-
+            if ($quantity > $product->quantity) {
+                $message_1 = "Số lượng sản phẩm $productName bạn đã nhập LỚN HƠN số lượng sản phẩm sẵn có của cửa hàng!";
+                return redirect()->back()->with('error_update_cart', $message_1);
+            }
             Cart::where([
                 'customer_id' => $cus_id,
                 'product_id' => $product->id
             ])->update([
                         'quantity' => $quantity
                     ]);
-
-            return redirect()->route('cart.index')->with('ok', 'Update product quantity in cart successfully');
+            $message_2 = "Cập nhật số lượng sản phẩm $productName thành công!";
+            return redirect()->route('cart.index')->with('success_update_cart', $message_2);
             ;
         }
 
@@ -99,7 +101,7 @@ class CartController extends Controller
             'customer_id' => $cus_id,
             'product_id' => $product_id
         ])->delete();
-        return redirect()->back()->with('ok', 'Deleted product in shopping cart');
+        return redirect()->back()->with('ok', 'Xóa sản phẩm thành công!');
     }
 
     public function clear()
@@ -109,6 +111,6 @@ class CartController extends Controller
             'customer_id' => $cus_id
         ])->delete();
 
-        return redirect()->back()->with('ok', 'Deleted all product in shopping cart');
+        return redirect()->back()->with('ok', 'Đã xóa tất cả sản phẩm trong giỏ hàng!');
     }
 }

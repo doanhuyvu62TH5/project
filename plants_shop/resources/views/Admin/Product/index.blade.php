@@ -14,6 +14,36 @@
         </div>
     @endif
     </div>
+    <div class="container text-center" style="padding: 20px 0px">
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <form action="{{ route('product.index') }}" method="GET">
+                    <div class="input-group mb-3">
+                        <select name="sort_by" class="form-select" >
+                            <option value="" selected disabled hidden>Sắp xếp theo</option>
+                            <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
+                            <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
+                            <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên A-Z</option>
+                            <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên Z-A</option>
+                            <option value="quantity_asc" {{ request('sort_by') == 'quantity_asc' ? 'selected' : '' }}>Số lượng thấp đến cao</option>
+                            <option value="quantity_desc" {{ request('sort_by') == 'quantity_desc' ? 'selected' : '' }}>Số lượng cao đến thấp</option>
+                            <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Ngày tạo cũ nhất</option>
+                            <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Ngày tạo mới nhất</option>
+                        </select>
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit">Lọc</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <form class="d-flex" method="GET" action="{{ route('product.index') }}">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search" value="{{ request('search') }}" aria-label="Search">
+                    <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+          </div>
+    </div>
     <table class="table table-light">
         <thead class="table-primary">
             <tr>
@@ -28,10 +58,10 @@
             </tr>
         </thead>
         <tbody>
-            @if ($product->count() > 0)
-                @foreach ($product as $pro)
+            @if ($products->count() > 0)
+                @foreach ($products as $pro)
                     <tr>
-                        <td class="align-middle">{{ ($product->currentPage() - 1) * $product->perPage() + $loop->index + 1 }}</td>
+                        <td class="align-middle">{{ ($products->currentPage() - 1) * $products->perPage() + $loop->index + 1 }}</td>
                         <td class="align-middle">{{ $pro->name}}</td>
                         <td class="align-middle">{{ $pro->price}}</td>
                         <td class="align-middle">{{ $pro->quantity}}</td>
@@ -62,7 +92,7 @@
             @endif
         </tbody>
         <div>
-            {!! $product->onEachSide(1)->links('pagination::bootstrap-4') !!}
+            {!! $products->onEachSide(1)->links('pagination::bootstrap-4') !!}
         </div>
     </table>
    

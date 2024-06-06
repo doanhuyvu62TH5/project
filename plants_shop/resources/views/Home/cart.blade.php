@@ -23,20 +23,6 @@
     <div class="cartmain" style="margin-top: 100px;">
         <div class="container">
             <div class="row">
-                @if (Session::has('yes'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check"></i>
-                        {{ Session::get('yes') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if (Session::has('no'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check"></i>
-                        {{ Session::get('no') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <div class="col-lg-12">
                     <div class="carttable">
                         <div class="cart-table table-responsive">
