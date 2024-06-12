@@ -1,13 +1,16 @@
 @extends('Admin.layouts.app')
 @section('contents')
-    <div>
+    <div class="container">
+        <div class="text-end">
+            <a class="btn btn-success btn-sm" href="{{ route('product.index') }}">Quay lại</a>
+        </div>
         <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="row justify-content-center" style="padding-top: 50px;">
-                <div class="text-center" style="padding-bottom: 50px;">
+            <div class="row justify-content-center">
+                <div class="text-center border-bottom">
                     <h4>Thêm sản phẩm</h4>
                 </div>
-                <div class="col-4 bg-white">
+                <div class="col-6 bg-white mt-3">
                     <div class="mb-3">
                         <label for="" class="form-label">Name</label>
                         <input name ="name" type="text" class="form-control @error('name')is-invalid @enderror" value="{{ old('name') }}">
@@ -24,7 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Content</label>
-                        <textarea name ="content" class="form-control @error('content')is-invalid @enderror"  style="height: 189px;">{{ old('content') }}</textarea>
+                        <textarea name ="content" class="form-control @error('content')is-invalid @enderror"  style="height: 100px;">{{ old('content') }}</textarea>
                         @error('content')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -37,7 +40,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-4 bg-white">
+                <div class="col-6 bg-white mt-3">
                     <div class="mb-3">
                         <label for="" class="form-label">Price</label>
                         <input name="price" type="text" class="form-control @error('price')is-invalid @enderror" value="{{ old('price') }}">

@@ -40,7 +40,7 @@ class CategoryController extends Controller
         ]);
         $data = $request->all('name','status','type');
         Category::create($data);
-        return redirect()->route('category.index')->with('success','Them thanh cong!');
+        return redirect()->route('category.index')->with('success','Thêm thành công!');
     }
 
     /**
@@ -72,7 +72,7 @@ class CategoryController extends Controller
         ]);
         $data = $request->all('name','status','type');
         $category -> update($data);
-        return redirect()->route('category.index')->with('success','Cap nhat thanh cong');
+        return redirect()->route('category.index')->with('success','Cập nhật thành công!');
     }
 
     /**
@@ -83,6 +83,6 @@ class CategoryController extends Controller
  
         $category->delete();
  
-        return redirect()->route('category.index')->with('success', 'product deleted successfully');
+        return redirect()->route('category.index')->with('success', 'Xóa thành công!');
     }
 }

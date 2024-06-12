@@ -83,6 +83,7 @@
                             <td>{{ $item->quantity }}</td>
                             <td>{{ number_format($item->price) }}</td>
                             <td>{{ number_format($item->price * $item->quantity) }}</td>
+                            
                         </tr>
                     @endforeach
                 </tbody>

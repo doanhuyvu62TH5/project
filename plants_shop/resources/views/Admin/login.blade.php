@@ -12,20 +12,15 @@
     <div class="container main">
         <div class="row">
             <div class="col-md-6 side-image">
-                       
                 <!-------------      image     ------------->
                 
                 <img src="img/hinh-nen-hoa-hong-1.jpg" alt="">
                 <div class="text">
                     <p>Join the community of developers <i>- ludiflex</i></p>
                 </div>
-                
             </div>
-
             <div class="col-md-6 right">
-                
-                <div class="input-box">
-                   
+                <div class="input-box">   
                    <header>Login</header>
                         @if(Session::has('success'))
                             <div id="successMessage" class="alert alert-success" role="alert">

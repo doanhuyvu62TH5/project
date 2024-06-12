@@ -14,6 +14,7 @@ class Order extends Model
         'email',
         'phone',
         'address',
+        'payment',
         'token',
         'customer_id',
         'status'
@@ -35,5 +36,9 @@ class Order extends Model
         }
 
         return $t;
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'order_id', 'id');
     }
 }

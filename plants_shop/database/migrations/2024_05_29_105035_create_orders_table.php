@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->nullable();
-            $table->string('email', 100)->nullable();
-            $table->string('phone', 100)->nullable();
-            $table->string('address', 100)->nullable();
-            $table->string('token', 50)->nullable();
+            $table->string('name', 100);
+            $table->string('email', 100);
+            $table->string('phone', 100);
+            $table->string('address', 100);
+            $table->string('note', 100)->nullable();
             $table->unsignedBigInteger('customer_id');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 

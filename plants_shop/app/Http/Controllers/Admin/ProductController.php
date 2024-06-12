@@ -237,6 +237,6 @@ class ProductController extends Controller
             File::delete($product->image);
         }
         $product->delete();
-        return redirect()->route('product.index')->with('success','xóa thành công!');
+        return redirect()->route('product.index')->with('success','Xóa thành công!');
     }
 }

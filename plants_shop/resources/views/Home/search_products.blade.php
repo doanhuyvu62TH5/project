@@ -52,8 +52,26 @@
                         <div class="card">
                             <img src="{{ asset($product->image) }}" height=230 class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $product->name }}</h5>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a href="{{ route('home.product', $product->id) }}"
+                                    class="text-decoration-none text-dark">
+                                    <h5 class="card-title mt-3">{{ $product->name }}</h5>
+                                    <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->price)}} đ</h6>
+                                </a>
+                                @if (auth('cus')->check())
+                                    <form action="{{ route('cart.add',$product->id) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('account.login') }}" method="GET">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                            <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -1,20 +1,11 @@
 @extends('Admin.layouts.app')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Sản phẩm</h1>
-        <a href="{{ route('product.create') }}" class="btn btn-success">Add Product</a>
+        <h4 class="mb-0">Sản phẩm</h4>
+        <a href="{{ route('product.create') }}" class="btn btn-success btn-sm">Add Product</a>
     </div>
     <hr />
-    <div style="height: 50px; margin: 15px 0px">
-        @if (Session::has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check"></i>
-            {{ Session::get('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    </div>
-    <div class="container text-center" style="padding: 20px 0px">
+    <div class="text-center">
         <div class="row justify-content-between">
             <div class="col-4">
                 <form action="{{ route('product.index') }}" method="GET">
@@ -37,24 +28,23 @@
             </div>
             <div class="col-4">
                 <form class="d-flex" method="GET" action="{{ route('product.index') }}">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search" value="{{ request('search') }}" aria-label="Search">
+                    <input class="form-control me-2 " type="search" name="search" placeholder="Search" value="{{ request('search') }}" aria-label="Search">
                     <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
           </div>
-    </div>
-    <table class="table table-light">
+          <table class="table table-light">
         <thead class="table-primary">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Category</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th class="text-end">Action</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Danh mục</th>
+                <th>Hình ảnh</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -71,7 +61,7 @@
                         </td>
                         <td class="align-middle">{{ $pro->status == 0 ? 'Ẩn' : 'Hiển thị' }}</td>
                         {{-- <td class="align-middle">{{ $rro->status == 0 ? 'Ẩn' : 'Hiển thị' }}</td> --}}
-                        <td class="align-middle text-end">
+                        <td class="align-middle text-center">
                             <div class="">
                                 <a href="{{ route('product.edit', $pro->id) }}" type="button" class="btn btn-warning"><i
                                         class="fas fa-edit"></i></a>
@@ -87,7 +77,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="text-center" colspan="8">Product not found</td>
+                    <td class="text-center" colspan="8">Không có sản phẩm nào!</td>
                 </tr>
             @endif
         </tbody>
@@ -95,5 +85,7 @@
             {!! $products->onEachSide(1)->links('pagination::bootstrap-4') !!}
         </div>
     </table>
+    </div>
+    
    
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Payment;
 use App\Models\OrderDetail;
 use App\Mail\OrderMail;
 use Illuminate\Support\Str;
@@ -53,15 +54,21 @@ class CheckoutController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'method_payment' => 'required|in:0,1',
         ]);
-
+        if ($req->method_payment == 1) { // Nếu thanh toán online
+            $req->validate([
+                'account_number' => 'required|string|max:100',
+                'account_name' => 'required|string|max:100',
+                'transaction_content' => 'required|string|max:255',
+            ]);
+        }
         $data = $req->only('name', 'email', 'phone', 'address');
         $data['customer_id'] = $auth->id;
-
+        
         $order = Order::create($data);
         if ($order) {
-            $token = Str::random(40);
             foreach ($auth->carts as $cart) {
                 $product = Product::find($cart->product_id);
                 $product->quantity = $product->quantity - $cart->quantity;
@@ -75,30 +82,25 @@ class CheckoutController extends Controller
                 OrderDetail::create($orderDetailData);
             }
             Cart::where('customer_id', $auth->id)->delete();
-            $order->token = $token;
             $order->save();
-            Mail::to($auth->email)->send(new OrderMail($order, $token));
-
-
+            $paymentData = [
+                'order_id' => $order->id,
+                'method_payment' => $req->method_payment,
+                'status_payment' => 0, // Chưa thanh toán
+            ];
+    
+            if ($req->method_payment == 1) { // Nếu thanh toán online
+                $paymentData['account_number'] = $req->account_number;
+                $paymentData['account_name'] = $req->account_name;
+                $paymentData['transaction_content'] = $req->transaction_content;
+            }
+    
+            Payment::create($paymentData);
             return redirect()->route('home.index')->with('ok', 'Order checkout successfully');
         }
-
         return redirect()->route('home.index')->with('no', 'Something orror, please try again');
-
     }
-
-    public function verify($token)
-    {
-        $order = Order::where('token', $token)->first();
-        if ($order) {
-            $order->token = null;
-            $order->status = 1;
-            $order->save();
-            return redirect()->route('home.index')->with('ok', 'Order verify successfully');
-        }
-        return abort(404);
-
-    }
+    
     public function cancel(Order $order)
     {
         $orderCreatedAt = Carbon::parse($order->created_at);
@@ -115,11 +117,13 @@ class CheckoutController extends Controller
                 $product->quantity += $detail->quantity;
                 $product->save();
             }
-            return redirect()->route('order.history')->with('yes', 'Hủy đơn hàng thành công!');
+            return redirect()->route('order.history')->with('ok', 'Hủy đơn hàng thành công!');
         }
 
         // Gửi email thông báo hủy đơn hàng (nếu cần)
         // Mail::to($auth->email)->send(new OrderCancelledMail($order));
         return redirect()->back()->with('no', 'Đơn hàng của bạn không thể hủy vì thời gian bạn đặt quá hạn!');
     }
+
+    
 }

@@ -21,16 +21,12 @@
             <div class="list-group list-group-flush my-3">
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-project-diagram me-2"></i>Projects</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-chart-line me-2"></i>Analytics</a>
                 <a href="{{ route('category.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-solid fa-list me-2"></i>Category</a>
+                        class="fas fa-solid fa-list me-2"></i>Danh mục</a>
                 <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold"data-bs-toggle="collapse"
                     href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i
-                        class="fas fa-shopping-cart me-2"></i>Store Mng</a>
+                        class="fas fa-shopping-cart me-2"></i>Đơn hàng</a>
                 <div class="collapse" id="collapseExample">
                     <div class="bg-dark text-dark">
                         <ul>
@@ -39,27 +35,23 @@
                                     aria-current="page" href="{{ route('admin.orders.index') }}">Danh sách đơn hàng</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.orders.index') }}?status=0"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Chờ xác nhận</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.orders.index') }}?status=2"
+                                <a href="{{ route('admin.orders.index') }}?status=1"
                                     class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang chuẩn bị hàng</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.orders.index') }}?status=3"
+                                <a href="{{ route('admin.orders.index') }}?status=2"
                                     class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã đóng gói</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.orders.index') }}?status=4"
+                                <a href="{{ route('admin.orders.index') }}?status=3"
                                     class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang giao hàng</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.orders.index') }}?status=5"
+                                <a href="{{ route('admin.orders.index') }}?status=4"
                                     class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã giao hàng</a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.orders.index') }}?status=6"
+                                <a href="{{ route('admin.orders.index') }}?status=5"
                                     class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã hủy</a>
                             </li>
                         </ul>
@@ -67,14 +59,12 @@
                 </div>
                 <a href="{{ route('product.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-gift me-2"></i>Products</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-comment-dots me-2"></i>Chat</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-map-marker-alt me-2"></i>Outlet</a>
+                        class="fas fa-gift me-2"></i>Sản phẩm</a>
+                <a href="{{ route('admin.contributes.index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-comment-dots me-2"></i>Đóng góp Phản hồi</a>
                 <a href="{{ route('admin.logout') }}"
                     class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
-                        class="fas fa-power-off me-2"></i>Logout</a>
+                        class="fas fa-power-off me-2"></i>Đăng xuất</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -118,18 +108,19 @@
     <!-- /#page-content-wrapper -->
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    <script>
-        var el = document.getElementById("wrapper");
-        var toggleButton = document.getElementById("menu-toggle");
-
-        toggleButton.onclick = function() {
-            el.classList.toggle("toggled");
-        };
-    </script>
+    @if(session('success'))
+        <script>
+            // Gọi SweetAlert2 để hiển thị thông báo
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('success') }}'
+            });
+        </script>
+    @endif
 </body>
 
 </html>

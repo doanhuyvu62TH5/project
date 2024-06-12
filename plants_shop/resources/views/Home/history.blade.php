@@ -28,45 +28,34 @@
                             <a class="nav-link" href="{{ route('order.history') }}">Tất cả</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=2&status[]=3&status[]=4">Chờ vận chuyển</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=1&status[]=2&status[]=3">Chờ vận chuyển</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('order.history') }}?status[]=0">Chờ xác nhận đơn hàng đặt</a>
+                            <a class="nav-link" href="{{ route('order.history') }}?status[]=0">Chờ xác nhận đơn hàng</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=5">Đã giao</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=4">Đã giao</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('order.history') }}?status[]=6">Đã hủy</a>
+                            <a class="nav-link" href="{{ route('order.history') }}?status[]=5">Đã hủy</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        @if (Session::has('yes'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check"></i>
-                {{ Session::get('yes') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if (Session::has('no'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check"></i>
-                {{ Session::get('no') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         <div class="container">
             @if ($orders->count() > 0)
+            <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Order date</th>
-                            <th>Status</th>
-                            <th>Total Price</th>
-                            <th></th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Trạng thái thanh toán</th>
+                            <th>Tổng tiền</th>
+                            <th class="text-center">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,17 +65,15 @@
                                 <td>{{ $item->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     @if ($item->status == 0)
-                                        <span>Bạn chưa xác nhận đơn hàng</span>
+                                        <span>Chờ cửa hàng xác nhận</span>
                                     @elseif ($item->status == 1)
-                                        <span>Bạn đã xác nhận đơn hàng</span>
-                                    @elseif ($item->status == 2)
                                         <span>Người bán đang chuẩn bị hàng</span>
-                                    @elseif ($item->status == 3)
+                                    @elseif ($item->status == 2)
                                         <span>Đơn hàng của bạn đã được đóng gói và đang bàn giao bên phía vận
                                             chuyển</span>
-                                    @elseif ($item->status == 4)
+                                    @elseif ($item->status == 3)
                                         <span>Đang giao hàng</span>
-                                    @elseif ($item->status == 5)
+                                    @elseif ($item->status == 4)
                                         <span>Đã giao hàng</span>
                                     @else
                                         <span>
@@ -94,18 +81,32 @@
                                         </span>
                                     @endif
                                 </td>
+                                <td>
+                                    @if($item->payment->method_payment == 0)
+                                        <span>Thanh toán khi nhận hàng.</span>
+                                    @elseif ($item->payment->method_payment == 1)
+                                        <span>Thanh toán Online</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($item->payment->status_payment == 0)
+                                        <span>Chưa thanh toán.</span>
+                                    @elseif ($item->payment->status_payment == 1)
+                                        <span>Đã thanh toán.</span>
+                                    @endif
+                                </td>
                                 <td>{{ number_format($item->totalPrice) }}</td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('order.detail', $item->id) }}"
-                                            class="btn btn-success p-1 me-3">Chi tiết</a>
+                                            class="btn btn-success p-1 me-3 btn-sm">Chi tiết</a>
                                         <div>
-                                            @if ($item->status == 0 || $item->status == 1)
+                                            @if ($item->status == 0)
                                                 <!-- Check if the order is not already cancelled or processed -->
                                                 <form action="{{ route('order.cancel', $item) }}" method="get">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-success p-1 me-3" type="submit"
+                                                    <button class="btn btn-success p-1 me-3 btn-sm" type="submit"
                                                         onclick="return confirm('Bạn có muốn chắc hủy đơn hàng này không?')">Hủy đặt hàng
                                                         </button>
                                                 </form>
@@ -117,8 +118,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
             @else
-                <h1>Khoong co san pham nao</h1>
+                <h6 class="text-center">Không có sản phẩm nào!</h6>
             @endif
         </div>
     </div>

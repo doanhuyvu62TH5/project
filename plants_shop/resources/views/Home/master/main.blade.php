@@ -23,7 +23,7 @@
     <style>
         body {
             font-size: 13px;
-            background-color: rgb(255, 247, 230);
+            background-color: white;
         }
 
         /* Thêm các quy tắc CSS khác ở đây nếu cần */
@@ -92,23 +92,28 @@
                                                             </div>
                                                             <div class="mt-3 d-flex align-items-center">
                                                                 <h6><span>{{ $item->quantity }}</span>
-                                                                    <strong>x</strong></h6>
+                                                                    <strong>x</strong>
+                                                                </h6>
                                                                 <a href=""
                                                                     class="text-decoration-none text-dark">
-                                                                    <h6 class="text-warning">{{ $item->product->price }}
+                                                                    <h6 class="text-warning">
+                                                                        {{ $item->product->price }}
                                                                     </h6>
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="col-2">
-                                                            <form action="{{ route('cart.delete', $item->product_id) }}" method="POST">
+                                                            <form
+                                                                action="{{ route('cart.delete', $item->product_id) }}"
+                                                                method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm('Are you sure want to delete product?')">
+                                                                <button type="submit" class="btn-close"
+                                                                    aria-label="Close"
+                                                                    onclick="return confirm('Are you sure want to delete product?')">
                                                                 </button>
                                                             </form>
-
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -138,12 +143,14 @@
                         aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="{{ route('home.index') }}">Trang
+                                    <a class="nav-link active" aria-current="page"
+                                        href="{{ route('home.index') }}">Trang
                                         chủ</a>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -186,17 +193,18 @@
                                     <a class="nav-link active" href="#">Blog</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">Liên hệ</a>
+                                    <a class="nav-link active" href="{{ route('contact_us.index') }}">Liên hệ</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <form class="d-flex" role="search" action="{{ route('search') }}" method="GET">
-                        <input class="form-control me-2" type="search" name="query" required placeholder="Tìm kiếm" aria-label="Search"
-                        oninvalid="this.setCustomValidity('Vui lòng nhập từ khóa tìm kiếm!')"
-                        oninput="setCustomValidity('')">
+                        <input class="form-control me-2" type="search" name="query" required
+                            placeholder="Tìm kiếm" aria-label="Search"
+                            oninvalid="this.setCustomValidity('Vui lòng nhập từ khóa tìm kiếm!')"
+                            oninput="setCustomValidity('')">
                         <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>                    
+                    </form>
                 </div>
             </nav>
         </div>
@@ -205,23 +213,93 @@
     <main>
         @yield('content')
     </main>
+
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-2">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-2">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-4 offset-1">
+                    <form>
+                        <h5>Subscribe to our newsletter</h5>
+                        <p>Monthly digest of whats new and exciting from us.</p>
+                        <div class="d-flex w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            <div class="d-flex justify-content-between py-4 my-4 border-top">
+                <p>&copy; 2021 Company, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                height="24">
+                                <use xlink:href="#twitter" />
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                height="24">
+                                <use xlink:href="#instagram" />
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
+                                height="24">
+                                <use xlink:href="#facebook" />
+                            </svg></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    @if(session('no'))
-    <script>
-        // Gọi SweetAlert2 để hiển thị thông báo
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: '{{ session('no') }}',
-            showConfirmButton: false,
-            timer: 3000 // Thời gian tự động đóng sau 3 giây
-        });
-    </script>
+    @if (session('no'))
+        <script>
+            // Gọi SweetAlert2 để hiển thị thông báo
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('no') }}',
+                showConfirmButton: false,
+                timer: 3000 // Thời gian tự động đóng sau 3 giây
+            });
+        </script>
     @endif
-    @if(session('ok'))
+    @if (session('ok'))
         <script>
             // Gọi SweetAlert2 để hiển thị thông báo
             Swal.fire({
@@ -230,10 +308,10 @@
                 title: '{{ session('ok') }}',
                 showConfirmButton: false,
                 timer: 1500
-                });
+            });
         </script>
     @endif
-    @if(session('success'))
+    @if (session('success'))
         <script>
             // Gọi SweetAlert2 để hiển thị thông báo
             Swal.fire({
@@ -242,7 +320,7 @@
             });
         </script>
     @endif
-    @if(session('error'))
+    @if (session('error'))
         <script>
             Swal.fire({
                 icon: 'error',
@@ -251,7 +329,7 @@
             });
         </script>
     @endif
-    @if(session('success_update_cart'))
+    @if (session('success_update_cart'))
         <script>
             // Gọi SweetAlert2 để hiển thị thông báo
             Swal.fire({
@@ -260,7 +338,7 @@
             });
         </script>
     @endif
-    @if(session('error_update_cart'))
+    @if (session('error_update_cart'))
         <script>
             Swal.fire({
                 icon: 'error',
@@ -269,6 +347,7 @@
             });
         </script>
     @endif
-    
+
 </body>
+
 </html>

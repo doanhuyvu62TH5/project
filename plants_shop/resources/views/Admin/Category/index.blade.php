@@ -5,23 +5,15 @@
         <a href="{{ route('category.create') }}" class="btn btn-success">Add Category</a>
     </div>
     <hr />
-    <div style="height: 50px; margin: 15px 0px">
-        @if (Session::has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check"></i>
-            {{ Session::get('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
     </div>
     <table class="table table-light">
         <thead class="table-primary">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th class="text-end">Action</th>
+                <th>Tên danh mục</th>
+                <th>Trạng thái</th>
+                <th>Loại</th>
+                <th class="text-end">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -48,7 +40,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="text-center" colspan="5">Product not found</td>
+                    <td class="text-center" colspan="5">Không có danh mục nào!</td>
                 </tr>
             @endif
         </tbody>

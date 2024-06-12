@@ -4,11 +4,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Admin\ContributeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\AccountController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CheckoutController;
+use App\Http\Controllers\Home\ContactController;
+use App\Http\Controllers\Home\HomeController;
 
 
 /*
@@ -52,7 +54,6 @@ Route::get('/products/category/{cat}', [HomeController::class, 'showProductsByCa
 Route::get('/products/all', [HomeController::class, 'showAllProducts'])->name('products.all');
 Route::get('/products/type/{type}', [HomeController::class, 'showProductsByType'])->name('products.byType');
 Route::get('/product/{product}',[HomeController::class, 'showProduct'])->name('home.product');
-
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 
@@ -77,7 +78,6 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::resource('/category',CategoryController::class);
     Route::resource('/product',ProductController::class);
 
-
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
     Route::post('orders/{order}/confirm', [OrderController::class, 'confirm'])->name('admin.orders.confirm');
@@ -85,6 +85,10 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::post('orders/{order}/mark-as-shipping', [OrderController::class, 'markAsShipping'])->name('admin.orders.markAsShipping');
     Route::post('orders/{order}/mark-as-delivered', [OrderController::class, 'markAsDelivered'])->name('admin.orders.markAsDelivered');
     Route::delete('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
+    Route::post('admin/orders/{order}/mark-as-paid', [OrderController::class, 'markAsPaid'])->name('admin.orders.markAsPaid');
+
+    Route::get('contributes', [ContributeController::class, 'index'])->name('admin.contributes.index');
+    Route::delete('contibutes/{contribute}', [ContributeController::class, 'destroy'])->name('admin.contributes.delete');
 });
 
 
@@ -103,7 +107,13 @@ Route::group(['prefix' => 'order','middleware' => 'customer'], function() {
     Route::post('/checkout', [CheckoutController::class, 'post_checkout']);
     Route::get('/verify/{token}', [CheckoutController::class, 'verify'])->name('order.verify');
     Route::get('/order/{order}/cancel', [CheckoutController::class, 'cancel'])->name('order.cancel');
+    Route::post('/vnp_payment', [CheckoutController::class, 'vnp_payment'])->name('vnp_payment');
 });
+
+
+
+Route::get('/contact_us',[ContactController::class, 'index'])->name('contact_us.index');
+Route::post('/contact_us',[ContactController::class, 'store'])->name('send');
 
 
 

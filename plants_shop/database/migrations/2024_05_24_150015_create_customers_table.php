@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email', 100)->unique();
             $table->string('phone', 100)->unique();
             $table->string('address', 100)->nullable();
-            $table->tinyInteger('gender')->default(0);
             $table->string('password', 200);
             $table->date('email_verified_at')->nullable();
             $table->timestamps(); // Thêm cột created_at và updated_at
