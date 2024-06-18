@@ -35,7 +35,7 @@
                     <form action="" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="">Name</label>
+                            <label for="">Họ và tên</label>
                             <input name="name" value="{{ $auth->name }}" type="text" class="form-control"
                                 placeholder="Your Name *" required>
                             @error('name')
@@ -51,7 +51,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="">Phone</label>
+                            <label for="">Số điện thoại</label>
                             <input name="phone" type="text" value="{{ $auth->phone }}" class="form-control"
                                 placeholder="Your phone *" required>
                             @error('phone')
@@ -59,12 +59,16 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="">Address</label>
+                            <label for="">Địa chỉ</label>
                             <input name="address" type="text" value="{{ $auth->address }}" class="form-control"
                                 placeholder="Your address *" required>
                             @error('address')
                                 <small class="help-block">{{ $message }}</small>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ghi chú</label>
+                            <textarea class="form-control" name="note"></textarea>
                         </div>
                         <div class="text-center mt-5 mb-5">
                             <h4>HÌNH THỨC THANH TOÁN</h4>
@@ -74,13 +78,6 @@
                                 {{ $errors->first('method_payment') }}
                             </div>
                         @endif
-                        <?php
-                        // Khởi tạo biến để lưu trạng thái các ô nhập liệu và nút radio
-                        $selectedPaymentMethod = isset($_POST['method_payment']) ? $_POST['method_payment'] : '';
-                        $accountNumber = isset($_POST['account_number']) ? $_POST['account_number'] : '';
-                        $accountName = isset($_POST['account_name']) ? $_POST['account_name'] : '';
-                        $transactionContent = isset($_POST['transaction_content']) ? $_POST['transaction_content'] : '';
-                        ?>
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="method_payment" value="0"
@@ -94,7 +91,7 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="method_payment" value="1"
-                                    id="onlinePayment">
+                                    id="onlinePayment" {{ old('method_payment') == '1' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="onlinePayment">
                                     Thanh toán online
                                 </label>
@@ -112,16 +109,28 @@
                                     </div>
                                     <div class="col-9">
                                         <label for="account_number">Số tài khoản người chuyển:</label>
-                                        <input class="form-control form-control-sm" type="text"
-                                            name="account_number" id="account_number">
+
+                                        <input
+                                            class="form-control form-control-sm @error('account_number')is-invalid @enderror"
+                                            type="text" value="{{ old('account_number') }}" name="account_number">
+                                        @error('account_number')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
 
                                         <label for="account_name">Tên chủ tài khoản:</label>
-                                        <input class="form-control form-control-sm" type="text" name="account_name"
-                                            id="account_name">
-
+                                        <input
+                                            class="form-control form-control-sm @error('account_name')is-invalid @enderror"
+                                            type="text" value="{{ old('account_name') }}" name="account_name">
+                                        @error('account_name')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                         <label for="transaction_content">Nội dung chuyển khoản:</label>
-                                        <input class="form-control form-control-sm" type="text"
-                                            name="transaction_content" id="transaction_content">
+                                        <input
+                                            class="form-control form-control-sm @error('transaction_content')is-invalid @enderror"
+                                            type="text" value="{{ old('transaction_content') }}" name="transaction_content">
+                                        @error('transaction_content')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

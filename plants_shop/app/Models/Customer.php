@@ -32,6 +32,10 @@ class Customer extends Authenticatable
     public function orders() {
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'customer_id','id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

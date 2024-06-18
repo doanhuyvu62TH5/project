@@ -17,4 +17,8 @@ class Product extends Model
     {
         return $this->hasMany(OrderDetail::class,'product_id','id');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'product_id','id');
+    }
 }

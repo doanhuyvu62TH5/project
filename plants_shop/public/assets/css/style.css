@@ -104,7 +104,10 @@
     display: block;
   }
   
-
+.scroll-comment{
+    max-height: 550px; /* Đặt chiều cao tối đa cho phần tử */
+    overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
+}
 
 
 

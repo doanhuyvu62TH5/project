@@ -49,8 +49,8 @@
                 @foreach ($products as $product )
                 <div class="col">
                     <div class="p-4 text-center">
-                        <div class="card">
-                            <img src="{{ asset($product->image) }}" height=230 class="card-img-top" alt="...">
+                        <div class="">
+                            <img src="{{ asset($product->image) }}" height=230 class="card-img-top zoom-image" alt="...">
                             <div class="card-body">
                                 <a href="{{ route('home.product', $product->id) }}"
                                     class="text-decoration-none text-dark">
@@ -68,7 +68,7 @@
                                 @else
                                     <form action="{{ route('account.login') }}" method="GET">
                                         <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                            <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                         </button>
                                     </form>
                                 @endif

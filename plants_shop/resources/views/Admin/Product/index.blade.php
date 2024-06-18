@@ -2,7 +2,7 @@
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
         <h4 class="mb-0">Sản phẩm</h4>
-        <a href="{{ route('product.create') }}" class="btn btn-success btn-sm">Add Product</a>
+        <a href="{{ route('product.create') }}" class="btn btn-success btn-sm">Thêm sản phẩm</a>
     </div>
     <hr />
     <div class="text-center">

@@ -24,6 +24,12 @@
                 <a href="{{ route('category.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-list me-2"></i>Danh mục</a>
+                <a href="{{ route('product.index') }}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-gift me-2"></i>Sản phẩm</a>
+                <a href="{{ route('blog.index') }}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-blog me-2"></i>Blog</a>
                 <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold"data-bs-toggle="collapse"
                     href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i
                         class="fas fa-shopping-cart me-2"></i>Đơn hàng</a>
@@ -36,31 +42,35 @@
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=1"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang chuẩn bị hàng</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang
+                                    chuẩn bị hàng</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=2"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã đóng gói</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã
+                                    đóng gói</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=3"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang giao hàng</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đang
+                                    giao hàng</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=4"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã giao hàng</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã
+                                    giao hàng</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=5"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã hủy</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã
+                                    hủy</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <a href="{{ route('product.index') }}"
+
+                <a href="{{ route('admin.contributes.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-gift me-2"></i>Sản phẩm</a>
-                <a href="{{ route('admin.contributes.index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-comment-dots me-2"></i>Đóng góp Phản hồi</a>
                 <a href="{{ route('admin.logout') }}"
                     class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
@@ -112,7 +122,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    @if(session('success'))
+    @if (session('success'))
         <script>
             // Gọi SweetAlert2 để hiển thị thông báo
             Swal.fire({

@@ -15,6 +15,7 @@ class Order extends Model
         'phone',
         'address',
         'payment',
+        'note',
         'token',
         'customer_id',
         'status'

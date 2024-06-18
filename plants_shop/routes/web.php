@@ -5,11 +5,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ContributeController;
+use App\Http\Controllers\Admin\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\AccountController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CheckoutController;
-use App\Http\Controllers\Home\ContactController;
 use App\Http\Controllers\Home\HomeController;
 
 
@@ -55,9 +55,12 @@ Route::get('/products/all', [HomeController::class, 'showAllProducts'])->name('p
 Route::get('/products/type/{type}', [HomeController::class, 'showProductsByType'])->name('products.byType');
 Route::get('/product/{product}',[HomeController::class, 'showProduct'])->name('home.product');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/contact_us',[HomeController::class, 'contact'])->name('contact_us.index');
+Route::post('/contact_us',[HomeController::class, 'contact_post'])->name('send');
+Route::get('/blog', [HomeController::class, 'blog'])->name('home.blogs');
+Route::get('/blog/{blog}', [HomeController::class, 'showBlogDetail'])->name('home.blog');
 
-
-
+Route::post('/comments', [HomeController::class, 'comment_post'])->name('comments.post')->middleware('customer');
 // Route::prefix('auth')->group(function () {
 //     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 //     Route::post('/login', [AuthController::class, 'login'])->name('loginAction');
@@ -77,6 +80,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::resource('/category',CategoryController::class);
     Route::resource('/product',ProductController::class);
+    Route::resource('/blog',BlogController::class);
 
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
@@ -104,16 +108,15 @@ Route::group(['prefix' => 'order','middleware' => 'customer'], function() {
     Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('order.checkout');
     Route::get('/history', [CheckoutController::class, 'history'])->name('order.history');
     Route::get('/detail/{order}', [CheckoutController::class, 'detail'])->name('order.detail');
-    Route::post('/checkout', [CheckoutController::class, 'post_checkout']);
+    Route::post('/checkout', [CheckoutController::class, 'post_checkout'])->name('checkout');
     Route::get('/verify/{token}', [CheckoutController::class, 'verify'])->name('order.verify');
     Route::get('/order/{order}/cancel', [CheckoutController::class, 'cancel'])->name('order.cancel');
-    Route::post('/vnp_payment', [CheckoutController::class, 'vnp_payment'])->name('vnp_payment');
+
+
 });
 
 
 
-Route::get('/contact_us',[ContactController::class, 'index'])->name('contact_us.index');
-Route::post('/contact_us',[ContactController::class, 'store'])->name('send');
 
 
 

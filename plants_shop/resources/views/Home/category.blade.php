@@ -21,72 +21,131 @@
             </div>
         </div>
     </div>
-    <div class="products" style="padding-top: 50px;">
+    <div class="products mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 order-2 order-lg-1 border">
+                <div class="col-lg-3 border border-danger">
                     <div class="row mb-3 mt-3 border-bottom text-center">
                         <h5>DANH MỤC SẢN PHẨM</h5>
                     </div>
                     <div class="row mb-3 mt-3 border-bottom text-center">
-                        <a href="{{ route('products.all') }}" class="text-decoration-none text-dark {{ request()->is('products/all') ? 'selected' : '' }}">
+                        <a href="{{ route('products.all') }}"
+                            class="text-decoration-none text-dark {{ request()->is('products/all') ? 'selected' : '' }}">
                             <h5>Tất cả sản phẩm</h5>
                         </a>
                     </div>
-                    <div class="category_tree">
-                        <div class="row mb-3 mt-3 border-bottom">
-                            <a href="{{ route('products.byType', ['type' => 0]) }}" 
-                               class="text-decoration-none text-dark {{ request()->is('products/type/0') ? 'selected' : '' }}">
-                                <h5>Cây cảnh</h5>
-                            </a>
-                        </div>
-                        <div class="scroll">
-                            <ul class="list-group list-group-flush">
-                                @foreach ($cats_home as $cat)
-                                    @if ($cat->type == '0')
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <a href="{{ route('home.category', $cat->id) }}"
-                                                class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}"><h5>{{ $cat->name }}</h5></a>
-                                            <span class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
-                                        </li>
-                                    @endif
-                                @endforeach
+                    @if ($headerTitle == 'Cây cảnh')
+                        <div class="category_tree">
+                            <div class="row mb-3 mt-3 border-bottom">
+                                <a href="{{ route('products.byType', ['type' => 0]) }}"
+                                    class="text-decoration-none text-dark {{ request()->is('products/type/0') ? 'selected' : '' }}">
+                                    <h5>Cây cảnh</h5>
+                                </a>
+                            </div>
+                            <div class="scroll">
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($cats_home as $cat)
+                                        @if ($cat->type == '0')
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('home.category', $cat->id) }}"
+                                                    class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}">
+                                                    <h5>{{ $cat->name }}</h5>
+                                                </a>
+                                                <span
+                                                    class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
+                                            </li>
+                                        @endif
+                                    @endforeach
 
-                                <!-- Thêm nhiều mục hơn nếu cần -->
-                            </ul>
+                                    <!-- Thêm nhiều mục hơn nếu cần -->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="category_flower">
-                        <div class="row mb-3 mt-3 border-bottom">
-                            <a href="{{ route('products.byType', ['type' => 1]) }}" 
-                                class="text-decoration-none text-dark {{ request()->is('products/type/1') ? 'selected' : '' }}">
-                                 <h5>Hoa</h5>
-                             </a>
+                    @elseif ($headerTitle == 'Hoa')
+                        <div class="category_flower">
+                            <div class="row mb-3 mt-3 border-bottom">
+                                <a href="{{ route('products.byType', ['type' => 1]) }}"
+                                    class="text-decoration-none text-dark {{ request()->is('products/type/1') ? 'selected' : '' }}">
+                                    <h5>Hoa</h5>
+                                </a>
+                            </div>
+                            <div class="scroll">
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($cats_home as $cat)
+                                        @if ($cat->type == '1')
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('home.category', $cat->id) }}"
+                                                    class="text-decoration-none text-dark">{{ $cat->name }}</a>
+                                                <span
+                                                    class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                        <div class="scroll">
-                            <ul class="list-group list-group-flush">
-                                @foreach ($cats_home as $cat)
-                                    @if ($cat->type == '1')
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <a href="{{ route('home.category', $cat->id) }}"
-                                                class="text-decoration-none text-dark">{{ $cat->name }}</a>
-                                            <span class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
+                    @else
+                        <div class="category_tree">
+                            <div class="row mb-3 mt-3 border-bottom">
+                                <a href="{{ route('products.byType', ['type' => 0]) }}"
+                                    class="text-decoration-none text-dark {{ request()->is('products/type/0') ? 'selected' : '' }}">
+                                    <h5>Cây cảnh</h5>
+                                </a>
+                            </div>
+                            <div class="scroll">
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($cats_home as $cat)
+                                        @if ($cat->type == '0')
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('home.category', $cat->id) }}"
+                                                    class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}">
+                                                    <h5>{{ $cat->name }}</h5>
+                                                </a>
+                                                <span
+                                                    class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+                                    <!-- Thêm nhiều mục hơn nếu cần -->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                        <div class="category_flower">
+                            <div class="row mb-3 mt-3 border-bottom">
+                                <a href="{{ route('products.byType', ['type' => 1]) }}"
+                                    class="text-decoration-none text-dark {{ request()->is('products/type/1') ? 'selected' : '' }}">
+                                    <h5>Hoa</h5>
+                                </a>
+                            </div>
+                            <div class="scroll">
+                                <ul class="list-group list-group-flush">
+                                    @foreach ($cats_home as $cat)
+                                        @if ($cat->type == '1')
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <a href="{{ route('home.category', $cat->id) }}"
+                                                    class="text-decoration-none text-dark">{{ $cat->name }}</a>
+                                                <span
+                                                    class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+
                     <div class="recent_product">
                         <div class="row mb-3 mt-3 border-bottom">
-                            <h5>Recent product</h5>
+                            <h5>Sản phẩm mới</h5>
                         </div>
                         @foreach ($new_products as $newp)
                             <div class="row text-center align-items-center mb-3">
                                 <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
                                 <div class="col-5">
                                     <a href="{{ route('home.product', $newp->id) }}">
-                                        <img src="{{ asset($newp->image) }}" height=125 width=110 class=""
+                                        <img src="{{ asset($newp->image) }}" height=125 width=110 class="zoom-image"
                                             alt="...">
                                     </a>
                                 </div>
@@ -105,33 +164,59 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="col-lg-9 order-1 order-lg-2 border">
+                <div class="col-lg-9 border border-danger">
                     <div class="container">
                         <div class="row justify-content-center mt-3 text-center">
-                            <div class="col-md-4 mb-3">
+                            <div class="row mb-5 justify-content-center">
                                 <!-- Thêm dropdown menu -->
-                                <form action="{{ request()->fullUrl() }}" method="GET">
-                                    <select name="sort_by" onchange="this.form.submit()">
-                                        <option value="" selected disabled hidden>Sắp xếp theo</option>
-                                        <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
-                                        <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
-                                        <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên A-Z</option>
-                                        <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên Z-A</option>
-                                        <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Ngày tạo cũ nhất</option>
-                                        <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Ngày tạo mới nhất</option>
-                                    </select>
+                                <form action="{{ request()->fullUrl() }}" class="row" method="GET">
+                                    <div class="col-6">
+                                        <select class="form-control" name="sort_by" onchange="this.form.submit()">
+                                            <option value="" selected disabled hidden>Sắp xếp theo</option>
+                                            <option value="price_asc"
+                                                {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần
+                                            </option>
+                                            <option value="price_desc"
+                                                {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần
+                                            </option>
+                                            <option value="name_asc"
+                                                {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên A-Z</option>
+                                            <option value="name_desc"
+                                                {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên Z-A</option>
+                                            <option value="created_asc"
+                                                {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Ngày tạo cũ
+                                                nhất</option>
+                                            <option value="created_desc"
+                                                {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Ngày tạo mới
+                                                nhất</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <select class="form-control" name="price_range" onchange="this.form.submit()">
+                                            <option value="" selected disabled hidden>Chọn khoảng giá</option>
+                                            <option value="under_100000"
+                                                {{ request('price_range') == 'under_100000' ? 'selected' : '' }}>Dưới
+                                                100.000</option>
+                                            <option value="100000_200000"
+                                                {{ request('price_range') == '100000_200000' ? 'selected' : '' }}>100.000 -
+                                                200.000</option>
+                                            <option value="above_200000"
+                                                {{ request('price_range') == 'above_200000' ? 'selected' : '' }}>Trên
+                                                200.000</option>
+                                        </select>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                         <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
                             @if ($products->count())
                                 @foreach ($products as $pro)
-                                    <div class="col">
+                                    <div class="col border-no">
                                         <div class="p-0 text-center">
-                                            <div class="card">
+                                            <div class="">
                                                 <a href="{{ route('home.product', $pro->id) }}"><img
-                                                        src="{{ asset($pro->image) }}" height="200px" class="card-img-top"
-                                                        alt="..."></a>
+                                                        src="{{ asset($pro->image) }}" height="200px"
+                                                        class="card-img-top zoom-image" alt="..."></a>
                                                 <div class="card-body">
                                                     <a
                                                         href="{{ route('home.product', $pro->id) }}"class="text-decoration-none text-dark">
@@ -139,17 +224,18 @@
                                                         <h5 class="card-title mt-3">{{ $pro->name }}</h5>
                                                     </a>
                                                     @if (auth('cus')->check())
-                                                        <form action="{{ route('cart.add',$pro->id) }}" method="POST">
+                                                        <form action="{{ route('cart.add', $pro->id) }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="quantity" value="1">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                             </button>
                                                         </form>
                                                     @else
                                                         <form action="{{ route('account.login') }}" method="GET">
-                                                            <button type="submit" class="btn btn-primary" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                                onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                             </button>
                                                         </form>
                                                     @endif

@@ -111,7 +111,7 @@
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn-close"
                                                                     aria-label="Close"
-                                                                    onclick="return confirm('Are you sure want to delete product?')">
+                                                                    onclick="return confirm('Bạn có muốn xóa sản phẩm này khỏi giỏ hàng?')">
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -158,7 +158,7 @@
                                         href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
-                                        Cây
+                                        Chủ đề về cây
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
@@ -167,7 +167,6 @@
                                                     href="{{ route('home.category', $cath->id) }}">{{ $cath->name }}</a>
                                             @endif
                                         @endforeach
-
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -175,7 +174,7 @@
                                         href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
-                                        Hoa
+                                        Chủ đề về hoa
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
@@ -190,7 +189,7 @@
                                     <a class="nav-link active" href="{{ route('products.all') }}">Sản Phẩm</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">Blog</a>
+                                    <a class="nav-link active" href="{{ route('home.blogs') }}">Blog</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" href="{{ route('contact_us.index') }}">Liên hệ</a>
@@ -214,7 +213,7 @@
         @yield('content')
     </main>
 
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-dark mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-2">

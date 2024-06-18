@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-12 mb-3 border-bottom">
                         <strong><i class="fa fa-fax"></i>
-                         Địa hỉ : Xóm Nam Phong, Xã Nam Phong, Tp.Nam Địng, Tỉnh Nam Định.</strong>
+                         Địa hỉ : Xóm Nam Phong, Xã Nam Phong, Tp.Nam Định, Tỉnh Nam Định.</strong>
                     </div>
                     <div class="col-12 mb-3 border-bottom">
                         <strong><i class="fa fa-phone"></i>

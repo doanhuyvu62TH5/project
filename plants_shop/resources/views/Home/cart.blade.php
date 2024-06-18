@@ -30,12 +30,12 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Remove</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
+                                        <th>Xóa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="d-block d-flex justify-content-between">
                             <div>
-                                <a href="{{ route('order.checkout') }}" class="btn btn-success">Place Order</a>
+                                <a href="{{ route('order.checkout') }}" class="btn btn-success">Đặt hàng ngay</a>
                             </div>
                             <form action="{{ route('cart.clear') }}" method="POST">
                                 @csrf

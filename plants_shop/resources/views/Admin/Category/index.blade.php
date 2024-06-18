@@ -2,7 +2,7 @@
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
         <h1 class="mb-0">Danh Mục</h1>
-        <a href="{{ route('category.create') }}" class="btn btn-success">Add Category</a>
+        <a href="{{ route('category.create') }}" class="btn btn-success">Thêm danh mục</a>
     </div>
     <hr />
     </div>

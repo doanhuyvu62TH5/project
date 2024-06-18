@@ -59,7 +59,8 @@
                                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                 <i class="fas fa-check"></i>
                                                 {{ Session::get('no') }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
                                             </div>
                                         @endif
                                     </div>
@@ -90,7 +91,7 @@
                                     </a>
                                 </div>
                             @endif
-                            
+
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -110,6 +111,95 @@
                             </div>
 
                         </div>
+
+                        <div class="">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="card text-body">
+                                        <div class="card-body p-4">
+                                            <h4 class="mb-0">Recent comments</h4>
+                                            <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+                                        </div>
+                                        <div class="scroll-comment">
+                                            @foreach ($comments as $comment)
+                                                <div class="card-body p-4 ">
+                                                    <div class="d-flex">
+                                                        <img class="rounded-circle shadow-1-strong me-3"
+                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
+                                                            alt="avatar" width="60" height="60" />
+                                                        <div>
+                                                            <h6 class="fw-bold mb-1">{{ auth('cus')->user()->name }}</h6>
+                                                            <div class="d-flex align-items-center mb-3">
+                                                                <p class="mb-0">
+                                                                    March 07, 2021
+                                                                    <span class="badge bg-primary">Pending</span>
+                                                                </p>
+                                                                <a href="#!" class="link-muted"><i
+                                                                        class="fas fa-pencil-alt ms-2"></i></a>
+                                                                <a href="#!" class="link-muted"><i
+                                                                        class="fas fa-redo-alt ms-2"></i></a>
+                                                                <a href="#!" class="link-muted"><i
+                                                                        class="fas fa-heart ms-2"></i></a>
+                                                            </div>
+                                                            <p class="mb-0">
+                                                                {{ $comment->comment }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr class="my-0" />
+                                            @endforeach
+
+
+                                        </div>
+                                        @if (auth('cus')->check())
+                                            <form action="{{ route('comments.post') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="type" value="product">
+                                                <div class="card-body p-4" style="background-color: #868b91;">
+                                                    <div class="d-flex flex-start w-100">
+                                                        <img class="rounded-circle shadow-1-strong me-3"
+                                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                                                            alt="avatar" width="40" height="40" />
+                                                        <div data-mdb-input-init class="form-outline w-100">
+                                                            <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
+                                                            <label class="form-label"
+                                                                for="textAreaExample">Message</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="float-end mt-2 pt-1">
+                                                        <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                                            class="btn btn-primary btn-sm">Post comment</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @else
+                                        <form action="{{ route('account.login') }}" method="GET">
+                                            @csrf
+                                            <div class="card-body p-4" style="background-color: #868b91;">
+                                                <div class="d-flex flex-start w-100">
+                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                                                        alt="avatar" width="40" height="40" />
+                                                    <div data-mdb-input-init class="form-outline w-100">
+                                                        <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
+                                                        <label class="form-label"
+                                                            for="textAreaExample">Message</label>
+                                                    </div>
+                                                </div>
+                                                <div class="float-end mt-2 pt-1">
+                                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                                        class="btn btn-primary btn-sm" onclick="alert('Vui lòng đăng nhập để bình luận')">Post comment</button>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

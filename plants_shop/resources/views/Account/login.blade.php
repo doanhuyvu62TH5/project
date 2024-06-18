@@ -2,7 +2,7 @@
 @section('content')
     <div class="register" style="margin-top: 100px;">
         <div class="container">
-            <div class="row justify-content-center align-items-center" style="height: 100px">
+            <div class="row justify-content-center align-items-center" >
                 <div class="col-lg-7">
                     <div class="card" style="border-radius: 2rem;">
                         <div class="row">

@@ -155,7 +155,7 @@
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>New Products</h2>
+                <h2>Sản phẩm mới</h2>
                 <p>.............</p>
             </div>
             <div class="product">
@@ -190,7 +190,7 @@
                                                     @else
                                                         <form action="{{ route('account.login') }}" method="GET">
                                                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                             </button>
                                                         </form>
                                                     @endif
@@ -216,7 +216,7 @@
             </div><!-- This closing div is added -->
         </div>
         <div class="viewallproduct text-center">
-            <a class="btn btn-warning" href="{{ route('products.all') }}" role="button">View All Product</a>
+            <a class="btn btn-warning" href="{{ route('products.all') }}" role="button">Tất cả sản phẩm</a>
         </div>
     </div>
 
@@ -224,46 +224,60 @@
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>Tree</h2>
+                <h2>Chủ đề về cây</h2>
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                <div id="carouselExampleDark2" class="carousel carousel-dark slide" data-bs-ride="carousel"
                     data-bs-interval="5000">
                     <div class="carousel-inner">
                         @foreach ($tree->chunk(4) as $chunk)
                             <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
-                                <div class="container">
                                     <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
                                         @foreach ($chunk as $tr)
                                             <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $tr->id) }}">
-                                                        <img src="{{ asset($tr->image) }}" height="290px"
-                                                            class="card-img-top" alt="...">
+                                            <div class="p-3 text-center">
+                                                <a href="{{ route('home.product', $tr->id) }}">
+                                                    <img src="{{ asset($tr->image) }}" height="230"
+                                                        class="card-img-top zoom-image">
+                                                </a>
+                                                <div class="card-body">
+                                                       <!-- Button trigger modal -->
+                                                    <a href="{{ route('home.product', $tr->id) }}"
+                                                        class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($tr->price)}} đ</h6>
                                                     </a>
-                                                    <div class="card-body">
-                                                        <a href="{{ route('home.product', $tr->id) }}"
-                                                            class="text-decoration-none text-dark">
-                                                            <h5 class="card-title mt-3">{{ $tr->name }}</h5>
-                                                        </a>
-                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
-                                                    </div>
+                                                    @if (auth('cus')->check())
+                                                        <form action="{{ route('cart.add',$tr->id) }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('account.login') }}" method="GET">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
-                            </div>
                         @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        data-bs-target="#carouselExampleDark2" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        data-bs-target="#carouselExampleDark2" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -276,11 +290,11 @@
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>Flower</h2>
+                <h2>Chủ để về hoa</h2>
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                <div id="carouselExampleDark3" class="carousel carousel-dark slide" data-bs-ride="carousel"
                     data-bs-interval="5000">
                     <div class="carousel-inner">
                         @foreach ($flower->chunk(4) as $chunk)
@@ -288,21 +302,37 @@
                                 <div class="container">
                                     <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
                                         @foreach ($chunk as $fl)
-                                            <div class="col">
-                                                <div class="p-0 text-center">
-                                                    <a href="{{ route('home.product', $fl->id) }}">
-                                                        <img src="{{ asset($fl->image) }}" height="290px"
-                                                            class="card-img-top" alt="...">
+                                        <div class="col">
+                                            <div class="p-3 text-center">
+                                                <a href="{{ route('home.product', $fl->id) }}">
+                                                    <img src="{{ asset($fl->image) }}" height="230"
+                                                        class="card-img-top zoom-image">
+                                                </a>
+                                                <div class="card-body">
+                                                       <!-- Button trigger modal -->
+                                                    <a href="{{ route('home.product', $fl->id) }}"
+                                                        class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $fl->name }}</h5>
+                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->price)}} đ</h6>
                                                     </a>
-                                                    <div class="card-body">
-                                                        <a href="{{ route('home.product', $fl->id) }}"
-                                                            class="text-decoration-none text-dark">
-                                                            <h5 class="card-title mt-3">{{ $fl->name }}</h5>
-                                                        </a>
-                                                        <a href="#" class="btn btn-primary mt-3">Go somewhere</a>
-                                                    </div>
+                                                    @if (auth('cus')->check())
+                                                        <form action="{{ route('cart.add',$fl->id) }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('account.login') }}" method="GET">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -310,12 +340,12 @@
                         @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        data-bs-target="#carouselExampleDark3" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        data-bs-target="#carouselExampleDark3" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
