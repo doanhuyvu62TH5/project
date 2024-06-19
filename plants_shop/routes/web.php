@@ -35,8 +35,10 @@ Route::group(['prefix' => 'account'], function(){
     Route::post('/register', [AccountController::class,'check_register'])->name('account.check_register');
 
     Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
-    Route::post('/profile', [AccountController::class,'check_profile']);
-    
+    Route::put('/profile/{customer}/update-info', [AccountController::class,'UpdateProfileInfor'])->name('account.updateinfor');
+    Route::put('/profile/{customer}/update-image', [AccountController::class,'UpdateProfileImg'])->name('account.updateimg');
+    Route::delete('/profile/{customer}/delete-image', [AccountController::class,'DeleteProfileImg'])->name('account.deleteimg');
+
     Route::get('/change-password', [AccountController::class, 'change_password'])->name('account.change_password');
     Route::post('/change-password', [AccountController::class,'check_change_password']);
 
@@ -59,7 +61,6 @@ Route::get('/contact_us',[HomeController::class, 'contact'])->name('contact_us.i
 Route::post('/contact_us',[HomeController::class, 'contact_post'])->name('send');
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blogs');
 Route::get('/blog/{blog}', [HomeController::class, 'showBlogDetail'])->name('home.blog');
-
 Route::post('/comments', [HomeController::class, 'comment_post'])->name('comments.post')->middleware('customer');
 // Route::prefix('auth')->group(function () {
 //     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

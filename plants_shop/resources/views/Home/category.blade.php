@@ -194,6 +194,7 @@
                                     <div class="col-6">
                                         <select class="form-control" name="price_range" onchange="this.form.submit()">
                                             <option value="" selected disabled hidden>Chọn khoảng giá</option>
+                                            <option value="">Tất cả</option>
                                             <option value="under_100000"
                                                 {{ request('price_range') == 'under_100000' ? 'selected' : '' }}>Dưới
                                                 100.000</option>

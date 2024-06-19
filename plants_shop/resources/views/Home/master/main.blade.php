@@ -37,10 +37,10 @@
                             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
-                                Hi, {{ auth('cus')->user()->name }}
+                                Xin chào, {{ auth('cus')->user()->name }}
                             </a>
                             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('account.profile') }}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{{ route('order.history') }}">Đơn hàng</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="">
                                     <div class="row">
-                                        <a class="btn btn-success" href="{{ route('cart.index') }}">ViewCart</a>
+                                        <a class="btn btn-success" href="{{ route('cart.index') }}">Chi tiết giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>

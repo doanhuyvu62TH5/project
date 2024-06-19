@@ -1,7 +1,4 @@
-<h3>Hi: {{ $account->name }}</h3>
+<h3>Xin chào: {{ $account->name }}</h3>
 <p>
-    Good Morning!
-</p>
-<p>
-    <a href="{{ route('account.verify',$account->email) }}">click here to verify your account!</a>
+    <a href="{{ route('account.verify',$account->email) }}">Vui lòng click vào đây để xác thực Email</a>
 </p>

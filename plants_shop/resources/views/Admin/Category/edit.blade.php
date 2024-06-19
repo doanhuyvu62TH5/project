@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class="mb-4 text-center">
-                    <button class="btn btn-success" style="width: 300px;">Cập nhật</button>
+                    <button type="submit" class="btn btn-success" style="width: 300px;">Cập nhật</button>
                 </div>
             </form>
         </div>

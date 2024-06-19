@@ -5,13 +5,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>History</h1>
+                        <h1>Đơn hàng</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="index.html">Trang chủ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Cart</a>
+                                <a class="nav-link" href="#">Giỏ hàng</a>
                             </li>
                         </ul>
                     </div>
