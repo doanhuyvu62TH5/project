@@ -11,7 +11,7 @@ class Product extends Model
     protected $fillable = ['name','image','price','sale_price','content','quantity','category_id', 'status'];
     protected $hidden = ['created_at','updated_at'];
     public function category(){
-        return $this->hasOne(Category::class,'id','category_id');
+        return $this->belongsTo(Category::class,'category_id');
     }
     public function orderDetails()
     {

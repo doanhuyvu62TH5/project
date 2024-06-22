@@ -22,7 +22,7 @@ class Order extends Model
     ];
 
     public function customer() {
-        return $this->hasOne(Customer::class, 'id', 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function details() {

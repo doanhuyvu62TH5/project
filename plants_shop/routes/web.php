@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ContributeController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\AccountController;
 use App\Http\Controllers\Home\CartController;
@@ -62,6 +63,7 @@ Route::post('/contact_us',[HomeController::class, 'contact_post'])->name('send')
 Route::get('/blog', [HomeController::class, 'blog'])->name('home.blogs');
 Route::get('/blog/{blog}', [HomeController::class, 'showBlogDetail'])->name('home.blog');
 Route::post('/comments', [HomeController::class, 'comment_post'])->name('comments.post')->middleware('customer');
+Route::delete('/delete/{comment}', [HomeController::class, 'delete_comment'])->name('delete.comment');
 // Route::prefix('auth')->group(function () {
 //     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 //     Route::post('/login', [AuthController::class, 'login'])->name('loginAction');
@@ -82,6 +84,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::resource('/category',CategoryController::class);
     Route::resource('/product',ProductController::class);
     Route::resource('/blog',BlogController::class);
+    Route::resource('/comment',CommentController::class);
 
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
@@ -110,10 +113,7 @@ Route::group(['prefix' => 'order','middleware' => 'customer'], function() {
     Route::get('/history', [CheckoutController::class, 'history'])->name('order.history');
     Route::get('/detail/{order}', [CheckoutController::class, 'detail'])->name('order.detail');
     Route::post('/checkout', [CheckoutController::class, 'post_checkout'])->name('checkout');
-    Route::get('/verify/{token}', [CheckoutController::class, 'verify'])->name('order.verify');
     Route::get('/order/{order}/cancel', [CheckoutController::class, 'cancel'])->name('order.cancel');
-
-
 });
 
 

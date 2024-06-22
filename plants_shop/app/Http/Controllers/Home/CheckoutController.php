@@ -94,9 +94,8 @@ class CheckoutController extends Controller
                 $paymentData['account_name'] = $req->account_name;
                 $paymentData['transaction_content'] = $req->transaction_content;
             }
-    
             Payment::create($paymentData);
-            return redirect()->route('home.index')->with('ok', 'Order checkout successfully');
+            return redirect()->route('home.index')->with('ok', 'Đặt hàng thành công!');
         }
         return redirect()->route('home.index')->with('no', 'Something orror, please try again');
     }

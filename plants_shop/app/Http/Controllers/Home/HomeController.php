@@ -221,7 +221,12 @@ class HomeController extends Controller
             'type' => $request->input('type'),
         ]);
 
-        return redirect()->back()->with('success', 'Comment added successfully.');
+        return redirect()->back()->with('success', 'Đã đăng bình luận!');
+    }
+    public function delete_comment(Comment $comment)
+    {
+        $comment->delete();
+        return redirect()->back()->with('success', 'Xoá bình luận thành công!');
     }
     
 }

@@ -33,9 +33,9 @@
                 <h5>Kết quả tìm kiếm tìm thấy: {{ count($products) }} sản phẩm</h5>
                 </div>
                 <div class="col-4 text-center">
-                    <form action="{{ route('search') }}" method="GET">
+                    <form  action="{{ route('search') }}" method="GET">
                         <input type="hidden" name="query" value="{{ $query }}">
-                        <select name="sort_by" onchange="this.form.submit()">
+                        <select class="form-control" name="sort_by" onchange="this.form.submit()">
                             <option value="" selected disabled hidden>Sắp xếp theo</option>
                             <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
                             <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>

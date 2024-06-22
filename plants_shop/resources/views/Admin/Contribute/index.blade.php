@@ -1,8 +1,9 @@
 @extends('Admin.layouts.app')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h4 class="mb-0">Phản hồi và đóng góp</h4>
+        <h1 class="mb-0">Đóng góp phản hồi</h1>
     </div>
+    <hr />
     <table class="table table-light">
         <thead class="table-primary">
             <tr>
@@ -43,8 +44,8 @@
                 </tr>
             @endif
         </tbody>
-        <div>
-            {!! $contributes->onEachSide(1)->links('pagination::bootstrap-4') !!}
-        </div>
     </table>
+    <div>
+        {!! $contributes->onEachSide(1)->links('pagination::bootstrap-4') !!}
+    </div>
 @endsection

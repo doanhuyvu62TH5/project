@@ -46,9 +46,8 @@
                 </tr>
             @endif
         </tbody>
-        <div>
-            {!! $blogs->onEachSide(1)->links('pagination::bootstrap-4') !!}
-        </div>
     </table>
-   
+    <div>
+        {!! $blogs->onEachSide(1)->links('pagination::bootstrap-4') !!}
+    </div>
 @endsection

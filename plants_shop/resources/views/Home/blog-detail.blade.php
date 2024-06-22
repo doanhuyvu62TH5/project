@@ -46,29 +46,32 @@
                     <div class="col-md-12">
                         <div class="card text-body">
                             <div class="card-body p-4">
-                                <h4 class="mb-0">Recent comments</h4>
-                                <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+                                <h4 class="mb-0">Bình luận gần đây</h4>
                             </div>
                             <div class="scroll-comment">
                                 @foreach ($comments as $comment)
                                     <div class="card-body p-4 ">
                                         <div class="d-flex">
-                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                                alt="avatar" width="60" height="60" />
+                                            <img src="{{ is_null($comment->customer->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset($comment->customer->image) }}"
+                                                alt="avatar" class="rounded-circle img-fluid"
+                                                style="height:70px ;width: 70px;">
                                             <div>
-                                                <h6 class="fw-bold mb-1">{{ auth('cus')->user()->name }}</h6>
+                                                <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
                                                 <div class="d-flex align-items-center mb-3">
                                                     <p class="mb-0">
-                                                        March 07, 2021
-                                                        <span class="badge bg-primary">Pending</span>
+                                                        {{ $comment->created_at->format('d-m-Y H:i:s') }}
                                                     </p>
-                                                    <a href="#!" class="link-muted"><i
-                                                            class="fas fa-pencil-alt ms-2"></i></a>
-                                                    <a href="#!" class="link-muted"><i
-                                                            class="fas fa-redo-alt ms-2"></i></a>
-                                                    <a href="#!" class="link-muted"><i
-                                                            class="fas fa-heart ms-2"></i></a>
+                                                    @if (auth('cus')->check() && $comment->customer_id == auth('cus')->user()->id)
+                                                        <form action="{{ route('delete.comment', $comment->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                onclick="return confirm('Bạn có muốn xóa bình luận này không?')"
+                                                                class="btn btn-sm btn-light"><i
+                                                                    class="text-danger fas fa-trash-alt"></i></button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                                 <p class="mb-0">
                                                     {{ $comment->comment }}
@@ -79,7 +82,6 @@
 
                                     <hr class="my-0" />
                                 @endforeach
-
                             </div>
                             @if (auth('cus')->check())
                                 <form action="{{ route('comments.post') }}" method="POST">
@@ -88,17 +90,18 @@
                                     <input type="hidden" name="type" value="blog">
                                     <div class="card-body p-4" style="background-color: #868b91;">
                                         <div class="d-flex flex-start w-100">
-                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                                                alt="avatar" width="40" height="40" />
+                                            <img src="{{ is_null(auth('cus')->user()->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset(auth('cus')->user()->image) }}"
+                                                alt="avatar" class="rounded-circle img-fluid"
+                                                style="height:70px ;width: 70px;">
                                             <div data-mdb-input-init class="form-outline w-100">
                                                 <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
-                                                <label class="form-label" for="textAreaExample">Message</label>
+                                                <label class="form-label" for="textAreaExample">Bình
+                                                    luận</label>
                                             </div>
                                         </div>
                                         <div class="float-end mt-2 pt-1">
                                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-primary btn-sm">Post comment</button>
+                                                class="btn btn-primary btn-sm">Đăng bình luận</button>
                                         </div>
                                     </div>
                                 </form>
@@ -112,16 +115,17 @@
                                                 alt="avatar" width="40" height="40" />
                                             <div data-mdb-input-init class="form-outline w-100">
                                                 <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
-                                                <label class="form-label" for="textAreaExample">Message</label>
+                                                <label class="form-label" for="textAreaExample">Bình
+                                                    luận</label>
                                             </div>
                                         </div>
                                         <div class="float-end mt-2 pt-1">
                                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
                                                 class="btn btn-primary btn-sm"
-                                                onclick="alert('Vui lòng đăng nhập để bình luận')">Post comment</button>
+                                                onclick="alert('Vui lòng đăng nhập để bình luận')">Đăng bình
+                                                luận</button>
                                         </div>
                                     </div>
-                                </form>
                             @endif
                         </div>
                     </div>

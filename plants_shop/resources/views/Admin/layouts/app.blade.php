@@ -72,6 +72,9 @@
                 <a href="{{ route('admin.contributes.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-comment-dots me-2"></i>Đóng góp Phản hồi</a>
+                <a href="{{ route('comment.index') }}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-comments me-2"></i>Quản lý bình luận</a>
                 <a href="{{ route('admin.logout') }}"
                     class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                         class="fas fa-power-off me-2"></i>Đăng xuất</a>

@@ -157,7 +157,7 @@
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h6 class="card-title">{{ $newp->price }}</h6>
+                                        <h6 class="card-title">{{ number_format($newp->price) }} đ</h6>
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +221,7 @@
                                                 <div class="card-body">
                                                     <a
                                                         href="{{ route('home.product', $pro->id) }}"class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $pro->price }}</h5>
+                                                        <h5 class="card-title mt-3">{{ number_format($pro->price) }} đ</h5>
                                                         <h5 class="card-title mt-3">{{ $pro->name }}</h5>
                                                     </a>
                                                     @if (auth('cus')->check())

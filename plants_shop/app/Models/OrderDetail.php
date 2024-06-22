@@ -17,8 +17,6 @@ class OrderDetail extends Model
         'quantity'
     ];
 
-
-
     public function order()
     {
         return $this->hasOne(Order::class, 'id','order_id');
