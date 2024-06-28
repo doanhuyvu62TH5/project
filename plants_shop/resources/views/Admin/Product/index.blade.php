@@ -29,7 +29,7 @@
                             tạo mới nhất</option>
                     </select>
                     <input type="hidden" name="search" value="{{ request('search') }}">
-                    <button class="btn btn-outline-secondary" type="submit">Lọc</button>
+                    <button class="btn btn-outline-secondary" type="submit">Sắp xếp</button>
                 </div>
             </form>
         </div>
@@ -62,7 +62,7 @@
                         <td class="align-middle">
                             {{ ($products->currentPage() - 1) * $products->perPage() + $loop->index + 1 }}</td>
                         <td class="align-middle">{{ $pro->name }}</td>
-                        <td class="align-middle">{{ $pro->price }}</td>
+                        <td class="align-middle">{{ number_format($pro->price) }}</td>
                         <td class="align-middle">{{ $pro->quantity }}</td>
                         <td class="align-middle">{{ $pro->category->name }}</td>
                         <td class="align-middle">

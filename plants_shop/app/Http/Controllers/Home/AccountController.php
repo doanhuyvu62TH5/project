@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Home;
 
 use App\Mail\VerifyAccount;
 use App\Models\Customer;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Mail\ForgotPasswordMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -80,7 +82,7 @@ class AccountController extends Controller
         $data['password'] = bcrypt($request->password);
         if ($acc = Customer::create($data)) {
             Mail::to($acc->email)->send(new VerifyAccount($acc));
-            return redirect()->route('account.login')->with('ok', 'Đăng kí tài khoản thành công!');
+            return redirect()->route('account.login')->with('success', 'Đăng kí tài khoản thành công vui lòng kiểm tra email để xác thức tài khoản!');
         }
         return redirect()->back('no', 'Lỗi!');
     }
@@ -88,24 +90,90 @@ class AccountController extends Controller
     {
         $acc = Customer::where('email', $email)->whereNULL('email_verified_at')->firstOrFail();
         Customer::where('email', $email)->update(['email_verified_at' => date('Y-m-d')]);
-        return redirect()->route('account.login')->with('ok', 'Đã xác thực tài khoản');
+        return redirect()->route('account.login')->with('ok', 'Tài khoản của bạn đã được xác thực! Bạn hãy đăng nhập để trải nghiệm!');
     }
-    public function chage_password()
+    public function check_change_password(Request $req) 
     {
-        return view('Account.chage_password');
-    }
-    public function check_chage_password()
-    {
+        // Lấy thông tin người dùng hiện tại
+        $auth = auth('cus')->user();
 
+        // Validate dữ liệu đầu vào
+        $req->validate([
+            'current_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required|same:new_password'
+        ],
+        [
+            'confirm_password.same' => 'Mật khẩu mới không khớp nhau!'
+        ]);
+
+        // Kiểm tra mật khẩu hiện tại
+        if (!Hash::check($req->current_password, $auth->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
+        }
+
+        // Thay đổi mật khẩu
+        $auth->password = bcrypt($req->new_password);
+        $auth->save();
+
+        return redirect()->back()->with('success', 'Thay đổi mật khẩu thành công!');
     }
     public function forgot_password()
     {
         return view('Account.forgot_password');
     }
-    public function check_forgot_password()
+    
+    public function check_forgot_password(Request $request) 
     {
-
+        $customer = Customer::where('email', $request->email)->first();
+        if ($customer) 
+        {
+            $customer->remember_token = \Str::random(40);
+            $customer->save();
+            Mail::to($customer->email)->send(new ForgotPasswordMail($customer));
+            return redirect()->back()->with('success', 'Gửi mail thành công! vui lòng kiểm tra eamil để thiết lập mật khẩu mới!');
+        } 
+         return redirect()->back()->with('no', 'Email không có trong hệ thống!');
+        
     }
+    
+    public function reset_password($token) 
+    {
+        $customer = Customer::where('remember_token', $token)->first();
+        if ($customer) 
+        {
+            return view('Account.reset_password',compact('customer'));
+        } 
+        abort(404);
+    }
+    
+    public function check_reset_password($token, Request $request) 
+    {
+        $customer = Customer::where('remember_token', $token)->first();
+        if ($customer) 
+        {
+            if ($request->password == $request->confirm_password) 
+            {
+                $customer->password = bcrypt($request->password);
+                if (!$customer->email_verified_at) 
+                {
+                    $customer->email_verified_at = now();
+                }
+                $customer->remember_token = \Str::random(40);
+                $customer->save();
+                return redirect()->route('account.login')->with('success', 'Thay đổi mật khẩu thành công! Bạn hãy đăng nhập để trải nghiệm!.');
+            } 
+            else 
+            {
+                return redirect()->back()->with('no', 'Mật khẩu chưa được thay đổi, vui lòng thử lại');
+            }
+        } 
+        else 
+        {
+            abort(404);
+        }
+    }
+
     public function profile()
     {
         $auth = auth('cus')->user();
@@ -172,14 +240,6 @@ class AccountController extends Controller
         return redirect()->route('account.profile')->with('success', 'Xóa hình ảnh thành công!');
     }
     public function check_profile()
-    {
-
-    }
-    public function reset_password()
-    {
-        return view('Account.reset_password');
-    }
-    public function check_reset_password()
     {
 
     }

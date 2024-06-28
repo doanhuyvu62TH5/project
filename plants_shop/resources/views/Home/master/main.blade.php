@@ -65,7 +65,8 @@
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasRightLabel">Giỏ hàng</h5>
+                                <h5 class="offcanvas-title" id="offcanvasRightLabel"><i
+                                        class="fas fa-shopping-cart"></i> Giỏ hàng</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
@@ -73,7 +74,7 @@
                                 <div class="container">
                                     <div class="recent_product">
                                         <div class="scroll-cart">
-                                            <div>
+                                            @if ($carts->count() > 0)
                                                 @foreach ($carts as $item)
                                                     <div class="row text-center align-items-center mb-3 border-bottom">
                                                         <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
@@ -85,7 +86,7 @@
                                                         </div>
                                                         <div class="col-5 text-start">
                                                             <div class="mb-3">
-                                                                <a href=""
+                                                                <a href="{{ route('home.product', $item->product->id) }}"
                                                                     class="text-decoration-none text-dark">
                                                                     <h6>{{ $item->product->name }}</h6>
                                                                 </a>
@@ -117,14 +118,15 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                            </div>
+                                            @else
+                                                <p><strong>Không có sản phẩm nào trong giỏ hàng!</strong></p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="">
-                                    <div class="row">
-                                        <a class="btn btn-success" href="{{ route('cart.index') }}">Chi tiết giỏ hàng</a>
-                                    </div>
+                                <div class="row">
+                                    <a class="btn btn-success" href="{{ route('cart.index') }}">Chi tiết giỏ
+                                        hàng</a>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +228,7 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
                     </ul>
                 </div>
-    
+
                 <div class="col-2">
                     <h5>Section</h5>
                     <ul class="nav flex-column">
@@ -237,7 +239,7 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
                     </ul>
                 </div>
-    
+
                 <div class="col-2">
                     <h5>Section</h5>
                     <ul class="nav flex-column">
@@ -248,7 +250,7 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
                     </ul>
                 </div>
-    
+
                 <div class="col-4 offset-1">
                     <form>
                         <h5>Subscribe to our newsletter</h5>
@@ -261,7 +263,7 @@
                     </form>
                 </div>
             </div>
-    
+
             <div class="d-flex justify-content-between py-4 my-4 border-top">
                 <p>&copy; 2021 Company, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
@@ -306,7 +308,7 @@
                 icon: "success",
                 title: '{{ session('ok') }}',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 3000
             });
         </script>
     @endif
@@ -346,7 +348,19 @@
             });
         </script>
     @endif
-
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                html: '<div>' +
+                    @foreach ($errors->all() as $error)
+                        '<p>{{ $error }}</p>' +
+                    @endforeach
+                '</div>',
+            })
+        </script>
+    @endif
 </body>
 
 </html>

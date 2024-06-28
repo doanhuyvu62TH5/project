@@ -8,13 +8,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>Check out</h1>
+                        <h1>Thanh toán</h1>
                         <ul class="nav justify-content-center">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
+                            <li class="nav-item me-2">
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Cart</a>
+                            <li class="nav-item me-2">
+                                <a class="custom-link" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart"></i> Giỏ Hàng</a>
                             </li>
                         </ul>
                     </div>
@@ -28,7 +28,7 @@
     <div class="contact-wrap mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-6" style="height: 900px;">
+                <div class="col-md-6" style="height: 950px;">
                     <div class="text-center mb-5">
                         <h4>THÔNG TIN VẬN CHUYỂN</h4>
                     </div>
@@ -165,7 +165,7 @@
                                             <div class="col-md-8">
                                                 <p>{{ $item->product->name }} x <Strong>Số lượng:</Strong>
                                                     {{ $item->quantity }}</p>
-                                                <p><strong>Giá: </strong>{{ number_format($item->price) }}</p>
+                                                <p><strong>Giá: </strong>{{ number_format($item->price) }} đ</p>
                                             </div>
                                         </div>
                                     </td>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('image');
             $table->decimal('price', 10, 2);
-            $table->decimal('sale_price', 10, 2);
+            $table->decimal('sale_price', 10, 2)->nullable();
             $table->text('content');
             $table->integer('quantity');
             $table->unsignedInteger('category_id');

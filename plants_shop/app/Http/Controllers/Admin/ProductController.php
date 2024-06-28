@@ -88,7 +88,7 @@ class ProductController extends Controller
         $request->validate([
             'name' =>'required|unique:products',
             'price' =>'required|numeric',
-            'sale_price' => 'numeric|lte:price',
+            'sale_price' => 'nullable|numeric|lte:price',
             'image' => 'required|file|mimes:jpg,jpeg,png,gif',
             'content' =>'required',
             'quantity' =>'required|numeric|gte:0',
@@ -166,7 +166,7 @@ class ProductController extends Controller
         $request->validate([
             'name' =>'required|unique:products,name,'.$product->id,
             'price' =>'required|numeric',
-            'sale_price' => 'numeric|lte:price',
+            'sale_price' => 'nullable|numeric|lte:price',
             'image' => 'file|mimes:jpg,jpeg,png,gif',
             'content' =>'required',
             'quantity' =>'required|numeric|gte:0',

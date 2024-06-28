@@ -13,7 +13,8 @@
                         @endif
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="btn" type="button" href="{{ route('home.index') }}">Home</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang
+                                    chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -56,7 +57,6 @@
                                             </li>
                                         @endif
                                     @endforeach
-
                                     <!-- Thêm nhiều mục hơn nếu cần -->
                                 </ul>
                             </div>
@@ -75,7 +75,9 @@
                                         @if ($cat->type == '1')
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <a href="{{ route('home.category', $cat->id) }}"
-                                                    class="text-decoration-none text-dark">{{ $cat->name }}</a>
+                                                    class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}">
+                                                    <h5>{{ $cat->name }}</h5>
+                                                </a>
                                                 <span
                                                     class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
                                             </li>
@@ -124,7 +126,9 @@
                                         @if ($cat->type == '1')
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <a href="{{ route('home.category', $cat->id) }}"
-                                                    class="text-decoration-none text-dark">{{ $cat->name }}</a>
+                                                    class="text-decoration-none text-dark {{ request()->is('products/category/' . $cat->id) ? 'selected' : '' }}">
+                                                    <h5>{{ $cat->name }}</h5>
+                                                </a>
                                                 <span
                                                     class="badge text-dark rounded-pill">{{ $cat->products->count() }}</span>
                                             </li>
@@ -150,14 +154,21 @@
                                     </a>
                                 </div>
                                 <div class="col-7 text-start">
-                                    <div class="card-body">
+                                    <div class="card-body mb-3">
                                         <a href="{{ route('home.product', $newp->id) }}"
                                             class="text-decoration-none text-dark">
                                             <h6 class="card-title">{{ $newp->name }}</h6>
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h6 class="card-title">{{ number_format($newp->price) }} đ</h6>
+                                        @if ($newp->sale_price != null)
+                                            <p class="text-decoration-line-through text-dark">
+                                                <Strong>{{ number_format($newp->price) }} đ</Strong></p>
+                                            <p class="text-danger"><Strong>{{ number_format($newp->sale_price) }}
+                                                    đ</Strong></p>
+                                        @else
+                                            <p class="text-danger"><Strong>{{ number_format($newp->price) }} đ</Strong></p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -204,6 +215,9 @@
                                             <option value="above_200000"
                                                 {{ request('price_range') == 'above_200000' ? 'selected' : '' }}>Trên
                                                 200.000</option>
+                                            <option value="sale"
+                                                {{ request('price_range') == 'sale' ? 'selected' : '' }}>Đang khuyến mãi
+                                            </option>
                                         </select>
                                     </div>
                                 </form>
@@ -221,8 +235,21 @@
                                                 <div class="card-body">
                                                     <a
                                                         href="{{ route('home.product', $pro->id) }}"class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ number_format($pro->price) }} đ</h5>
                                                         <h5 class="card-title mt-3">{{ $pro->name }}</h5>
+                                                        @if ($pro->sale_price != null)
+                                                            <div class="row" style="height: 30px;">
+                                                                <h6
+                                                                    class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">
+                                                                    {{ number_format($pro->price) }} đ</h6>
+                                                            </div>
+                                                            <h6 class="card-title my-3 text-danger text-outline-danger">
+                                                                {{ number_format($pro->sale_price) }} đ</h6>
+                                                        @else
+                                                            <div class="row" style="height: 30px;">
+                                                            </div>
+                                                            <h6 class="card-title my-3 text-danger text-outline-danger">
+                                                                {{ number_format($pro->price) }} đ</h6>
+                                                        @endif
                                                     </a>
                                                     @if (auth('cus')->check())
                                                         <form action="{{ route('cart.add', $pro->id) }}" method="POST">

@@ -8,10 +8,7 @@
                         <h1>Giỏ hàng</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Giỏ hàng</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -46,7 +43,7 @@
                                                 <img src="{{ asset($item->product->image) }}" width="70" height="80">
                                             </td>
                                             <td>{{ $item->product->name }}</td>
-                                            <td>{{ $item->price }}</td>
+                                            <td>{{ number_format($item->price) }}</td>
                                             <td>
                                                 <form action="{{ route('cart.update', $item->product_id) }}" method="POST">
                                                     @csrf

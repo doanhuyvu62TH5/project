@@ -8,10 +8,7 @@
                         <h1>Tài khoản của tôi</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Giỏ hàng</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -115,7 +112,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="staticBackdropLabel">Sửa thông tin</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                                aria-label="Đóng"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="mb-3 form-floating">
@@ -162,8 +159,66 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
+                                                data-bs-dismiss="modal">Đóng</button>
                                             <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop2">
+                            Đổi mật khẩu
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="{{ route('account.check_change_password') }}" method="POST">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Đổi mật khẩu</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Đóng"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3 form-floating">
+                                                <input type="password" name="current_password"
+                                                    class="form-control @error('current_password')is-invalid @enderror"
+                                                 id="floatingInput"
+                                                    placeholder="name@example.com">
+                                                <label for="floatingInput">Mật khẩu hiện tại</label>
+                                                @error('current_password')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="password" name="new_password"
+                                                    class="form-control @error('new_password')is-invalid @enderror"
+                                                     id="floatingInput"
+                                                    placeholder="name@example.com">
+                                                <label for="floatingInput">Mật khẩu mới</label>
+                                                @error('new_password')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="password" name="confirm_password"
+                                                    class="form-control @error('confirm_password')is-invalid @enderror"
+                                                     id="floatingInput"
+                                                    placeholder="name@example.com">
+                                                <label for="floatingInput">Nhập lại mật khẩu mới</label>
+                                                @error('confirm_password')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Thay đổi</button>
                                         </div>
                                     </form>
                                 </div>

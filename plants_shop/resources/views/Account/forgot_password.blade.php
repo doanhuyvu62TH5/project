@@ -12,13 +12,13 @@
                             </div>
                             <div class="col col-lg-7 d-flex align-items-center">
                                 <div class="card-body">
-                                    <form method="POST" action="">
+                                    <form method="POST" action="{{ route('account.check_forgot_password') }}">
                                         @csrf
                                         <div class="align-items-center mb-3 text-center">
                                             <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                             <span class="h6 fw-bold mb-0">Logo</span>
                                         </div>
-                                        <h6 class="text-center" style="letter-spacing: 1px;">Đăng nhập</h6>
+                                        <h6 class="text-center" style="letter-spacing: 1px;">Nhập Email đã đăng ký</h6>
                                         <div class="mb-3 form-floating">
                                             <input type="email" name="email"
                                                 class="form-control @error('email')is-invalid @enderror"
@@ -29,23 +29,12 @@
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="mb-3 form-floating">
-                                            <input type="password" name="password"
-                                                class="form-control @error('password')is-invalid @enderror"
-                                                id="floatingPassword" placeholder="Password">
-                                            <label for="floatingPassword">Password</label>
-                                            @error('password')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
                                         <div class="mb-4 d-grid gap-2 col-6 mx-auto">
-                                            <button class="btn btn-success btn-block" type="submit">Đăng
-                                                nhập</button>
+                                            <button class="btn btn-success btn-block" type="submit">Gửi mail xác nhận
+                                            </button>
                                         </div>
-                                        <a class="small text-muted" href="{{ route('account.forgot_password') }}">Forgot password?</a>
-                                        <p class="mb-5" style="color: #393f81;">Bạn chưa có tài khoản?
-                                            <a href="{{ route('account.register') }}" style="color: #393f81;">Đăng ký
+                                        <p class="mb-5" style="color: #393f81;">Bạn đã có tài khoản?
+                                            <a href="{{ route('account.login') }}" style="color: #393f81;">Đăng nhập
                                                 ngay.</a>
                                         </p>
                                     </form>

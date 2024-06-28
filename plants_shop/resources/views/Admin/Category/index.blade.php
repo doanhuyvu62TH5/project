@@ -1,7 +1,7 @@
 @extends('Admin.layouts.app')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Danh Mục</h1>
+        <h4 class="mb-0">Danh mục sản phẩm</h4>
         <a href="{{ route('category.create') }}" class="btn btn-success">Thêm danh mục</a>
     </div>
     <hr />
@@ -29,7 +29,7 @@
                             <a href="{{ route('category.edit', $cat->id) }}" type="button" class="btn btn-warning"><i
                                     class="fas fa-edit"></i></a>
                             <form action="{{ route('category.destroy', $cat->id) }}" method="POST" type="button"
-                                class="btn btn-danger p-0" onsubmit="return confirm('Ban co muon xoa khong?')">
+                                class="btn btn-danger p-0" onsubmit="return confirm('Bạn có muốn xóa danh mục này không?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger m-0"><i class="fas fa-trash-alt"></i></button>

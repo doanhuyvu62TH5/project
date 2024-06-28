@@ -18,9 +18,12 @@
         <div class="bg-dark sidebar" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas fa-user-secret me-2"></i>Codersbite</div>
-            <div class="list-group list-group-flush my-3">
+            <div class="list-group list-group-flush my-3"><i class="fas fa-users"></i>
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="{{ route('customer.index') }}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-users me-2"></i>Khách hàng</a>
                 <a href="{{ route('category.index') }}"
                     class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-list me-2"></i>Danh mục</a>

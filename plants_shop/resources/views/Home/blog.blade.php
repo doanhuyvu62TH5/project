@@ -8,10 +8,8 @@
                         <h1>Blog</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Blog</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang
+                                    chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -36,12 +34,21 @@
                                 </a>
                             </div>
                             <div class="col-7 text-start">
-                                <div class="card-body">
+                                <div class="card-body mb-3">
                                     <a href="{{ route('home.product', $newp->id) }}" class="text-decoration-none text-dark">
                                         <h6 class="card-title">{{ $newp->name }}</h6>
                                     </a>
                                 </div>
-                                <h6 class="card-title">{{ $newp->price }}</h6>
+                                <div class="card-body">
+                                    @if ($newp->sale_price != null)
+                                        <p class="text-decoration-line-through text-dark">
+                                            <Strong>{{ number_format($newp->price) }} đ</Strong></p>
+                                        <p class="text-danger"><Strong>{{ number_format($newp->sale_price) }}
+                                                đ</Strong></p>
+                                    @else
+                                        <p class="text-danger"><Strong>{{ number_format($newp->price) }} đ</Strong></p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endforeach

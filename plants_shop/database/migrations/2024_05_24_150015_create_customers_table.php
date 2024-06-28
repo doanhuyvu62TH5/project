@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address', 100)->nullable();
             $table->string('password', 200);
             $table->date('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps(); // Thêm cột created_at và updated_at
         });
     }

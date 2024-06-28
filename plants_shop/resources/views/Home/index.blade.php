@@ -177,7 +177,16 @@
                                                     <a href="{{ route('home.product', $newp->id) }}"
                                                         class="text-decoration-none text-dark">
                                                         <h5 class="card-title mt-3">{{ $newp->name }}</h5>
-                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($newp->price)}} đ</h6>
+                                                        @if ($newp->sale_price != null)
+                                                            <div class="row" style="height: 30px;">
+                                                                <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($newp->price)}} đ</h6>
+                                                            </div>
+                                                                <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($newp->sale_price)}} đ</h6>
+                                                        @else
+                                                            <div class="row" style="height: 30px;">
+                                                            </div>
+                                                            <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($newp->price)}} đ</h6>
+                                                        @endif    
                                                     </a>
                                                     @if (auth('cus')->check())
                                                         <form action="{{ route('cart.add',$newp->id) }}" method="POST">
@@ -246,7 +255,16 @@
                                                     <a href="{{ route('home.product', $tr->id) }}"
                                                         class="text-decoration-none text-dark">
                                                         <h5 class="card-title mt-3">{{ $tr->name }}</h5>
-                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($tr->price)}} đ</h6>
+                                                        @if ($tr->sale_price != null)
+                                                            <div class="row" style="height: 30px;">
+                                                                <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($tr->price)}} đ</h6>
+                                                            </div>
+                                                                <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($tr->sale_price)}} đ</h6>
+                                                        @else
+                                                            <div class="row" style="height: 30px;">
+                                                            </div>
+                                                            <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($tr->price)}} đ</h6>
+                                                        @endif                         
                                                     </a>
                                                     @if (auth('cus')->check())
                                                         <form action="{{ route('cart.add',$tr->id) }}" method="POST">
@@ -259,7 +277,7 @@
                                                     @else
                                                         <form action="{{ route('account.login') }}" method="GET">
                                                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                             </button>
                                                         </form>
                                                     @endif
@@ -312,8 +330,17 @@
                                                        <!-- Button trigger modal -->
                                                     <a href="{{ route('home.product', $fl->id) }}"
                                                         class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $fl->name }}</h5>
-                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->price)}} đ</h6>
+                                                        <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                                                        @if ($fl->sale_price != null)
+                                                            <div class="row" style="height: 30px;">
+                                                                <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($fl->price)}} đ</h6>
+                                                            </div>
+                                                                <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->sale_price)}} đ</h6>
+                                                        @else
+                                                            <div class="row" style="height: 30px;">
+                                                            </div>
+                                                            <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->price)}} đ</h6>
+                                                        @endif    
                                                     </a>
                                                     @if (auth('cus')->check())
                                                         <form action="{{ route('cart.add',$fl->id) }}" method="POST">
@@ -326,7 +353,7 @@
                                                     @else
                                                         <form action="{{ route('account.login') }}" method="GET">
                                                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
-                                                                <i class="fa fa-shopping-cart"></i> ADD TO CART
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                             </button>
                                                         </form>
                                                     @endif
@@ -394,363 +421,70 @@
     <div class="top-seller">
         <div class="container">
             <div class="title text-center">
-                <h2>Top Seller</h2>
+                <h2>Sản phẩm giảm giá</h2>
                 <p>.............</p>
             </div>
             <div class="product">
-                <div id="carouselExampleDark2" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div id="carouselExampleDark4" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                    data-bs-interval="5000">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    <div class="col">
+                        @foreach ($discounted_products->chunk(4) as $chunk)
+                            <div class="carousel-item{{ $loop->first ? ' active' : '' }}">
+                                <div class="container">
+                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                                        @foreach ($chunk as $product)
                                         <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
+                                            <div class="p-3 text-center">
+                                                <a href="{{ route('home.product', $product->id) }}">
+                                                    <img src="{{ asset($product->image) }}" height="230"
+                                                        class="card-img-top zoom-image">
+                                                </a>
+                                                <div class="card-body">
+                                                       <!-- Button trigger modal -->
+                                                    <a href="{{ route('home.product', $product->id) }}"
+                                                        class="text-decoration-none text-dark">
+                                                        <h5 class="card-title mt-3">{{ $product->name }}</h5>
+                                                        <div class="row" style="height: 30px;">
+                                                            <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($product->price)}} đ</h6>
+                                                        </div>
+                                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->sale_price)}} đ</h6>
+                                                    </a>
+                                                    @if (auth('cus')->check())
+                                                        <form action="{{ route('cart.add',$product->id) }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('account.login') }}" method="GET">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="alert('Vui lòng đăng nhập để thêm vào giỏ hàng')">
+                                                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border text-center">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="{{ asset('assets') }}/images/home/img/product/product-1.jpg"
-                                                        class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <button class="carousel-control-prev" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark2" data-bs-slide="prev">
+                        data-bs-target="#carouselExampleDark4" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" staria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" style="width: 30px;" type="button"
-                        data-bs-target="#carouselExampleDark2" data-bs-slide="next">
+                        data-bs-target="#carouselExampleDark4" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-            </div>
+            </div><!-- This closing div is added -->
         </div>
     </div>
 

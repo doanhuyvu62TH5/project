@@ -8,10 +8,7 @@
                         <h1>Chi tiết sản phẩm</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home.index') }}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Cart</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -42,7 +39,12 @@
                                     dictumst.</h6>
                             </div>
                             <div class="row mb-3">
-                                <h1>Giá: {{ $product->price }}</h1>
+                                @if ($product->sale_price == null)
+                                    <h4 class="text-danger">Giá: {{ number_format($product->price) }} đ</h4>
+                                @else
+                                    <h4 class="text-decoration-line-through text-dark">Giá cũ: {{ number_format($product->price) }} đ</h4>
+                                    <h4 class="text-danger">Giá khuyến mãi: {{ number_format($product->sale_price) }} đ</h4>
+                                @endif 
                             </div>
                             @if (auth('cus')->check())
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
@@ -55,14 +57,6 @@
                                                 oninput="validity.valid||(value='1' );" onblur="if(!value) value='1';"
                                                 min="1" value="1" style="width: 100px;">
                                         </div>
-                                        @if (Session::has('no'))
-                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                <i class="fas fa-check"></i>
-                                                {{ Session::get('no') }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="row mb-3">
                                         <h6>Số lượng trong kho: {{ $product->quantity }}</h6>
@@ -123,7 +117,7 @@
                                                 <div class="d-flex">
                                                     <img src="{{ is_null($comment->customer->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset($comment->customer->image) }}"
                                                         alt="avatar" class="rounded-circle img-fluid"
-                                                        style="height:70px ;width: 70px;">
+                                                        height="50" width="50">
                                                     <div>
                                                         <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
                                                         <div class="d-flex align-items-center mb-3">
@@ -201,151 +195,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="related-product" style="padding-top: 80px;">
-        <div class="cotainer">
-            <div class="container">
-                <div class="title text-center">
-                    <h2>Related product</h2>
-                    <p>.............</p>
-                </div>
-                <div class="r">
-                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
-                        data-bs-interval="5000">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="container">
-                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                        <div class="col">
-                                            <div class="col">
-                                                <div class="p-3 border text-center">
-                                                    <div>
-                                                        <img src="img/product/product-1.jpg" class="card-img-top"
-                                                            alt="...">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Card title</h5>
-                                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col">
-                                                <div class="p-3 border text-center">
-                                                    <div>
-                                                        <img src="img/product/product-1.jpg" class="card-img-top"
-                                                            alt="...">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Card title</h5>
-                                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col">
-                                                <div class="p-3 border text-center">
-                                                    <div>
-                                                        <img src="img/product/product-1.jpg" class="card-img-top"
-                                                            alt="...">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Card title</h5>
-                                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="col">
-                                                <div class="p-3 border text-center">
-                                                    <div>
-                                                        <img src="img/product/product-1.jpg" class="card-img-top"
-                                                            alt="...">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Card title</h5>
-                                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="container">
-                                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="img/product/product-1.jpg" class="card-img-top"
-                                                        alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="img/product/product-1.jpg" class="card-img-top"
-                                                        alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="img/product/product-1.jpg" class="card-img-top"
-                                                        alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="p-3 border text-center">
-                                                <div>
-                                                    <img src="img/product/product-1.jpg" class="card-img-top"
-                                                        alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" style="width: 30px;" type="button"
-                            data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" staria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" style="width: 30px;" type="button"
-                            data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

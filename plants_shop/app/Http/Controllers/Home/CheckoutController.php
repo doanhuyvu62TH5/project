@@ -42,7 +42,7 @@ class CheckoutController extends Controller
     public function detail(Order $order)
     {
         $auth = auth('cus')->user();
-        return view('home.detail', compact('auth', 'order'));
+        return view('home.order_detail', compact('auth', 'order'));
     }
 
 
@@ -56,6 +56,9 @@ class CheckoutController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'method_payment' => 'required|in:0,1',
+        ],
+        [
+            'method_payment.required' => 'Vui lòng chọn phương thức thanh toán!',
         ]);
         if ($req->method_payment == 1) { // Nếu thanh toán online
             $req->validate([

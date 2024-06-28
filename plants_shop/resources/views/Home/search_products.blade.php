@@ -8,10 +8,7 @@
                     <h5>Kết quả tìm kiếm cho: "{{ $query }}"</h5>
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Cart</a>
+                            <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +52,16 @@
                                 <a href="{{ route('home.product', $product->id) }}"
                                     class="text-decoration-none text-dark">
                                     <h5 class="card-title mt-3">{{ $product->name }}</h5>
-                                    <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->price)}} đ</h6>
+                                    @if ($product->sale_price != null)
+                                        <div class="row" style="height: 30px;">
+                                            <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($product->price)}} đ</h6>
+                                        </div>
+                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->sale_price)}} đ</h6>
+                                     @else
+                                        <div class="row" style="height: 30px;">
+                                        </div>
+                                        <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->price)}} đ</h6>
+                                    @endif 
                                 </a>
                                 @if (auth('cus')->check())
                                     <form action="{{ route('cart.add',$product->id) }}" method="POST">

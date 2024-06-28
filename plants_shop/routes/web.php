@@ -7,7 +7,10 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ContributeController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\CustomerController;
+
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Home\AccountController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CheckoutController;
@@ -35,24 +38,25 @@ Route::group(['prefix' => 'account'], function(){
     Route::get('/register', [AccountController::class, 'register'])->name('account.register');
     Route::post('/register', [AccountController::class,'check_register'])->name('account.check_register');
 
-    Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
-    Route::put('/profile/{customer}/update-info', [AccountController::class,'UpdateProfileInfor'])->name('account.updateinfor');
-    Route::put('/profile/{customer}/update-image', [AccountController::class,'UpdateProfileImg'])->name('account.updateimg');
-    Route::delete('/profile/{customer}/delete-image', [AccountController::class,'DeleteProfileImg'])->name('account.deleteimg');
+    Route::group(['middleware' => 'customer'], function() {
+        Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
+        Route::put('/profile/{customer}/update-info', [AccountController::class,'UpdateProfileInfor'])->name('account.updateinfor');
+        Route::put('/profile/{customer}/update-image', [AccountController::class,'UpdateProfileImg'])->name('account.updateimg');
+        Route::delete('/profile/{customer}/delete-image', [AccountController::class,'DeleteProfileImg'])->name('account.deleteimg');
+    });
+   
 
     Route::get('/change-password', [AccountController::class, 'change_password'])->name('account.change_password');
-    Route::post('/change-password', [AccountController::class,'check_change_password']);
+    Route::post('/change-password', [AccountController::class,'check_change_password'])->name('account.check_change_password');
 
-    Route::get('/forgot-password', [AccountController::class, 'login'])->name('account.forgot_password');
-    Route::post('/forgot-password', [AccountController::class,'check_forgot_password']);
+    Route::get('/forgot-password', [AccountController::class, 'forgot_password'])->name('account.forgot_password');
+    Route::post('/forgot-password', [AccountController::class,'check_forgot_password'])->name('account.check_forgot_password');
 
-    Route::get('/reset-password', [AccountController::class, 'reset_password'])->name('account.reset_password');
-    Route::post('/reset-password', [AccountController::class,'check_reset-password']);
+    Route::get('/reset-password/{token}', [AccountController::class, 'reset_password'])->name('account.reset_password');
+    Route::post('/reset-password/{token}', [AccountController::class, 'check_reset_password'])->name('account.check_reset_password');
 });
-// Route::get('/products/category/{cat}', [HomeController::class, 'showProducts'])->name('home.category');
-// Route::get('/products/all', [HomeController::class, 'showProducts'])->name('products.all');
-// Route::get('/products/type/{type}', [HomeController::class, 'showProducts'])->name('products.byType');
-// Route::get('/product/{product}',[HomeController::class, 'showProduct'])->name('home.product');
+
+
 Route::get('/products/category/{cat}', [HomeController::class, 'showProductsByCategory'])->name('home.category');
 Route::get('/products/all', [HomeController::class, 'showAllProducts'])->name('products.all');
 Route::get('/products/type/{type}', [HomeController::class, 'showProductsByType'])->name('products.byType');
@@ -64,13 +68,9 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('home.blogs');
 Route::get('/blog/{blog}', [HomeController::class, 'showBlogDetail'])->name('home.blog');
 Route::post('/comments', [HomeController::class, 'comment_post'])->name('comments.post')->middleware('customer');
 Route::delete('/delete/{comment}', [HomeController::class, 'delete_comment'])->name('delete.comment');
-// Route::prefix('auth')->group(function () {
-//     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-//     Route::post('/login', [AuthController::class, 'login'])->name('loginAction');
-//     Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-//     Route::post('/register', [AuthController::class, 'register'])->name('registerSave');
-//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-// });
+
+
+
 Route::controller(AdminController::class)->group(function(){
     Route::get('admin/login', 'showLoginForm')->name('admin.login');
     Route::post('admin/login', 'login')->name('loginAction');
@@ -85,6 +85,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::resource('/product',ProductController::class);
     Route::resource('/blog',BlogController::class);
     Route::resource('/comment',CommentController::class);
+    Route::resource('/customer',CustomerController::class);
 
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');

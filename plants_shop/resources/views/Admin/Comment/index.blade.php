@@ -45,7 +45,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="text-center" colspan="5">Không có bình luận nào!</td>
+                    <td class="text-center" colspan="6">Không có bình luận nào!</td>
                 </tr>
             @endif
         </tbody>

@@ -53,7 +53,7 @@ class CartController extends Controller
             $data = [
                 'customer_id' => auth('cus')->id(),
                 'product_id' => $product->id,
-                'price' => $product->price,
+                'price' => $product->sale_price ? $product->sale_price : $product->price,
                 'quantity' => $quantity
             ];
 
@@ -61,7 +61,7 @@ class CartController extends Controller
                 return redirect()->route('cart.index')->with('success', 'Đã thêm vào giỏ hàng');
             }
         }
-        return redirect()->back()->with('error', 'Something error, please try again');
+        return redirect()->back()->with('error', 'Lỗi');
     }
 
     public function update(Product $product, Request $req)
@@ -91,7 +91,7 @@ class CartController extends Controller
             ;
         }
 
-        return redirect()->back()->with('no', 'Something error, please try again');
+        return redirect()->back()->with('no', 'Lỗi');
     }
 
     public function delete($product_id)

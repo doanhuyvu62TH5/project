@@ -16,22 +16,28 @@ class HomeController extends Controller
     public function index()
     {
         $new_products = Product::orderBy('created_at', 'DESC')
-            ->where('status', 1)
-            ->limit(8)->get();
+                                ->where('status', 1)
+                                ->limit(8)->get();
         $tree = Product::join('categories', 'products.category_id', '=', 'categories.id')
-            ->where('categories.type', 0)
-            ->where('products.status', 1)
-            ->select('products.*')
-            ->limit(8)
-            ->get();
+                        ->where('categories.type', 0)
+                        ->where('products.status', 1)
+                        ->select('products.*')
+                        ->limit(8)
+                        ->get();
         $flower = Product::join('categories', 'products.category_id', '=', 'categories.id')
-            ->where('categories.type', 1)
-            ->where('products.status', 1)
-            ->select('products.*')
-            ->get();
-        return view('Home.index', compact('new_products', 'tree', 'flower'));
+                        ->where('categories.type', 1)
+                        ->where('products.status', 1)
+                        ->select('products.*')
+                        ->get();
+        $discounted_products = Product::orderBy('created_at','DESC')
+                                    ->where('status', '1')
+                                    ->whereNotNull('sale_price')
+                                    ->limit(8)
+                                    ->get();
+        return view('Home.index', compact('new_products', 'tree', 'flower','discounted_products'));
 
     }
+
 
     public function showAllProducts(Request $request)
     {
@@ -109,6 +115,10 @@ class HomeController extends Controller
                     break;
                 case 'above_200000':
                     $query->where('price', '>', 200000);
+                    break;
+                case 'sale':
+                        // Lọc các sản phẩm có giá sale_price khác null và khác 0
+                    $query->whereNotNull('sale_price');
                     break;
             }
         }

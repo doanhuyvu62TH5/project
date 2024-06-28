@@ -68,14 +68,14 @@
     margin-top: 100px;
     background-image: url("../images/home/images/bg/breadcrumb.jpg");
     background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: 100% 100%;
 }
 .scroll{
     max-height: 200px; /* Đặt chiều cao tối đa cho phần tử */
     overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
 }
 .scroll-cart{
-    max-height: 400px; /* Đặt chiều cao tối đa cho phần tử */
+    height: 430px; /* Đặt chiều cao tối đa cho phần tử */
     overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
 }
 .selected h4, .selected h5 {
@@ -107,6 +107,16 @@
 .scroll-comment{
     max-height: 550px; /* Đặt chiều cao tối đa cho phần tử */
     overflow-y: auto; /* Bắt buộc thanh cuộn dọc xuất hiện khi cần */
+}
+
+.custom-link {
+    text-decoration: none;
+    color: black; /* màu mặc định */ /* bỏ gạch chân mặc định */
+}
+  
+  /* Đổi màu khi di chuột qua */
+.custom-link:hover {
+    color: rgb(144, 23, 23); /* màu khi di chuột qua */
 }
 
 

@@ -8,10 +8,7 @@
                         <h1>Đơn hàng</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Giỏ hàng</a>
+                                <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
                             </li>
                         </ul>
                     </div>
@@ -25,19 +22,19 @@
                 <div class="col-12">
                     <ul class="nav justify-content-center">
                         <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('order.history') }}">Tất cả</a>
+                            <a class=" custom-link me-5" href="{{ route('order.history') }}">Tất cả</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=1&status[]=2&status[]=3">Chờ vận chuyển</a>
+                            <a class=" custom-link me-5" aria-current="page" href="{{ route('order.history') }}?status[]=1&status[]=2&status[]=3">Chờ vận chuyển</a>
                         </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('order.history') }}?status[]=0">Chờ xác nhận đơn hàng</a>
+                        <li class="nav-item mx-3 me-5">
+                            <a class="custom-link" href="{{ route('order.history') }}?status[]=0">Chờ xác nhận đơn hàng</a>
                         </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link active" aria-current="page" href="{{ route('order.history') }}?status[]=4">Đã giao</a>
+                        <li class="nav-item mx-3 me-5">
+                            <a class=" custom-link" aria-current="page" href="{{ route('order.history') }}?status[]=4">Đã giao</a>
                         </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('order.history') }}?status[]=5">Đã hủy</a>
+                        <li class="nav-item mx-3 me-5">
+                            <a class=" custom-link" href="{{ route('order.history') }}?status[]=5">Đã hủy</a>
                         </li>
                     </ul>
                 </div>
