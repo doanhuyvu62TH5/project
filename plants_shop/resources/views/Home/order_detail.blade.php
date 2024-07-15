@@ -5,13 +5,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>Chi tiết đơn hàng</h1>
+                        <h1>Chi Tiết Đơn Hàng</h1>
                         <ul class="nav justify-content-center">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('order.history') }}">Đơn hàng</a>
+                            <li class="nav-item me-2">
+                                <a class="custom-link" href="{{ route('order.history') }}">Đơn hàng</a>
                             </li>
                         </ul>
                     </div>
@@ -24,11 +21,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <h3>Thông tin khách hàng</h3>
-                    <table class="table text-center">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Họ tên</th>
                                 <td>{{ $auth->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ $auth->email }}</td>
                             </tr>
                             <tr>
                                 <th>Số điện thoại</th>
@@ -58,13 +59,35 @@
                                 <td>{{ $order->address }}</td>
                             </tr>
                             <tr>
-                                <th>Ghi chú</th> 
+                                <th>Ghi chú:</th>
                                 @if ($order->note == null)
-                                    <td>Không có</td>                                  
+                                    <td>Không có</td>
                                 @else
                                     <td>{{ $order->note }}</td>
                                 @endif
                             </tr>
+                            <tr>
+                                <th>Phương thức thanh toán:</th>
+                                @if ($order->payment->method_payment == '0')
+                                    <td>Thanh toán khi nhận hàng</td>
+                                @else
+                                    <td>Thanh toán chuyển khoản online</td>
+                                @endif
+                            </tr>
+                            @if ($order->payment->method_payment == '1')
+                            <tr>
+                                <th>Số tài khoản người chuyển:</th>
+                                <td>{{ $order->payment->account_number }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tên chủ tài khoản:</th>
+                                <td>{{ $order->payment->account_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nội dung chuyển khoản:</th>
+                                <td>{{ $order->payment->transaction_content }}</td>
+                            </tr>
+                            @endif
                         </thead>
                     </table>
                 </div>
@@ -101,7 +124,7 @@
                     @endforeach
                     <tr>
                         
-                        <td colspan="5"><h6>Tổng:</h6></td>
+                        <td colspan="5"><h6>Tổng tiền:</h6></td>
                         <td><strong>{{ number_format($total) }} đ</strong></td>
                     </tr>
                 </tbody>

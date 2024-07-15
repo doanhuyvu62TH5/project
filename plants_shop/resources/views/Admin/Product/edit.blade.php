@@ -9,32 +9,32 @@
             @method('PUT')
             <div class="row justify-content-center">
                 <div class="text-center border-bottom" style="padding-bottom: 10px;">
-                    <h4>Cập nhật sản phẩm</h4>
+                    <h4>Sửa Sản Phẩm</h4>
                 </div>
                 <div class="col-6 bg-white mt-3">
                     <div class="mb-3">
-                        <label for="" class="form-label">Name</label>
+                        <label for="" class="form-label">Tên sản phẩm</label>
                         <input name ="name" type="text" class="form-control @error('name')is-invalid @enderror" value="{{ $product->name }}">
                         @error('name')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">Quantity</label>
+                        <label for="" class="form-label">Số lượng</label>
                         <input name ="quantity" type="text" class="form-control @error('quantity')is-invalid @enderror" value="{{ $product->quantity }}">
                         @error('quantity')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">Content</label>
-                        <textarea name ="content" class="form-control @error('content')is-invalid @enderror" style="height: 105px;">{{ $product->content }}</textarea>
+                        <label for="" class="form-label">Nội dung</label>
+                        <textarea id="editor" name ="content" class="form-control @error('content')is-invalid @enderror" style="height: 105px;">{{ $product->content }}</textarea>
                         @error('content')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Product Image</label>
+                        <label for="formFile" class="form-label">hình ảnh</label>
                         <input name="image" class="form-control @error('image')is-invalid @enderror" type="file">
                         @error('image')
                             <span class="invalid-feedback">{{ $message }}</span>
@@ -43,21 +43,21 @@
                 </div>
                 <div class="col-6 bg-white mt-3">
                     <div class="mb-3">
-                        <label for="" class="form-label">Price</label>
+                        <label for="" class="form-label">Giá</label>
                         <input name="price" type="text" class="form-control @error('price')is-invalid @enderror" value="{{ $product->price }}">
                         @error('price')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">Sale Price</label>
+                        <label for="" class="form-label">Giá khuyển mãi</label>
                         <input name="sale_price" type="text" class="form-control @error('sale_price')is-invalid @enderror" value="{{ $product->sale_price }}">
                         @error('sale_price')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">Product Status</label>
+                        <label for="" class="form-label">Trạng thái</label>
                         <div class="form-check">
                             <input name="status" class="form-check-input" type="radio" value="1"
                             {{ $product->status == 1 ? 'checked' : ''}}>
@@ -91,4 +91,13 @@
                 </div>
         </form>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

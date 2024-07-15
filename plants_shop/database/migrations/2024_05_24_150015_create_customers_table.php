@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100);
-            $table->string('email', 100)->unique();
-            $table->string('phone', 100)->unique();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
             $table->string('image')->nullable();
-            $table->string('address', 100)->nullable();
-            $table->string('password', 200);
+            $table->string('address')->nullable();
+            $table->string('password');
             $table->date('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps(); // Thêm cột created_at và updated_at

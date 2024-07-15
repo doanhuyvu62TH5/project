@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>Đơn hàng</h1>
+                        <h1>Lịch Sử Đặt Hàng</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
                                 <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>

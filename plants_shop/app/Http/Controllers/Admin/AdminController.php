@@ -5,6 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\Comment;
+use App\Models\Blog;
+use App\Models\Category;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\Contact;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +21,21 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('Admin.index');
+        $productCount = Product::count();
+        $customerCount = Customer::count();
+        $categoryCount = Category::count();
+        $commentCount = Comment::count();
+        $contributeCount = Contact::count();
+        $blogCount = Blog::count();
+        $SliderCount = Slider::count();
+        $orderCount = Order::where('status', 0)->count();
+        $orderdeliveredCount = Order::where('status', 4)->count();
+        $orderShippingCount = Order::where('status', 3)->count();
+        return view('Admin.index',compact('productCount','customerCount',
+                                        'categoryCount','blogCount',
+                                        'commentCount','orderCount',
+                                        'orderShippingCount','orderdeliveredCount',
+                                        'contributeCount','SliderCount'));
     }
     public function showRegistrationForm()
     {
@@ -49,19 +71,19 @@ class AdminController extends Controller
     public function Login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
+            'email' => 'required',
             'password' => 'required|min:6',
         ]);
         $data = $request->only('email','password');
         $check = auth()->attempt($data);
         if($check){
-            return redirect()->route('admin.index')->with('success','welcom admin');
+            return redirect()->route('admin.index')->with('success','Đăng nhập thành công!');
         }
-        return redirect()->back()->with('error','Email or Password is no match');
+        return redirect()->back()->with('no','Thông tin tài khoản hoặc mật khẩu không đúng!');
     }
 
     public function logout(){
         auth()->logout();
-        return redirect()->route('admin.login')->with('success','logouted');
+        return redirect()->route('admin.login')->with('success','Đã đăng xuất!');
     }
 }

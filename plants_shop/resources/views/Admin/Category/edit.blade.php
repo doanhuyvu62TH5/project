@@ -9,7 +9,7 @@
 
         <div class="col-7 bg-light">
             <div class="border-bottom  mt-3 mb-3">
-                <h4 class="text-center">Sửa danh mục</h4>
+                <h4 class="text-center">Sửa Danh Mục Sản Phẩm</h4>
             </div>
             <form action="{{ route('category.update', $category->id) }}" method="POST">
                 @csrf

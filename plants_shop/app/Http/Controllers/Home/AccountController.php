@@ -44,7 +44,7 @@ class AccountController extends Controller
         // Check if customer exists and password is correct
         if ($customer && Hash::check($data['password'], $customer->password)) {
             if ($customer->email_verified_at == null) {
-                return redirect()->back()->with('no', 'Tài khoản của bạn chưa được xác thực, vui lòng kiểm tra lại Email');
+                return redirect()->back()->with('no', 'Tài khoản chưa được xác thực, vui lòng kiểm tra lại Email để xác thực tài khoản!');
             }
     
             // Perform login
@@ -82,7 +82,7 @@ class AccountController extends Controller
         $data['password'] = bcrypt($request->password);
         if ($acc = Customer::create($data)) {
             Mail::to($acc->email)->send(new VerifyAccount($acc));
-            return redirect()->route('account.login')->with('success', 'Đăng kí tài khoản thành công vui lòng kiểm tra email để xác thức tài khoản!');
+            return redirect()->route('account.login')->with('success', 'Đăng kí tài khoản thành công! Vui lòng kiểm tra email để xác thực tài khoản!');
         }
         return redirect()->back('no', 'Lỗi!');
     }
@@ -131,7 +131,7 @@ class AccountController extends Controller
             $customer->remember_token = \Str::random(40);
             $customer->save();
             Mail::to($customer->email)->send(new ForgotPasswordMail($customer));
-            return redirect()->back()->with('success', 'Gửi mail thành công! vui lòng kiểm tra eamil để thiết lập mật khẩu mới!');
+            return redirect()->back()->with('success', 'Vui lòng kiểu tra email để đặt lại mật khẩu!');
         } 
          return redirect()->back()->with('no', 'Email không có trong hệ thống!');
         
@@ -152,7 +152,7 @@ class AccountController extends Controller
         $customer = Customer::where('remember_token', $token)->first();
         if ($customer) 
         {
-            if ($request->password == $request->confirm_password) 
+            if($request->password == $request->confirm_password) 
             {
                 $customer->password = bcrypt($request->password);
                 if (!$customer->email_verified_at) 

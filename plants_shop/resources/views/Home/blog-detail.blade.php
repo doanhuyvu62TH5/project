@@ -1,7 +1,5 @@
 @extends('Home.master.main')
 @section('content')
-    @extends('Home.master.main')
-@section('content')
     <div class="homecart">
         <div class="container">
             <div class="row">
@@ -9,7 +7,7 @@
                     <div class="text-center">
                         <h1>Blog</h1>
                         <ul class="nav justify-content-center">
-                            <li class="nav-item">
+                            <li class="nav-item me-2">
                                 <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang
                                     chủ</a>
                             </li>
@@ -40,7 +38,7 @@
                 </div>
                 <div class="content mt-3">
                     <p class="">
-                        {!! nl2br(e($blog->content)) !!}
+                        {!! $blog->content !!}
                     </p>
                 </div>
                 <div class="row d-flex justify-content-center">
@@ -53,12 +51,14 @@
                                 @foreach ($comments as $comment)
                                     <div class="card-body p-4 ">
                                         <div class="d-flex">
-                                            <img src="{{ is_null($comment->customer->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset($comment->customer->image) }}"
+                                            <div class="me-2">
+                                                <img src="{{ is_null($comment->customer->image) ? asset('assets/images/home/avata.png') : asset($comment->customer->image) }}"
                                                 alt="avatar" class="rounded-circle img-fluid"
-                                                style="height:70px ;width: 70px;">
+                                                style="height:30px ;width: 30px;">
+                                            </div>
                                             <div>
                                                 <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
-                                                <div class="d-flex align-items-center mb-3">
+                                                <div class="d-flex align-items-center">
                                                     <p class="mb-0">
                                                         {{ $comment->created_at->format('d-m-Y H:i:s') }}
                                                     </p>
@@ -88,12 +88,14 @@
                                 <form action="{{ route('comments.post') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="blog_id" value="{{ $blog->id }}">
-                                    <input type="hidden" name="type" value="blog">
+                                    <input type="hidden" name="type" value="1">
                                     <div class="card-body p-4" style="background-color: #868b91;">
                                         <div class="d-flex flex-start w-100">
-                                            <img src="{{ is_null(auth('cus')->user()->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset(auth('cus')->user()->image) }}"
+                                            <div class="me-2">
+                                                 <img src="{{ is_null(auth('cus')->user()->image) ? asset('assets/images/home/avata.png') : asset(auth('cus')->user()->image) }}"
                                                 alt="avatar" class="rounded-circle img-fluid"
-                                                style="height:70px ;width: 70px;">
+                                                style="height:30px ;width: 30px;">
+                                            </div>
                                             <div data-mdb-input-init class="form-outline w-100">
                                                 <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
                                                 <label class="form-label" for="textAreaExample">Bình
@@ -112,7 +114,7 @@
                                     <div class="card-body p-4" style="background-color: #868b91;">
                                         <div class="d-flex flex-start w-100">
                                             <img class="rounded-circle shadow-1-strong me-3"
-                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                                                src="{{ asset('assets/images/home/avata.png') }}"
                                                 alt="avatar" width="40" height="40" />
                                             <div data-mdb-input-init class="form-outline w-100">
                                                 <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
@@ -174,4 +176,3 @@
     </div>
 @endsection
 
-@endsection

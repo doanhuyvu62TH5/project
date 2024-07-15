@@ -27,7 +27,9 @@
                         @elseif ($item->status == 3)
                             <span>Đang giao hàng</span>       
                         @elseif ($item->status == 4)
-                            <span>Đã giao hàng</span>   
+                            <span>Đã giao hàng</span>
+                        @else
+                            <span>Đã hủy</span>    
                         @endif
                     </td>
                     <td class="align-middle">

@@ -9,68 +9,11 @@ use App\Models\Product;
 use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    private function applySort($query, $sortBy)
-    {
-        if ($sortBy) {
-            switch ($sortBy) {
-                case 'price_asc':
-                    $query->orderBy('price', 'ASC');
-                    break;
-                case 'price_desc':
-                    $query->orderBy('price', 'DESC');
-                    break;
-                case 'name_asc':
-                    $query->orderBy('name', 'ASC');
-                    break;
-                case 'name_desc':
-                    $query->orderBy('name', 'DESC');
-                    break;
-                case 'created_asc':
-                    $query->orderBy('created_at', 'ASC');
-                    break;
-                case 'created_desc':
-                    $query->orderBy('created_at', 'DESC');
-                    break;
-                case 'quantity_asc':
-                    $query->orderBy('quantity', 'ASC');
-                    break;
-                case 'quantity_desc':
-                    $query->orderBy('quantity', 'DESC');
-                    break;
-            }
-        }
-        return $query;
-    }
     public function index(Request $request)
     {
-        $sortBy = $request->input('sort_by', 'created_desc');
-        $search = $request->input('search', '');
-        
-        // Tạo query ban đầu cho tìm kiếm theo tên sản phẩm và nội dung
-        $products = Product::where('name', 'LIKE', "%{$search}%")
-            ->orWhere('content', 'LIKE', "%{$search}%")
-            ->where('status', 1)
-            ->select('products.*'); // Chọn các cột cần thiết
-
-        // Tạo query cho tìm kiếm theo tên danh mục
-        $productsInCategory = Product::join('categories', 'products.category_id', '=', 'categories.id')
-            ->where('categories.name', 'LIKE', "%{$search}%")
-            ->where('products.status', 1)
-            ->select('products.*'); // Chọn các cột cần thiết
-
-        // Kết hợp kết quả của hai câu truy vấn bằng union()
-        $products = $products->union($productsInCategory->getQuery());
-
-        // Áp dụng sắp xếp
-        $products = $this->applySort($products, $sortBy)->paginate(5);
-
-        return view('Admin.Product.index', compact('products', 'sortBy', 'search'));
+        $products = Product::all();
+        return view('Admin.Product.index', compact('products'));
     }
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -164,7 +107,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' =>'required|unique:products,name,'.$product->id,
+            'name' => 'required|unique:products,name,'.$product->id,
             'price' =>'required|numeric',
             'sale_price' => 'nullable|numeric|lte:price',
             'image' => 'file|mimes:jpg,jpeg,png,gif',
@@ -185,16 +128,6 @@ class ProductController extends Controller
             'content.required' => 'Vui lòng nhập nội dung',
             'category_id.required' => 'Vui lòng chọn danh mục'
         ]);
-        // if($request->has('image')){
-        //     $file = $request->file('image');
-        //     $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
-        //     $path = 'uploads/product/';
-        //     $file->move($path,$filename);
-
-        //     if(File::exists($product->image)){
-        //         File::delete($product->image);
-        //     }
-        // }
         $oldImagePath = $product->image;
         if($request->has('image')){
 

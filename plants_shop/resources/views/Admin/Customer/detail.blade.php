@@ -1,31 +1,51 @@
 @extends('Admin.layouts.app')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h4 class="mb-0">Thông tin khách hàng chi tiết</h4>
+        <h4 class="mb-0">Thông Tin Chi Tiết Khách Hàng</h4>
     </div>
     <hr />
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="row">
                     <div class="text-center mb-5 mt-5">
                         <h5>Thông tin tài khoản</h5>
                     </div>
-                    <div class="col-4">
-                        <p><i class="fas fa-user"></i> Họ và tên: </p>
-                        <p><i class="fas fa-envelope"></i> Email: </p>
-                        <p><i class="fas fa-phone"></i> Số điện thoại: </p>
-                        <p><i class="fas fa-address-card"></i> Địa chỉ: </p>
+                    <div class="row">
+                        <div class="col-4">
+                            <p><i class="fas fa-user"></i> Họ và tên: </p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{ $customer->name }}</p>
+                        </div>
                     </div>
-                    <div class="col-8">
-                        <p>{{ $customer->name }}</p>
-                        <p>{{ $customer->email }}</p>
-                        <p>{{ $customer->phone }}</p>
-                        <p>{{ $customer->address }}</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <p><i class="fas fa-envelope"></i> Email: </p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{ $customer->email }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p><i class="fas fa-phone"></i> Số điện thoại: </p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{ $customer->phone }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p><i class="fas fa-address-card"></i> Địa chỉ: </p>
+                        </div>
+                        <div class="col-8">
+                            <p>{{ $customer->address }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class="text-center mb-5 mt-5">
                     <h5>Lịch sử đặt hàng
                     </h5>
@@ -69,7 +89,7 @@
                                     @endif
                                 </p>
                                 <p><strong>Tổng tiền: </strong>{{ number_format($order->totalPrice) }}</p>
-                                <h4>Sản phẩm:</h4>
+                                <h4>Sản phẩm bao gồm:</h4>
                                 <table class="table  text-center">
                                     <thead>
                                         <tr>

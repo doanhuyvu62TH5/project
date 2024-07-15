@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::orderBy('created_at', 'DESC')->paginate(5);
+        $category = Category::all();
         return view('Admin.Category.index', compact('category'));
     }
 

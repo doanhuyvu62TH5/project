@@ -22,28 +22,28 @@ class OrderController extends Controller
     public function confirm(Order $order) {
         $order->status = 1;
         $order->save();
-        return redirect()->route('admin.orders.index')->with('ok', 'Order confirmed successfully.');
+        return redirect()->route('admin.orders.index')->with('ok', 'Cập nhật trạng thái đơn hàng thành công!');
     }
     public function markAsPacked(Order $order) {
         if ($order->status != 1) {
-            return redirect()->route('admin.orders.index')->with('no', 'Order cannot be marked as packed.');
+            return redirect()->route('admin.orders.index')->with('no', 'Lỗi');
         }
         $order->status = 2;
         $order->save();
-        return redirect()->route('admin.orders.index')->with('ok', 'Order confirmed successfully.');
+        return redirect()->route('admin.orders.index')->with('ok', 'Cập nhật trạng thái đơn hàng thành công!');
     }
     public function markAsShipping(Order $order) {
         if ($order->status != 2) {
-            return redirect()->route('admin.orders.index')->with('no', 'Order cannot be marked as shipping.');
+            return redirect()->route('admin.orders.index')->with('no', 'Lỗi!');
         }
         $order->status = 3;
         $order->save();
-        return redirect()->route('admin.orders.index')->with('ok', 'Order marked as shipping successfully.');
+        return redirect()->route('admin.orders.index')->with('ok', 'Cập nhật trạng thái đơn hàng thành công!');
     }
     
     public function markAsDelivered(Order $order) {
         if ($order->status != 3) {
-            return redirect()->route('admin.orders.index')->with('no', 'Order cannot be marked as delivered.');
+            return redirect()->route('admin.orders.index')->with('no', 'Lỗi!');
         }
         $order->status = 4;
         $order->save();
@@ -51,7 +51,7 @@ class OrderController extends Controller
             ['order_id' => $order->id],
             ['status_payment' => 1]
         );
-        return redirect()->route('admin.orders.index')->with('ok', 'Order marked as delivered successfully.');
+        return redirect()->route('admin.orders.index')->with('ok', 'Cập nhật trạng thái đơn hàng thành công!');
     }
 
     public function markAsPaid(Order $order) {
@@ -59,16 +59,16 @@ class OrderController extends Controller
             ['order_id' => $order->id],
             ['status_payment' => 1]
         );
-        return redirect()->route('admin.orders.index')->with('ok', 'Order marked as paid successfully.');
+        return redirect()->route('admin.orders.index')->with('ok', 'Cập nhật trạng thái đơn hàng thành công!');
     }
     
     public function cancel(Order $order) {
         if ($order->status == 0) {
             $order->status = 5;
             $order->save();
-            return redirect()->route('admin.orders.index')->with('ok', 'Order canceled successfully.');
+            return redirect()->route('admin.orders.index')->with('ok', 'Hủy đơn hàng thành công!');
         }
-        return redirect()->route('admin.orders.index')->with('no', 'Order cannot be canceled.');
+        return redirect()->route('admin.orders.index')->with('no', 'Lỗi!');
     }
     
 }

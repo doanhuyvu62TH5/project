@@ -13,7 +13,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('created_at', 'DESC')->paginate(5);
+        $customers = Customer::all();
         return view('Admin.Customer.index', compact('customers'));
     }
 

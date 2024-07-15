@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>Tài khoản của tôi</h1>
+                        <h1>Thông Tin Cá Nhân</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
                                 <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
@@ -22,8 +22,8 @@
             <div class="col-md-3">
                 <div class="row text-center">
                     <div class="col-12">
-                        <img src="{{ is_null($customer->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset($customer->image) }}"
-                            alt="avatar" class="rounded-circle img-fluid" style="height:150px ;width: 150px;">
+                        <img src="{{ is_null($customer->image) ? asset('assets/images/home/avata.png') : asset($customer->image) }}"
+                            alt="avatar" class="rounded-circle img-fluid" style="height:100px ;width: 100px;">
                         <!-- Button trigger modal -->
                         <ul class="nav justify-content-center mt-3">
                             <li class="nav-item">

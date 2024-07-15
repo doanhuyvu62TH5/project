@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-7 bg-light" style="border-radius: 20px">
             <div class="border-bottom  mt-3 mb-3">
-                <h4 class="text-center">Thêm danh mục</h4>
+                <h4 class="text-center">Thêm Mới Danh Mục Sản Phẩm</h4>
             </div>
 
             <form action="{{ route('category.store') }}" method="POST">

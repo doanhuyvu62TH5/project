@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('email', 100);
-            $table->string('phone', 100);
-            $table->string('address', 100);
-            $table->string('note', 100)->nullable();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address');
+            $table->text('note')->nullable();
             $table->unsignedBigInteger('customer_id');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();

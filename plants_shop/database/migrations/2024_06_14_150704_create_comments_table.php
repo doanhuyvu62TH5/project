@@ -17,8 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('blog_id')->nullable();
             $table->text('comment');
-            $table->enum('type', ['product', 'blog']);
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('type');
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

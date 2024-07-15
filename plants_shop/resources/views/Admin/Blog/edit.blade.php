@@ -24,7 +24,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="exampleFormControlInput1" class="form-label">Nội dung</label>
-                    <textarea name ="content" class="form-control @error('content')is-invalid @enderror" style="height: 100px;">{{ $blog->content }}</textarea>
+                    <textarea id="editor" name ="content" class="form-control @error('content')is-invalid @enderror" style="height: 100px;">{{ $blog->content }}</textarea>
                     @error('content')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
@@ -59,4 +59,13 @@
             </form>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

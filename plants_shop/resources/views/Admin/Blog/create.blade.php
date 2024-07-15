@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-7 bg-light" style="border-radius: 20px">
             <div class="border-bottom  mt-3 mb-3">
-                <h4 class="text-center">Thêm blog</h4>
+                <h4 class="text-center">Thêm Mới Blog</h4>
             </div>
 
             <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="exampleFormControlInput1" class="form-label">Nội dung</label>
-                    <textarea name ="content" class="form-control @error('content')is-invalid @enderror" style="height: 100px;">{!! nl2br(e(old('content'))) !!}</textarea>
+                    <textarea name ="content" id="editor" class="form-control @error('content')is-invalid @enderror" style="height: e00px;"></textarea>
                     @error('content')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
@@ -56,4 +56,13 @@
             </form>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

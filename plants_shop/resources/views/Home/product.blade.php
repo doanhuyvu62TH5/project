@@ -23,20 +23,14 @@
                 <div class="col-lg-12 order-1 order-lg-2">
                     <div class="row">
                         <div class="col-lg-5 text-center">
-                            <img src="{{ asset($product->image) }}" width="100%" height="500px" alt="">
+                            <img src="{{ asset($product->image) }}" width="100%" height="400px" alt="">
                         </div>
                         <div class="col-lg-7">
                             <div class="row mb-3">
                                 <h1>{{ $product->name }}</h1>
                             </div>
                             <div class="row mb-3">
-                                <h6>⭐⭐⭐⭐⭐</h6>
-                            </div>
-                            <div class="row mb-3">
-                                <h6>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                                    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                                    Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea
-                                    dictumst.</h6>
+                                <h6>{!! $product->content !!}</h6>
                             </div>
                             <div class="row mb-3">
                                 @if ($product->sale_price == null)
@@ -62,7 +56,7 @@
                                         <h6>Số lượng trong kho: {{ $product->quantity }}</h6>
                                     </div>
                                     <div class="row mb-3">
-                                        <button type="submit" class="btn btn-warning" style="width: 200px;">Thêm vào giỏ
+                                        <button type="submit" class="btn btn-sm btn-danger" style="width: 200px;"><i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ
                                             hàng</button>
                                     </div>
                                 </form>
@@ -94,16 +88,8 @@
                                 <h1>Mô tả sản phẩm</h1>
                             </div>
                             <div class="row mt-3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec
-                                    est tristique auctor. Ipsum metus feugiat sem, quis fermentum turpis eros eget
-                                    velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus
-                                    eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non
-                                    neque.Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida
-                                    vehicula tellus, in imperdiet ligula euismod eget. Pellentesque habitant morbi
-                                    tristique senectus et netus et malesuada fames ac turpis egestas. Nam erat mi,
-                                    rutrum at sollicitudin rhoncus</p>
+                                <p>{!! $product->content !!}</p>
                             </div>
-
                         </div>
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-12">
@@ -115,12 +101,14 @@
                                         @foreach ($comments as $comment)
                                             <div class="card-body p-4 ">
                                                 <div class="d-flex">
-                                                    <img src="{{ is_null($comment->customer->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset($comment->customer->image) }}"
+                                                    <div class="me-2">
+                                                        <img src="{{ is_null($comment->customer->image) ? asset('assets/images/home/avata.png') : asset($comment->customer->image) }}"
                                                         alt="avatar" class="rounded-circle img-fluid"
-                                                        height="50" width="50">
+                                                        style="height:30px ;width: 30px;">
+                                                    </div>
                                                     <div>
                                                         <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
-                                                        <div class="d-flex align-items-center mb-3">
+                                                        <div class="d-flex align-items-center mb-2">
                                                             <p class="mb-0">
                                                                 {{ $comment->created_at->format('d-m-Y H:i:s') }}
                                                             </p>
@@ -150,12 +138,14 @@
                                         <form action="{{ route('comments.post') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <input type="hidden" name="type" value="product">
+                                            <input type="hidden" name="type" value="0">
                                             <div class="card-body p-4" style="background-color: #868b91;">
                                                 <div class="d-flex flex-start w-100">
-                                                    <img src="{{ is_null(auth('cus')->user()->image) ? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' : asset(auth('cus')->user()->image) }}"
+                                                    <div class="me-2">
+                                                        <img src="{{ is_null(auth('cus')->user()->image) ? asset('assets/images/home/avata.png') : asset(auth('cus')->user()->image) }}"
                                                         alt="avatar" class="rounded-circle img-fluid"
-                                                        style="height:70px ;width: 70px;">
+                                                        style="height:30px ;width: 30px;">
+                                                    </div>
                                                     <div data-mdb-input-init class="form-outline w-100">
                                                         <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
                                                         <label class="form-label" for="textAreaExample">Bình
@@ -173,9 +163,11 @@
                                             @csrf
                                             <div class="card-body p-4" style="background-color: #868b91;">
                                                 <div class="d-flex flex-start w-100">
-                                                    <img class="rounded-circle shadow-1-strong me-3"
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
-                                                        alt="avatar" width="40" height="40" />
+                                                    <div class="me-2">
+                                                        <img src="{{ is_null($comment->customer->image) ? asset('assets/images/home/avata.png') : asset($comment->customer->image) }}"
+                                                        alt="avatar" class="rounded-circle img-fluid"
+                                                        style="height:30px ;width: 30px;">
+                                                    </div>
                                                     <div data-mdb-input-init class="form-outline w-100">
                                                         <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
                                                         <label class="form-label" for="textAreaExample">Bình

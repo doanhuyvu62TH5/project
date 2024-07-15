@@ -5,7 +5,7 @@
     <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Thế giới cây và hoa</title>
     <link rel="stylesheet" href="{{ asset('assets') }}/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <!-- bootstrap links -->
@@ -24,9 +24,8 @@
         body {
             font-size: 13px;
             background-color: white;
+            font-family: 'Times New Roman', Times, serif;
         }
-
-        /* Thêm các quy tắc CSS khác ở đây nếu cần */
     </style>
     <header>
         <div class="fixed-top">
@@ -34,7 +33,7 @@
                 @if (auth('cus')->check())
                     <li class="nav-item">
                         <div class="dropdown">
-                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                            <a href="#" class="d-block link-dark nav-link text-white dropdown-toggle"
                                 id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
                                 Xin chào, {{ auth('cus')->user()->name }}
@@ -50,18 +49,18 @@
                         </div>
                     </li>
                 @else
-                    <li class="nav-item text-small">
-                        <a class="nav-link" href="{{ route('account.login') }}">Đăng nhập</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('account.login') }}"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="{{ route('account.register') }}">Đăng kí</a>
+                        <a class="nav-link text-white" href="{{ route('account.register') }}">Đăng kí</a>
                     </li>
                 @endif
                 @if (auth('cus')->check())
                     <li class="nav-item">
-                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                        <a type="button" class="text-white nav-link" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
-                                class="fa-solid fa-cart-shopping"></i></button>
+                                class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
@@ -77,7 +76,6 @@
                                             @if ($carts->count() > 0)
                                                 @foreach ($carts as $item)
                                                     <div class="row text-center align-items-center mb-3 border-bottom">
-                                                        <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
                                                         <div class="col-5">
                                                             <a href="{{ route('home.product', $item->product->id) }}">
                                                                 <img src="{{ asset($item->product->image) }}"
@@ -132,15 +130,20 @@
                         </div>
                     </li>
                 @else
-                    <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}"
-                        onclick="alert('vui lòng đăng nhập để xem giỏ hàng')"><i
-                            class="fa-solid fa-cart-shopping"></i></a>
+                    <li class="nav-item">
+                        <a class="text-white nav-link" title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}"
+                            onclick="alert('Vui lòng đăng nhập để xem giỏ hàng')"><i
+                                class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
+                    </li>
                 @endif
 
             </ul>
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
-                    <a class="navbar-brand me-auto" href="#">Logo</a>
+                    <a class="navbar-brand me-auto" href="{{ route('home.index') }}"><img src="{{ asset('assets') }}/images/home/img/logo/logo-home.png" height="50" width="140"  alt=""></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                         aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
@@ -160,7 +163,7 @@
                                         href="{{ route('products.byType', ['type' => '0']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
-                                        Chủ đề về cây
+                                        Bộ sưu tập về cây
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
@@ -176,7 +179,7 @@
                                         href="{{ route('products.byType', ['type' => '1']) }}" id="navbarDropdown"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
-                                        Chủ đề về hoa
+                                        Bộ sưu tập về hoa
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @foreach ($cats_home as $cath)
@@ -188,7 +191,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="{{ route('products.all') }}">Sản Phẩm</a>
+                                    <a class="nav-link active" href="{{ route('products.all') }}">Bộ Sưu Tập Hoa và Cây</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" href="{{ route('home.blogs') }}">Blog</a>
@@ -197,15 +200,15 @@
                                     <a class="nav-link active" href="{{ route('contact_us.index') }}">Liên hệ</a>
                                 </li>
                             </ul>
+                            <form class="d-flex" role="search" action="{{ route('search') }}" role="search" method="GET">
+                                <input class="form-control me-2 rounded-pill" type="search" name="query" required
+                                    placeholder="Tìm kiếm" aria-label="Search"
+                                    oninvalid="this.setCustomValidity('Vui lòng nhập từ khóa tìm kiếm!')"
+                                    oninput="setCustomValidity('')">
+                                <button class="btn btn-link text-dark" type="submit"><i class="fas fa-search"></i></button>
+                            </form>
                         </div>
                     </div>
-                    <form class="d-flex" role="search" action="{{ route('search') }}" method="GET">
-                        <input class="form-control me-2" type="search" name="query" required
-                            placeholder="Tìm kiếm" aria-label="Search"
-                            oninvalid="this.setCustomValidity('Vui lòng nhập từ khóa tìm kiếm!')"
-                            oninput="setCustomValidity('')">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
                 </div>
             </nav>
         </div>
@@ -215,71 +218,47 @@
         @yield('content')
     </main>
 
-    <footer class="py-5 bg-dark mt-5">
+    <footer class="py-5 mt-5 bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-2">
-                    <h5>Section</h5>
+                <div class="col-md-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-3"><a href="#" class="nav-link p-0 text-muted"><img src="{{ asset('assets') }}/images/home/img/logo/logo-home.png" height="50" width="140"  alt=""></li>
+                        <li class="nav-item mb-3"><a href="#" class="nav-link p-0 text-muted">
+                            Với phương châm “ Vui lòng người nhận, Đẹp lòng người trao” Dalat Hasfarm luôn cam kết chất lượng hoa tươi đảm bảo, cắm đúng mẫu, giao hoa tận nơi đúng giờ. Bằng tất cả niềm đam mê và tận tâm, luôn chọn những bông hoa tươi nhất và sáng tạo lên những mẫu hoa tuyệt vời để chuyển đến người thân yêu của bạn cùng với những lời chúc tốt đẹp.</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="text-success mb-3">Liên hệ</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-3"><a href="#" class="nav-link p-0 text-muted"><i class="fa fa-fax"></i>
+                            Địa chỉ : Xóm Nam Phong, Xã Nam Phong, Tp.Nam Định, Tỉnh Nam Định.</li>
+                        <li class="nav-item mb-3"><a href="#" class="nav-link p-0 text-muted"><i class="fa fa-phone"></i>
+                            Số điện thoại : 0833388292</a></li>
+                        <li class="nav-item mb-3"><a href="#" class="nav-link p-0 text-muted"><i class="fa fa-envelope"></i>
+                            Email: huyvu31032002@gmail.com</a></li>
                     </ul>
                 </div>
 
-                <div class="col-2">
-                    <h5>Section</h5>
+                <div class="col-md-3">
+                    <h5 class="text-success mb-3" >Web Shop</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Trang chủ</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Bộ sưu tập về cây</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Bộ sưu sưu tập về hoa</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Bộ sưu tập</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Blog</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Liên hệ</a></li>
                     </ul>
                 </div>
 
-                <div class="col-2">
-                    <h5>Section</h5>
+                <div class="col-md-3">
+                    <h5 class="text-success">Kết nối với chúng tôi</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"><i class="fab fa-facebook"></i> Fanpage: Dalat Hasfarm</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Quét mã Zalo <img src="{{ asset('assets') }}/images/home/qr_zalo.jpg" height="100" width="100"  alt=""></a></li>
                     </ul>
                 </div>
-
-                <div class="col-4 offset-1">
-                    <form>
-                        <h5>Subscribe to our newsletter</h5>
-                        <p>Monthly digest of whats new and exciting from us.</p>
-                        <div class="d-flex w-100 gap-2">
-                            <label for="newsletter1" class="visually-hidden">Email address</label>
-                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                            <button class="btn btn-primary" type="button">Subscribe</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-between py-4 my-4 border-top">
-                <p>&copy; 2021 Company, Inc. All rights reserved.</p>
-                <ul class="list-unstyled d-flex">
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                height="24">
-                                <use xlink:href="#twitter" />
-                            </svg></a></li>
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                height="24">
-                                <use xlink:href="#instagram" />
-                            </svg></a></li>
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24"
-                                height="24">
-                                <use xlink:href="#facebook" />
-                            </svg></a></li>
-                </ul>
             </div>
         </div>
     </footer>
@@ -293,7 +272,7 @@
             // Gọi SweetAlert2 để hiển thị thông báo
             Swal.fire({
                 icon: 'error',
-                title: 'Error!',
+                title: 'Lỗi!',
                 text: '{{ session('no') }}',
                 showConfirmButton: false,
                 timer: 3000 // Thời gian tự động đóng sau 3 giây

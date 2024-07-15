@@ -14,7 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::orderBy('created_at', 'DESC')->paginate(5);
+        $blogs = Blog::all();
         return view('Admin.Blog.index', compact('blogs'));
     }
 

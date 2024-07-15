@@ -7,7 +7,7 @@
                     <div class="card" style="border-radius: 2rem;">
                         <div class="row">
                             <div class="col col-lg-5 d-none d-md-block">
-                                <img src="{{ asset('assets/images/login/bg_login2.jpg') }}" alt="login form" height="100%"
+                                <img src="{{ asset('assets/images/login/bg_login3.jpg') }}" alt="login form" height="100%"
                                     width="100%" style="border-radius: 2rem 0 0 2rem;" />
                             </div>
                             <div class="col col-lg-7 d-flex align-items-center">
@@ -15,10 +15,9 @@
                                     <form method="POST" action="">
                                         @csrf
                                         <div class="align-items-center mb-3 text-center">
-                                            <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                            <span class="h6 fw-bold mb-0">Logo</span>
+                                            <img src="{{ asset('assets') }}/images/home/img/logo/logo-home.png" height="50" width="140"  alt="">
                                         </div>
-                                        <h6 class="text-center" style="letter-spacing: 1px;">Đăng nhập</h6>
+                                        <h6 class="text-center" style="letter-spacing: 1px;">ĐĂNG NHẬP</h6>
                                         <div class="mb-3 form-floating">
                                             <input type="email" name="email"
                                                 class="form-control @error('email')is-invalid @enderror"
@@ -33,17 +32,17 @@
                                             <input type="password" name="password"
                                                 class="form-control @error('password')is-invalid @enderror"
                                                 id="floatingPassword" placeholder="Password">
-                                            <label for="floatingPassword">Password</label>
+                                            <label for="floatingPassword">Mật khẩu</label>
                                             @error('password')
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <div class="mb-4 d-grid gap-2 col-6 mx-auto">
-                                            <button class="btn btn-success btn-block" type="submit">Đăng
+                                            <button class="btn btn-success btn-block btn-sm" type="submit">Đăng
                                                 nhập</button>
                                         </div>
-                                        <a class="small text-muted" href="{{ route('account.forgot_password') }}">Forgot password?</a>
+                                        <a class="small text-muted" href="{{ route('account.forgot_password') }}">Quên mật khẩu?</a>
                                         <p class="mb-5" style="color: #393f81;">Bạn chưa có tài khoản?
                                             <a href="{{ route('account.register') }}" style="color: #393f81;">Đăng ký
                                                 ngay.</a>

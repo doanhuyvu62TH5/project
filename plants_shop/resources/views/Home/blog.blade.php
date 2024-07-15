@@ -64,13 +64,13 @@
                             <div class="p-2">
                                 <div class="card" style="width: 100%">
                                     <img src="{{ asset($blog->image) }}"
-                                        class="card-img-top" alt="...">
+                                        class="card-img-top" height="250" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $blog->title }}</h5>
-                                        <p class="card-text">{{ Str::limit($blog->content, 100, '...') }}</p>
+                                        <p class="card-text">{!! Str::limit($blog->content, 100, '...') !!}</p>
                                     </div>
                                     <div class="card-body">
-                                        <a href="{{ route('home.blog',$blog->id) }}" class="card-link">Xem thêm...</a>
+                                        <a href="{{ route('home.blog',$blog->id) }}" class="card-link text-danger text-decoration-none">Xem thêm...</a>
                                     </div>
                                 </div>
                             </div>

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <h1>Giỏ hàng</h1>
+                        <h1>Giỏ Hàng</h1>
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
                                 <a class="custom-link" href="{{ route('home.index') }}"><i class="fas fa-home"></i> Trang chủ</a>
@@ -52,7 +52,7 @@
                                                         style="width: 60px; text-align:center"
                                                         oninput="validity.valid||(value='1' );" onblur="if(!value) value='1';"
                                                         min="1">
-                                                    <button><i class="fa fa-save"></i></button>
+                                                    <button class="btn"><i class="fa fa-save"></i></button>
                                                 </form>
                                             </td>
                                             <td>
@@ -63,8 +63,8 @@
                                                 <form action="{{ route('cart.delete', $item->product_id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        onclick="return confirm('Are you sure want to delete product?')">
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>

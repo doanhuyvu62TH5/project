@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\ContributeController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CustomerController;
-
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Home\AccountController;
@@ -86,7 +87,12 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function(){
     Route::resource('/blog',BlogController::class);
     Route::resource('/comment',CommentController::class);
     Route::resource('/customer',CustomerController::class);
+    Route::resource('/slider',SliderController::class);
 
+    
+    Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('reports/revenue', [ReportController::class, 'revenue'])->name('admin.reports.revenue');
+    
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
     Route::post('orders/{order}/confirm', [OrderController::class, 'confirm'])->name('admin.orders.confirm');

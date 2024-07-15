@@ -4,95 +4,112 @@
         <div class="col-md-3">
             <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h3 class="fs-2">720</h3>
-                    <p class="fs-5">Products</p>
+                    <p class="fs-5"><strong>Sản phẩm</strong></p>
+                    <h3 class="fs-2">{{ $productCount }}</h3>
+                    <a href="{{ route('product.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                <i class="fas fa-gift fs-1 primary-text p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h3 class="fs-2">4920</h3>
-                    <p class="fs-5">Sales</p>
+                    <p class="fs-5">Khách hàng</p>
+                    <h3 class="fs-2">{{ $customerCount }}</h3>
+                    <a href="{{ route('customer.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                <i class="fas fa-users fs-1 primary-text  p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h3 class="fs-2">3899</h3>
-                    <p class="fs-5">Delivery</p>
+                    <p class="fs-5">Danh mục</p>
+                    <h3 class="fs-2">{{ $categoryCount }}</h3>
+                    <a href="{{ route('category.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                <i class="fas fa-solid fa-list fs-1 primary-text p-3"></i>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                 <div>
-                    <h3 class="fs-2">%25</h3>
-                    <p class="fs-5">Increase</p>
+                    <p class="fs-5">Blog</p>
+                    <h3 class="fs-2">{{ $blogCount }}</h3>
+                    <a href="{{ route('blog.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                <i class="fas fa-blog fs-1 primary-text p-3"></i>
             </div>
         </div>
     </div>
+    <div class="row g-3 my-2">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Bình luận</p>
+                    <h3 class="fs-2">{{ $commentCount }}</h3>
+                    <a href="{{ route('comment.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fas fa-comments fs-1 primary-text  p-3"></i>
+            </div>
+        </div>
 
-    <div class="row my-5">
-        <h3 class="fs-4 mb-3">Recent Orders</h3>
-        <div class="col">
-            <table class="table bg-white rounded shadow-sm  table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col" width="50">#</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Television</td>
-                        <td>Jonny</td>
-                        <td>$1200</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Laptop</td>
-                        <td>Kenny</td>
-                        <td>$750</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Cell Phone</td>
-                        <td>Jenny</td>
-                        <td>$600</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Laptop</td>
-                        <td>Kenny</td>
-                        <td>$750</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Cell Phone</td>
-                        <td>Jenny</td>
-                        <td>$600</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Laptop</td>
-                        <td>Kenny</td>
-                        <td>$750</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Đơn hàng</p>
+                    <h3 class="fs-2">{{ $orderCount }}</h3>
+                    <a href="{{ route('admin.orders.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fas fa-shopping-cart fs-1 primary-text p-3"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Đang vận chuyển</p>
+                    <h3 class="fs-2">{{ $orderShippingCount }}</h3>
+                    <a href="{{ route('admin.orders.index') }}?status=3" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fas fa-truck fs-1 primary-text p-3"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Đã giao hàng</p>
+                    <h3 class="fs-2">{{ $orderdeliveredCount }}</h3>
+                    <a href="{{ route('admin.orders.index') }}?status=4" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 primary-text p-3"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 my-2">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Phản hồi</p>
+                    <h3 class="fs-2">{{ $contributeCount }}</h3>
+                    <a href="{{ route('admin.contributes.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fas fa-comment-dots fs-1 primary-text  p-3"></i>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <p class="fs-5">Slider</p>
+                    <h3 class="fs-2">{{ $SliderCount }}</h3>
+                    <a href="{{ route('slider.index') }}" class="text-success fw-bold text-decoration-none">Chi tiết... <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <i class="fa fa-images fs-1 primary-text  p-3"></i>
+            </div>
         </div>
     </div>
 @endsection

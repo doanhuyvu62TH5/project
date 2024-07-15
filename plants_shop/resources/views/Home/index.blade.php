@@ -1,32 +1,13 @@
 @extends('Home.master.main')
 @section('content')
-    <div class="slide">
-        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+    <div class="slider">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" >
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('assets') }}/images/home/img/slider/home1-slide1.jpg" class="d-block w-100"
-                        alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
-                    </div>
+                @foreach($sliders as $slider)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                    <img src="{{ asset($slider->image) }}" class="d-block w-100" alt="{{ $slider->title }}" height="450">
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('assets') }}/images/home/img/slider/home1-slide3.jpg" class="d-block w-100"
-                        alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('assets') }}/images/home/img/slider/home1-slide1.jpg" class="d-block w-100"
-                        alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                 data-bs-slide="prev">
@@ -47,30 +28,29 @@
             <div class="row align-items-center flex-md-row flex-column">
                 <div class="col mb-3">
                     <div class="card">
-                        <img src="{{ asset('assets') }}/images/home/img/banner/banner-1.jpg" class="card-img"
+                        <img src="{{ asset('assets') }}/images/home/img/banner/banner2.jpg" class="card-img"
                             alt="...">
                         <div class="card-img-overlay overflow-hidden">
-                            <h5 class="card-title">Card
-                                titleaaaaaaa
+                            <h5 class="card-title">
                             </h5>
                         </div>
                     </div>
                 </div>
                 <div class="col mb-3">
                     <div class="card">
-                        <img src="{{ asset('assets') }}/images/home/img/banner/banner-2.jpg" class="card-img"
+                        <img src="{{ asset('assets') }}/images/home/img/banner/banner1.jpg" class="card-img"
                             alt="...">
                         <div class="card-img-overlay overflow-hidden">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title"></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col mb-3">
                     <div class="card">
-                        <img src="{{ asset('assets') }}/images/home/img/banner/banner-1.jpg" class="card-img"
+                        <img src="{{ asset('assets') }}/images/home/img/banner/banner3.jpg" class="card-img"
                             alt="...">
                         <div class="card-img-overlay overflow-hidden">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title"></h5>
                         </div>
                     </div>
                 </div>
@@ -90,9 +70,9 @@
                                     class="img-fluid rounded-start" alt="...">
                             </div>
                             <div class="col-md-8 ">
-                                <div class="card-body">
-                                    <h6 class="card-title">FREE SHIPPING</h6>
-                                    <p>Free shipping all order</p>
+                                <div>
+                                    <p><strong>MIỄN PHÍ VẬN CHUYỂN</strong></p>
+                                    <p>Tất cả đơn hàng</p>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +87,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h6 class="card-title">SUPPORT 24/7</h6>
-                                    <p>Support 24 hours a day</p>
+                                    <p><strong>HỖ TRỢ 24/7</strong></p>
+                                    <p>Hỗ trợ 24 giờ trong ngày</p>
                                 </div>
                             </div>
                         </div>
@@ -123,8 +103,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h6 class="card-title">FRMONEY RETURN</h6>
-                                    <p>30 days for free return</p>
+                                    <p><strong>HOÀN TIỀN</strong></p>
+                                    <p>30 ngày đổi trả miễn phí</p>
                                 </div>
                             </div>
                         </div>
@@ -139,8 +119,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h6 class="card-title">ORDER DISCOUNT</h6>
-                                    <p>SOn every order $15</p>
+                                    <p><strong>KHUYẾN MÃI</strong></p>
+                                    <p>Nhiều sản phẩm khuyển mãi</p>
                                 </div>
                             </div>
                         </div>
@@ -155,8 +135,7 @@
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>Sản phẩm mới</h2>
-                <p>.............</p>
+                <h2 class="text-success">SẢN PHẨM MỚI</h2>
             </div>
             <div class="product">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel"
@@ -178,12 +157,12 @@
                                                         class="text-decoration-none text-dark">
                                                         <h5 class="card-title mt-3">{{ $newp->name }}</h5>
                                                         @if ($newp->sale_price != null)
-                                                            <div class="row" style="height: 30px;">
+                                                            <div class="row" style="height: 20px;">
                                                                 <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($newp->price)}} đ</h6>
                                                             </div>
                                                                 <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($newp->sale_price)}} đ</h6>
                                                         @else
-                                                            <div class="row" style="height: 30px;">
+                                                            <div class="row" style="height: 20px;">
                                                             </div>
                                                             <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($newp->price)}} đ</h6>
                                                         @endif    
@@ -225,7 +204,7 @@
             </div><!-- This closing div is added -->
         </div>
         <div class="viewallproduct text-center">
-            <a class="btn btn-warning" href="{{ route('products.all') }}" role="button">Tất cả sản phẩm</a>
+            <a class="btn btn-sm btn-danger" href="{{ route('products.all') }}" role="button">Tất cả sản phẩm</a>
         </div>
     </div>
 
@@ -233,8 +212,7 @@
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>Chủ đề về cây</h2>
-                <p>.............</p>
+                <h2 class="text-success">BỘ SƯU TẬP VỀ CÂY</h2>
             </div>
             <div class="product">
                 <div id="carouselExampleDark2" class="carousel carousel-dark slide" data-bs-ride="carousel"
@@ -302,14 +280,16 @@
                 </div>
             </div><!-- This closing div is added -->
         </div>
+        <div class="viewallproduct text-center">
+            <a class="btn btn-sm btn-danger" href="{{ route('products.byType', ['type' => '0']) }}" role="button">Xem thêm...</a>
+        </div>
     </div>
 
     {{-- flower --}}
     <div class="newproduct">
         <div class="container">
             <div class="title text-center">
-                <h2>Chủ để về hoa</h2>
-                <p>.............</p>
+                <h2 class="text-success">BỘ SƯU TẬP VỀ HOA</h2>
             </div>
             <div class="product">
                 <div id="carouselExampleDark3" class="carousel carousel-dark slide" data-bs-ride="carousel"
@@ -330,14 +310,14 @@
                                                        <!-- Button trigger modal -->
                                                     <a href="{{ route('home.product', $fl->id) }}"
                                                         class="text-decoration-none text-dark">
-                                                        <h5 class="card-title mt-3">{{ $tr->name }}</h5>
+                                                        <h5 class="card-title mt-3">{{ $fl->name }}</h5>
                                                         @if ($fl->sale_price != null)
-                                                            <div class="row" style="height: 30px;">
+                                                            <div class="row" style="height: 20px;">
                                                                 <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($fl->price)}} đ</h6>
                                                             </div>
                                                                 <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->sale_price)}} đ</h6>
                                                         @else
-                                                            <div class="row" style="height: 30px;">
+                                                            <div class="row" style="height: 20px;">
                                                             </div>
                                                             <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($fl->price)}} đ</h6>
                                                         @endif    
@@ -379,6 +359,9 @@
                 </div>
             </div><!-- This closing div is added -->
         </div>
+        <div class="viewallproduct text-center">
+            <a class="btn btn-sm btn-danger" href="{{ route('products.byType', ['type' => '1']) }}" role="button">Xem thêm...</a>
+        </div>
     </div>
 
     <div class="banner2">
@@ -390,27 +373,27 @@
                                 class="figure-img img-fluid rounded" alt="..."></a>
 
                         <figcaption class="figure-caption position-absolute top-50 start-50 translate-middle">
-                            <h2>caption</h2>
+                            <h2></h2>
                         </figcaption>
                     </figure>
                 </div>
                 <div class="col-md-6 order-sm-3 order-md-2">
                     <figure class="figure1 position-relative">
-                        <a href=""><img src="{{ asset('assets') }}/images/home/img/banner/banner-4.jpg"
+                        <a href=""><img src="{{ asset('assets') }}/images/home/img/banner/banner-2.jpg"
                                 class="figure-img img-fluid rounded" alt="..."></a>
 
                         <figcaption class="figure-caption position-absolute top-50 start-50 translate-middle">
-                            <h2>caption</h2>
+                            <h2></h2>
                         </figcaption>
                     </figure>
                 </div>
                 <div class="col-md-3 col-sm-6 order-sm-2 order-md-3">
                     <figure class="figure1 position-relative">
-                        <a href=""><img src="{{ asset('assets') }}/images/home/img/banner/banner-3.jpg"
+                        <a href=""><img src="{{ asset('assets') }}/images/home/img/banner/banner-1.jpg"
                                 class="figure-img img-fluid rounded" alt="..."></a>
 
                         <figcaption class="figure-caption position-absolute top-50 start-50 translate-middle">
-                            <h2>caption</h2>
+                            <h2></h2>
                         </figcaption>
                     </figure>
                 </div>
@@ -421,8 +404,7 @@
     <div class="top-seller">
         <div class="container">
             <div class="title text-center">
-                <h2>Sản phẩm giảm giá</h2>
-                <p>.............</p>
+                <h2 class="text-success">SẢN PHẨM GIẢM GIÁ</h2>
             </div>
             <div class="product">
                 <div id="carouselExampleDark4" class="carousel carousel-dark slide" data-bs-ride="carousel"
@@ -444,7 +426,7 @@
                                                     <a href="{{ route('home.product', $product->id) }}"
                                                         class="text-decoration-none text-dark">
                                                         <h5 class="card-title mt-3">{{ $product->name }}</h5>
-                                                        <div class="row" style="height: 30px;">
+                                                        <div class="row" style="height: 20px;">
                                                             <h6 class="card-title my-3 text-decoration-line-through text-dark text-outline-danger">{{ number_format($product->price)}} đ</h6>
                                                         </div>
                                                         <h6 class="card-title my-3 text-danger text-outline-danger">{{ number_format($product->sale_price)}} đ</h6>
@@ -494,17 +476,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="goodmaximcontent">
-                        <h6>A little Story About Us</h6>
+                        <h3 class="text-danger">Tươi Đẹp & Sắc Màu: Hoa và Cây Cảnh Cho Mọi Góc Nhìn</h3>
                     </div>
                     <div class="goodmaximcontent">
-                        <h4>Our History</h4>
+                        <p>Chào mừng đến với thế giới của những màu sắc và hương thơm tuyệt vời! Tại đây, chúng tôi mang đến cho bạn những loại hoa tươi đẹp nhất từ các vườn hoa chăm sóc kỹ lưỡng. Từ những bông hoa đơn giản nhưng thanh lịch cho đến những bó hoa thảo mộc phong phú, mỗi sản phẩm đều mang đến sự tươi mới và sắc màu cho không gian của bạn.</p>
                     </div>
                     <div class="goodmaximcontent">
-                        <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
-                            mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis
-                            in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me
-                            lius quod ii legunt saepius. Claritas est etiam processus dynamicus. Phasellus eu
-                            rhoncus dolor, vitae scelerisque sapien</p>
+                        <p>Khám phá bộ sưu tập đa dạng của chúng tôi về cây cảnh, từ những cây nội thất nhỏ gọn đến những cây kiểng lớn mang lại sự sang trọng và xanh mát cho không gian sống của bạn. Chúng tôi cam kết cung cấp các loại cây cảnh chất lượng cao, được chăm sóc kỹ lưỡng để đảm bảo sức khỏe và sự thịnh vượng của cây trong mọi điều kiện thời tiết.</p>
                     </div>
                 </div>
             </div>
@@ -515,120 +493,33 @@
     <div class="blog">
         <div class="container">
             <div class="title text-center">
-                <h2>Blog</h2>
-                <p>.............</p>
+                <h2 class="text-success">Blog</h2>
             </div>
-            <div class="content-blog">
-                <div class="text-center">
-                    <div id="carouselExampleDark3" class="carousel carousel-dark slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active" data-bs-interval="10000">
-                                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
+            <div class="content-blog mt-5">
+                <div class="">
+                    <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
+                        @foreach ($blogs as $blog)
+                            <div class="col">
+                                <div class="p-2">
+                                    <div class="card" style="width: 100%">
+                                        <img src="{{ asset($blog->image) }}"
+                                            class="card-img-top" height="250" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $blog->title }}</h5>
+                                            <p class="card-text">{!! Str::limit($blog->content, 100, '...') !!}</p>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
+                                        <div class="card-body">
+                                            <a href="{{ route('home.blog',$blog->id) }}" class="card-link text-danger text-decoration-none">Xem thêm...</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item" data-bs-interval="2000">
-                                <div class="row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/images/home/img/blog/blog-details-1.jpg"
-                                                    class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <button class="carousel-control-prev" type="button" style="width: 30px;"
-                            data-bs-target="#carouselExampleDark3" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" style="width: 30px;"
-                            data-bs-target="#carouselExampleDark3" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        @endforeach    
                     </div>
-
                 </div>
+            </div>
+            <div class="viewallproduct text-center">
+                <a class="btn btn-sm btn-danger" href="{{ route('home.blogs') }}" role="button">Xem thêm...</a>
             </div>
         </div>
     </div>
@@ -638,8 +529,7 @@
     <div class="image-instagram">
         <div class="container">
             <div class="title text-center">
-                <h2>Instagram</h2>
-                <p>.............</p>
+                <h2 class="text-success">INSTAGRAM</h2>
             </div>
             <div class="content-blog">
                 <div id="carouselExample" class="carousel slide">

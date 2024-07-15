@@ -20,7 +20,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-6">
-                <h5 class="mb-3">ĐÓNG GÓP Ý TƯỞNG VỚI CHÚNG TÔI</h5>
+                <h5 class="mb-3">ĐÓNG GÓP, PHẢN HỒI VỚI CHÚNG TÔI</h5>
                 <form action="{{ route('send') }}" method="POST">
                     @csrf
                     <div class="row">
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-12 mb-3 border-bottom">
                         <strong><i class="fa fa-fax"></i>
-                         Địa hỉ : Xóm Nam Phong, Xã Nam Phong, Tp.Nam Định, Tỉnh Nam Định.</strong>
+                         Địa chỉ : Xóm Nam Phong, Xã Nam Phong, Tp.Nam Định, Tỉnh Nam Định.</strong>
                     </div>
                     <div class="col-12 mb-3 border-bottom">
                         <strong><i class="fa fa-phone"></i>

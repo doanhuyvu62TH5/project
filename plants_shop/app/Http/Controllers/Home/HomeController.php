@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Blog;
 use App\Models\Contact;
+use App\Models\Slider;
 use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,25 +17,35 @@ class HomeController extends Controller
     public function index()
     {
         $new_products = Product::orderBy('created_at', 'DESC')
-                                ->where('status', 1)
-                                ->limit(8)->get();
+            ->where('status', 1)
+            ->limit(8)->get();
         $tree = Product::join('categories', 'products.category_id', '=', 'categories.id')
-                        ->where('categories.type', 0)
-                        ->where('products.status', 1)
-                        ->select('products.*')
-                        ->limit(8)
-                        ->get();
+            ->where('categories.type', 0)
+            ->where('products.status', 1)
+            ->select('products.*')
+            ->limit(8)
+            ->get();
         $flower = Product::join('categories', 'products.category_id', '=', 'categories.id')
-                        ->where('categories.type', 1)
-                        ->where('products.status', 1)
-                        ->select('products.*')
-                        ->get();
-        $discounted_products = Product::orderBy('created_at','DESC')
-                                    ->where('status', '1')
-                                    ->whereNotNull('sale_price')
-                                    ->limit(8)
-                                    ->get();
-        return view('Home.index', compact('new_products', 'tree', 'flower','discounted_products'));
+            ->where('categories.type', 1)
+            ->where('products.status', 1)
+            ->select('products.*')
+            ->limit(8)
+            ->get();
+        $discounted_products = Product::orderBy('created_at', 'DESC')
+            ->where('status', '1')
+            ->whereNotNull('sale_price')
+            ->limit(8)
+            ->get();
+
+        $blogs = Blog::orderBy('created_at', 'DESC')
+            ->where('status', '1')
+            ->limit(3)
+            ->get();
+
+        $sliders = Slider::orderBy('order', 'ASC')
+            ->where('status', '1')
+            ->get();
+        return view('Home.index', compact('new_products', 'tree', 'flower', 'discounted_products','blogs','sliders'));
 
     }
 
@@ -44,8 +55,9 @@ class HomeController extends Controller
         $productsQuery = Product::where('status', '1');
         $productsQuery = $this->applyPriceFilter($productsQuery, $request->price_range);
         $productsQuery = $this->applySort($productsQuery, $request->sort_by);
+        $productsQuery = $this->applyPriceSale($productsQuery, $request->sale);
         $products = $productsQuery->paginate(12);
-        $headerTitle = 'Tất cả sản phẩm';
+        $headerTitle = 'BỘ SƯU TẬP';
         $new_products = $this->getNewProducts();
 
         return view('Home.category', compact('products', 'headerTitle', 'new_products'));
@@ -55,6 +67,8 @@ class HomeController extends Controller
         $productsQuery = $cat->products();
         $productsQuery = $this->applyPriceFilter($productsQuery, $request->price_range);
         $productsQuery = $this->applySort($productsQuery, $request->sort_by);
+        $productsQuery = $this->applyPriceSale($productsQuery, $request->sale);
+
         $products = $productsQuery->paginate(12);
         $headerTitle = $this->getHeaderTitleByCategoryType($cat->type);
         $new_products = $this->getNewProducts();
@@ -70,6 +84,7 @@ class HomeController extends Controller
             ->select('products.*');
         $productsQuery = $this->applyPriceFilter($productsQuery, $request->price_range);
         $productsQuery = $this->applySort($productsQuery, $request->sort_by);
+        $productsQuery = $this->applyPriceSale($productsQuery, $request->sale);
         $products = $productsQuery->paginate(12);
         $headerTitle = $this->getHeaderTitleByCategoryType($type);
         $new_products = $this->getNewProducts();
@@ -87,6 +102,12 @@ class HomeController extends Controller
                 case 'price_desc':
                     $query->orderBy('price', 'DESC');
                     break;
+                    case 'sale_asc':
+                        $query->orderByRaw('IFNULL(sale_price, price) ASC');
+                        break;
+                    case 'sale_desc':
+                        $query->orderByRaw('IFNULL(sale_price, price) DESC');
+                        break;
                 case 'name_asc':
                     $query->orderBy('name', 'ASC');
                     break;
@@ -103,31 +124,45 @@ class HomeController extends Controller
         }
         return $query;
     }
+    private function applyPriceSale($query, $isSale)
+    {
+        if ($isSale) {
+            $query->whereNotNull('sale_price');
+        }
+        return $query;
+    }
     private function applyPriceFilter($query, $priceRange)
     {
         if ($priceRange) {
             switch ($priceRange) {
                 case 'under_100000':
-                    $query->where('price', '<', 100000);
+                    $query->where(function ($q) {
+                        $q->where('sale_price', '<', 100000)
+                        ->orWhereNull('sale_price')
+                        ->where('price', '<', 100000);
+                    });
                     break;
                 case '100000_200000':
-                    $query->whereBetween('price', [100000, 200000]);
+                    $query->where(function ($q) {
+                        $q->whereBetween('sale_price', [100000, 200000])
+                        ->orWhereNull('sale_price')
+                        ->whereBetween('price', [100000, 200000]);
+                    });
                     break;
                 case 'above_200000':
-                    $query->where('price', '>', 200000);
-                    break;
-                case 'sale':
-                        // Lọc các sản phẩm có giá sale_price khác null và khác 0
-                    $query->whereNotNull('sale_price');
+                    $query->where(function ($q) {
+                        $q->where('sale_price', '>', 200000)
+                        ->orWhereNull('sale_price')
+                        ->where('price', '>', 200000);
+                    });
                     break;
             }
         }
         return $query;
     }
-
     private function getHeaderTitleByCategoryType($type)
     {
-        return $type == '0' ? 'Cây cảnh' : ($type == '1' ? 'Hoa' : 'Sản phẩm');
+        return $type == '0' ? 'BỘ SƯU TẬP VỀ CÂY' : ($type == '1' ? 'BỘ SƯU TẬP VỀ HOA' : 'BỘ SƯU TẬP');
     }
 
     private function getNewProducts()
@@ -140,8 +175,8 @@ class HomeController extends Controller
 
     public function showProduct(Product $product)
     {
-        $comments = $product->comments()->where('status', 0)->get();
-        return view('Home.product', compact('product','comments'));
+        $comments = $product->comments()->get();
+        return view('Home.product', compact('product', 'comments'));
     }
     public function search(Request $request)
     {
@@ -178,38 +213,40 @@ class HomeController extends Controller
     }
     public function contact_post(Request $request)
     {
-        $request->validate([
-            'name' =>'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'subject' => 'required',
-            'message' => 'required',
-        ],
-        [
-            'name.required' => 'Vui lòng điền họ tên!',
-            'email.required' => 'Vui lòng điền email!',
-            'phone.required' => 'Vui lòng điền số điện thoại!',
-            'subject.required' => 'Vui lòng điền chủ đề!',
-            'message.required' => 'Vui lòng chọn ghi lời nhắn!',
-        ]);
-        $data = $request->all('name','email','phone','subject','message');
+        $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'required',
+                'phone' => 'required',
+                'subject' => 'required',
+                'message' => 'required',
+            ],
+            [
+                'name.required' => 'Vui lòng điền họ tên!',
+                'email.required' => 'Vui lòng điền email!',
+                'phone.required' => 'Vui lòng điền số điện thoại!',
+                'subject.required' => 'Vui lòng điền chủ đề!',
+                'message.required' => 'Vui lòng chọn ghi lời nhắn!',
+            ]
+        );
+        $data = $request->all('name', 'email', 'phone', 'subject', 'message');
         Contact::create($data);
-        return redirect()->route('contact_us.index')->with('success','Cảm ơn bạn đã đóng góp với chúng tôi! Chúng tôi sẽ phản hồi qua email của bạn trong thời gian sớm nhất.');
+        return redirect()->route('contact_us.index')->with('success', 'Cảm ơn bạn đã đóng góp với chúng tôi! Chúng tôi sẽ phản hồi qua email của bạn trong thời gian sớm nhất.');
     }
     public function blog()
     {
         $blogs = Blog::orderBy('created_at', 'DESC')
-                    ->where('status', '1')
-                    ->limit(6)
-                    ->get();
+            ->where('status', '1')
+            ->limit(6)
+            ->get();
         $new_products = $this->getNewProducts();
-        return view('Home.blog',compact('blogs','new_products'));
+        return view('Home.blog', compact('blogs', 'new_products'));
     }
     public function showBlogDetail(Blog $blog)
     {
-        $comments = $blog->comments()->where('status', 0)->get();
+        $comments = $blog->comments()->get();
         $new_products = $this->getNewProducts();
-        return view('Home.blog-detail', compact('blog','new_products','comments'));
+        return view('Home.blog-detail', compact('blog', 'new_products', 'comments'));
     }
 
     public function comment_post(Request $request)
@@ -218,7 +255,6 @@ class HomeController extends Controller
             'comment' => 'required',
             'product_id' => 'nullable|exists:products,id',
             'blog_id' => 'nullable|exists:blogs,id',
-            'type' => 'required|in:product,blog',
         ]);
 
         // Tạo mới comment bằng phương thức create
@@ -227,7 +263,6 @@ class HomeController extends Controller
             'product_id' => $request->input('product_id'),
             'blog_id' => $request->input('blog_id'),
             'comment' => $request->input('comment'),
-            'parent_id' => $request->input('parent_id', 0),
             'type' => $request->input('type'),
         ]);
 
@@ -238,5 +273,5 @@ class HomeController extends Controller
         $comment->delete();
         return redirect()->back()->with('success', 'Xoá bình luận thành công!');
     }
-    
+
 }

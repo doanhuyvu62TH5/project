@@ -8,7 +8,7 @@
             @csrf
             <div class="row justify-content-center">
                 <div class="text-center border-bottom">
-                    <h4>Thêm sản phẩm</h4>
+                    <h4>Thêm Mới Sản Phẩm</h4>
                 </div>
                 <div class="col-6 bg-white mt-3">
                     <div class="mb-3">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Nội dung</label>
-                        <textarea name ="content" class="form-control @error('content')is-invalid @enderror"  style="height: 100px;">{{ old('content') }}</textarea>
+                        <textarea id="editor" name ="content" class="form-control @error('content')is-invalid @enderror"  style="height: 100px;">{{ old('content') }}</textarea>
                         @error('content')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -58,13 +58,13 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Trạng thái</label>
                         <div class="form-check">
-                            <input name="status" class="form-check-input" type="radio" value="1">
+                            <input name="status" class="form-check-input" type="radio" value="1" checked>
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Hiện
                             </label>
                         </div>
                         <div class="form-check">
-                            <input name="status" class="form-check-input" type="radio" value="0" checked>
+                            <input name="status" class="form-check-input" type="radio" value="0" >
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Ẩn
                             </label>
@@ -88,4 +88,13 @@
                 </div>
         </form>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

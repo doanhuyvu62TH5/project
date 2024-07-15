@@ -27,7 +27,7 @@ class CheckoutController extends Controller
         $status = request('status', null);
         $auth = auth('cus')->user();
 
-        if ($status !== null) {
+        if($status !== null) {
             $orders = Order::where('customer_id', $auth->id)
                 ->whereIn('status', $status)
                 ->orderBy('id', 'DESC')
@@ -100,7 +100,7 @@ class CheckoutController extends Controller
             Payment::create($paymentData);
             return redirect()->route('home.index')->with('ok', 'Đặt hàng thành công!');
         }
-        return redirect()->route('home.index')->with('no', 'Something orror, please try again');
+        return redirect()->route('home.index')->with('no', 'Lỗi, vui lòng thử lại sau!');
     }
     
     public function cancel(Order $order)
@@ -110,7 +110,7 @@ class CheckoutController extends Controller
         $hoursDifference = $orderCreatedAt->diffInHours($currentTime);
 
         if ($hoursDifference < 3) {
-            $order->status = 6;
+            $order->status = 5;
             $order->save();
             $orderDetails = $order->details;
             foreach ($orderDetails as $detail) {
