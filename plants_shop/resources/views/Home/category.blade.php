@@ -9,7 +9,7 @@
                             <h1>{{ $headerTitle }}</h1>
                         @endif
                         @if (isset($cat))
-                            <h6>{{ $cat->name }}</h6>
+                            <h4 class="text-danger">{{ $cat->name }}</h4>
                         @endif
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
@@ -149,7 +149,7 @@
                                 <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
                                 <div class="col-5">
                                     <a href="{{ route('home.product', $newp->id) }}">
-                                        <img src="{{ asset($newp->image) }}" height=125 width=110 class="zoom-image"
+                                        <img src="{{ asset($newp->image) }}" height=120 width=110 class="zoom-image"
                                             alt="...">
                                     </a>
                                 </div>
@@ -163,7 +163,8 @@
                                     <div class="card-body">
                                         @if ($newp->sale_price != null)
                                             <p class="text-decoration-line-through text-dark">
-                                                <Strong>{{ number_format($newp->price) }} đ</Strong></p>
+                                                <Strong>{{ number_format($newp->price) }} đ</Strong>
+                                            </p>
                                             <p class="text-danger"><Strong>{{ number_format($newp->sale_price) }}
                                                     đ</Strong></p>
                                         @else
@@ -180,32 +181,49 @@
                         <div class="row justify-content-center mt-3">
                             <div class="row mb-5 justify-content-center">
                                 <!-- Thêm dropdown menu -->
-                                <form action="{{ request()->fullUrl() }}" class="row" method="GET" id="filter-sort-form">
+                                <form action="{{ request()->fullUrl() }}" class="row" method="GET"
+                                    id="filter-sort-form">
                                     <div class="col-md-4 mb-3">
                                         <select class="form-control" name="sort_by" id="sort_by">
                                             <option value="" selected disabled hidden>Sắp xếp theo</option>
-                                            <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
-                                            <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
-                                            <option value="sale_asc" {{ request('sort_by') == 'sale_asc' ? 'selected' : '' }}>Giá khuyến mãi tăng dần</option>
-                                            <option value="sale_desc" {{ request('sort_by') == 'sale_desc' ? 'selected' : '' }}>Giá khuyến mãi giảm dần</option>
-                                            <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên A-Z</option>
-                                            <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên Z-A</option>
-                                            <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Sản phẩm cũ</option>
-                                            <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Sản phẩm mới</option>
+                                            <option value="price_asc"
+                                                {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần
+                                            </option>
+                                            <option value="price_desc"
+                                                {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần
+                                            </option>
+                                            <option value="name_asc"
+                                                {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Tên từ A-Z</option>
+                                            <option value="name_desc"
+                                                {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Tên từ Z-A</option>
+                                            <option value="created_asc"
+                                                {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Sản phẩm từ cũ
+                                                đến mới</option>
+                                            <option value="created_desc"
+                                                {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Sản phẩm từ
+                                                mới đến cũ</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <select class="form-control" name="price_range" id="price_range">
                                             <option value="" selected disabled hidden>Chọn khoảng giá</option>
                                             <option value="">Tất cả</option>
-                                            <option value="under_100000" {{ request('price_range') == 'under_100000' ? 'selected' : '' }}>Dưới 100.000</option>
-                                            <option value="100000_200000" {{ request('price_range') == '100000_200000' ? 'selected' : '' }}>100.000 - 200.000</option>
-                                            <option value="above_200000" {{ request('price_range') == 'above_200000' ? 'selected' : '' }}>Trên 200.000</option>
+                                            <option value="under_100000"
+                                                {{ request('price_range') == 'under_100000' ? 'selected' : '' }}>Dưới
+                                                100.000 đ</option>
+                                            <option value="100000_400000"
+                                                {{ request('price_range') == '100000_400000' ? 'selected' : '' }}>Từ
+                                                100.000 đ - 400.000 đ</option>
+                                            <option value="above_400000"
+                                                {{ request('price_range') == 'above_400000' ? 'selected' : '' }}>Trên
+                                                400.000 đ</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-chec form-check-lgk">
-                                            <input class="form-check-input" type="checkbox" name="sale" id="sale" value="sale" {{ request('sale') == 'sale' ? 'checked' : '' }}>
+                                            <input class="form-check-input" type="checkbox" name="sale"
+                                                id="sale" value="sale"
+                                                {{ request('sale') == 'sale' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="sale">Đang khuyến mãi</label>
                                         </div>
                                     </div>
@@ -213,11 +231,11 @@
                                         <button type="submit" class="btn btn-sm btn-success">Lọc</button>
                                     </div>
                                 </form>
-                                
+
                             </div>
                         </div>
-                        <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-                            @if ($products->count())
+                        @if ($products->count())
+                            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
                                 @foreach ($products as $pro)
                                     <div class="col border-no">
                                         <div class="p-0 text-center">
@@ -265,10 +283,10 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            @else
-                                <p>Không có sản phẩm nào!</p>
-                            @endif
-                        </div>
+                            </div>
+                        @else
+                            <h6 class="text-center">Không có sản phẩm nào phù hợp!</h6>
+                        @endif
                         <div class="row mt-3">
                             <div class="col-12 d-flex justify-content-center">
                                 {!! $products->onEachSide(1)->links('pagination::bootstrap-4') !!}

@@ -30,7 +30,7 @@
                             <!-- Thêm lớp 'flex-md-row' để đảm bảo cả hai cột vẫn nằm ngang trên màn hình lớn và thu nhỏ -->
                             <div class="col-5">
                                 <a href="{{ route('home.product', $newp->id) }}">
-                                    <img src="{{ asset($newp->image) }}" height=125 width=105 class="zoom-image" alt="...">
+                                    <img src="{{ asset($newp->image) }}" height=120 width=105 class="zoom-image" alt="...">
                                 </a>
                             </div>
                             <div class="col-7 text-start">

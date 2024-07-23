@@ -4,7 +4,7 @@
         <h4 class="mb-0">Quản Lý Đóng Góp Phản Hồi</h4>
     </div>
     <hr />
-    <table class="table table-light" id="contribute" style="width: 100%">
+    <table class="table table-light" id="contributes" style="width: 100%">
         <thead class="table-primary">
             <tr>
                 <th>#</th>
@@ -43,7 +43,7 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-                new DataTable('#comments', {
+                new DataTable('#contributes', {
                     "paging": true, // Disable DataTables pagination if you want to use Laravel pagination
                     "info": true, // Disable table information display
                     "searching": true, // Enable the search functionality

@@ -15,13 +15,14 @@ class CartController extends Controller
     }
     public function add(Product $product, Request $req)
     {
-
         $quantity = $req->quantity ? floor($req->quantity) : 1;
 
         $cus_id = auth('cus')->id();
         $redirectPage = $req->redirect;
         $productName = $product->name;
-
+        if ($product->quantity == 0) {
+            return redirect()->back()->with('error', 'Sản phẩm này đã hết hàng!');
+        }
         $cartExist = Cart::where([
             'customer_id' => $cus_id,
             'product_id' => $product->id
@@ -30,7 +31,7 @@ class CartController extends Controller
             $newQuantity = $cartExist->quantity + $quantity;
             if ($newQuantity > $product->quantity) {
                 // Chuyển hướng dựa vào trang hiện tại
-                if ($redirectPage === 'product-detail') {
+                if ($redirectPage == 'product-detail') {
                     return redirect()->back()->with('error', 'Số lượng sản phẩm bạn vừa nhập với số lượng sản phẩm trong giỏ hàng đã LỚN HƠN số lượng sản phẩm đang có trong cửa hàng!');
                 } else {
                     $message = "Số lượng sản phẩm $productName trong giỏ hàng của bạn đã đạt mức tối đa số lượng sản phẩm của cửa hàng!";
@@ -46,7 +47,7 @@ class CartController extends Controller
         } else {
             if ($quantity > $product->quantity) {
                 // Nếu số lượng yêu cầu vượt quá số lượng tồn kho, trả về thông báo lỗi
-                if ($redirectPage === 'product-detail') {
+                if ($redirectPage == 'product-detail') {
                     return redirect()->back()->with('error', 'Số lượng sản phẩm bạn nhập LỚN HƠN số lượng sản phẩm sẵn có của cửa hàng!');
                 }
             }

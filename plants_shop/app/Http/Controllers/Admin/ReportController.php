@@ -51,16 +51,16 @@ class ReportController extends Controller
     }
 
 
-    private function getCompletedOrders($startDate, $endDate)
+    public function getCompletedOrders($startDate, $endDate)
     {
         return Order::where('status', '4')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
     }
 
-    private function calculateRevenue($orders)
+    public function calculateRevenue($orders)
     {
-        return $orders->sum('total_price');
+        return $orders->sum('totalPrice');
     }
 
     public function revenue(Request $request)

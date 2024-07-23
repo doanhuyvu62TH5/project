@@ -59,7 +59,7 @@
                                             <div>
                                                 <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
                                                 <div class="d-flex align-items-center">
-                                                    <p class="mb-0">
+                                                    <p class="mb-0 fst-italic text-primary">
                                                         {{ $comment->created_at->format('d-m-Y H:i:s') }}
                                                     </p>
                                                     @if (auth('cus')->check() && $comment->customer_id == auth('cus')->user()->id)
@@ -115,7 +115,7 @@
                                         <div class="d-flex flex-start w-100">
                                             <img class="rounded-circle shadow-1-strong me-3"
                                                 src="{{ asset('assets/images/home/avata.png') }}"
-                                                alt="avatar" width="40" height="40" />
+                                                alt="avatar" style="height:30px ;width: 30px;"/>
                                             <div data-mdb-input-init class="form-outline w-100">
                                                 <textarea name="comment" class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
                                                 <label class="form-label" for="textAreaExample">Bình
@@ -146,7 +146,7 @@
                         <div class="row text-center align-items-center mb-3">
                             <div class="col-5">
                                 <a href="{{ route('home.product', $newp->id) }}">
-                                    <img src="{{ asset($newp->image) }}" height=125 width=105 class="zoom-image"
+                                    <img src="{{ asset($newp->image) }}" height=120 width=105 class="zoom-image"
                                         alt="...">
                                 </a>
                             </div>

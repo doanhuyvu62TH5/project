@@ -20,6 +20,11 @@
     <div class="cartmain" style="margin-top: 100px;">
         <div class="container">
             <div class="row">
+                <div class="col-12">
+                    <h4 class="text-danger">*Lưu ý: Khách hàng thay đổi số lượng sản phẩm nhớ phải bấm nút lưu bên cạnh! Xin cảm ơn!</h4>
+                </div>
+            </div>
+            <div class="row">
                 @if($carts->count() > 0)
                     <div class="col-lg-12">
                         <div class="cart-table table-responsive">
@@ -43,7 +48,7 @@
                                                 <img src="{{ asset($item->product->image) }}" width="70" height="80">
                                             </td>
                                             <td>{{ $item->product->name }}</td>
-                                            <td>{{ number_format($item->price) }}</td>
+                                            <td>{{ number_format($item->price) }} đ</td>
                                             <td>
                                                 <form action="{{ route('cart.update', $item->product_id) }}" method="POST">
                                                     @csrf
@@ -57,7 +62,7 @@
                                             </td>
                                             <td>
                                                 {{-- Tính tổng giá trị bằng cách nhân giá với số lượng --}}
-                                                {{ $item->price * $item->quantity }}
+                                                {{ number_format($item->price * $item->quantity) }} đ
                                             </td>
                                             <td>
                                                 <form action="{{ route('cart.delete', $item->product_id) }}" method="POST">

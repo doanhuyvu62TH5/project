@@ -13,6 +13,7 @@
                 <th>STT</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
+                <th>Giá khuyến mãi</th>
                 <th>Số lượng</th>
                 <th>Danh mục</th>
                 <th>Hình ảnh</th>
@@ -26,7 +27,19 @@
                     <td class="align-middle">
                         {{ $loop->index + 1 }}</td>
                     <td class="align-middle">{{ $pro->name }}</td>
-                    <td class="align-middle">{{ number_format($pro->price) }}</td>
+
+                    @if ($pro->sale_price == null)
+                        <td class="align-middle">{{ $pro->price }} đ</td>
+                    @else
+                        <td class="align-middle text-decoration-line-through">{{ $pro->price }} đ</td>
+                    @endif
+                    <td class="align-middle text-center">
+                        @if ($pro->sale_price == null)
+                            -
+                        @else
+                            {{ number_format($pro->sale_price) }} đ
+                        @endif
+                    </td>
                     <td class="align-middle">{{ $pro->quantity }}</td>
                     <td class="align-middle">{{ $pro->category->name }}</td>
                     <td class="align-middle">

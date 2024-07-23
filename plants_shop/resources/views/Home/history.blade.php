@@ -64,9 +64,9 @@
                                     @if ($item->status == 0)
                                         <span>Chờ cửa hàng xác nhận</span>
                                     @elseif ($item->status == 1)
-                                        <span>Người bán đang chuẩn bị hàng</span>
+                                        <span>Cửa hàng đang chuẩn bị hàng</span>
                                     @elseif ($item->status == 2)
-                                        <span>Đơn hàng của bạn đã được đóng gói và đang bàn giao bên phía vận
+                                        <span>Đơn hàng của bạn đã đóng gói đang bàn giao bên phía vận
                                             chuyển</span>
                                     @elseif ($item->status == 3)
                                         <span>Đang giao hàng</span>
@@ -92,7 +92,7 @@
                                         <span>Đã thanh toán.</span>
                                     @endif
                                 </td>
-                                <td>{{ number_format($item->totalPrice) }}</td>
+                                <td>{{ number_format($item->totalPrice) }} đ</td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('order.detail', $item->id) }}"
@@ -117,7 +117,7 @@
                 </table>
             </div>
             @else
-                <h6 class="text-center">Không có sản phẩm nào!</h6>
+                <h6 class="text-center">Không có đơn hàng nào!</h6>
             @endif
         </div>
     </div>

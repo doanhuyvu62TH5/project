@@ -98,9 +98,10 @@
                                 <div class="payment-content">
                                     <div class="row align-items-center">
                                         <div class="col col-md-6 ">
-                                            <h6>Ngân hàng: Vietinbank.</h6>
-                                            <h6>STK: 105872836955</h6>
-                                            <h6>TÊN: DOAN HUY VU</h6>
+                                            <h4>Ngân hàng: Vietinbank.</h4>
+                                            <h4>STK: 105872836955</h4>
+                                            <h4>TÊN: DOAN HUY VU</h4>
+                                            <p class="text-danger">* Lưu ý: Khách hàng vui lòng chuyển khoản xong nhập thông tin bên dưới rồi đặt hàng!</p>
                                         </div>
                                         <div class="col col-md-6">
                                             <img src="{{ asset('assets/images/home/img_qr_vnp.jpg') }}" height="150"

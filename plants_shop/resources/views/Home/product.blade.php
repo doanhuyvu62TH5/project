@@ -109,7 +109,7 @@
                                                     <div>
                                                         <h6 class="fw-bold mb-1">{{ $comment->customer->name }}</h6>
                                                         <div class="d-flex align-items-center mb-2">
-                                                            <p class="mb-0">
+                                                            <p class="mb-0 fst-italic text-primary">
                                                                 {{ $comment->created_at->format('d-m-Y H:i:s') }}
                                                             </p>
                                                             @if (auth('cus')->check() && $comment->customer_id == auth('cus')->user()->id)
@@ -164,7 +164,7 @@
                                             <div class="card-body p-4" style="background-color: #868b91;">
                                                 <div class="d-flex flex-start w-100">
                                                     <div class="me-2">
-                                                        <img src="{{ is_null($comment->customer->image) ? asset('assets/images/home/avata.png') : asset($comment->customer->image) }}"
+                                                        <img src="{{ asset('assets/images/home/avata.png') }}"
                                                         alt="avatar" class="rounded-circle img-fluid"
                                                         style="height:30px ;width: 30px;">
                                                     </div>
@@ -177,7 +177,7 @@
                                                 <div class="float-end mt-2 pt-1">
                                                     <button type="submit" data-mdb-button-init data-mdb-ripple-init
                                                         class="btn btn-primary btn-sm"
-                                                        onclick="alert('Vui lòng đăng nhập để bình luận')">Đăng bình
+                                                        onclick="alert('Vui lòng đăng nhập để bình luận!')">Đăng bình
                                                         luận</button>
                                                 </div>
                                             </div>

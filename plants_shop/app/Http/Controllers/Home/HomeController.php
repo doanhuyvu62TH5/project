@@ -92,22 +92,16 @@ class HomeController extends Controller
         return view('Home.category', compact('products', 'headerTitle', 'new_products'));
     }
 
-    private function applySort($query, $sortBy)
+    public function applySort($query, $sortBy)
     {
         if ($sortBy) {
             switch ($sortBy) {
                 case 'price_asc':
-                    $query->orderBy('price', 'ASC');
+                    $query->orderByRaw('IFNULL(sale_price, price) ASC');
                     break;
                 case 'price_desc':
-                    $query->orderBy('price', 'DESC');
+                    $query->orderByRaw('IFNULL(sale_price, price) DESC');
                     break;
-                    case 'sale_asc':
-                        $query->orderByRaw('IFNULL(sale_price, price) ASC');
-                        break;
-                    case 'sale_desc':
-                        $query->orderByRaw('IFNULL(sale_price, price) DESC');
-                        break;
                 case 'name_asc':
                     $query->orderBy('name', 'ASC');
                     break;
@@ -124,14 +118,14 @@ class HomeController extends Controller
         }
         return $query;
     }
-    private function applyPriceSale($query, $isSale)
+    public function applyPriceSale($query, $isSale)
     {
         if ($isSale) {
             $query->whereNotNull('sale_price');
         }
         return $query;
     }
-    private function applyPriceFilter($query, $priceRange)
+    public function applyPriceFilter($query, $priceRange)
     {
         if ($priceRange) {
             switch ($priceRange) {
@@ -142,30 +136,30 @@ class HomeController extends Controller
                         ->where('price', '<', 100000);
                     });
                     break;
-                case '100000_200000':
+                case '100000_400000':
                     $query->where(function ($q) {
-                        $q->whereBetween('sale_price', [100000, 200000])
+                        $q->whereBetween('sale_price', [100000, 400000])
                         ->orWhereNull('sale_price')
-                        ->whereBetween('price', [100000, 200000]);
+                        ->whereBetween('price', [100000, 400000]);
                     });
                     break;
-                case 'above_200000':
+                case 'above_400000':
                     $query->where(function ($q) {
-                        $q->where('sale_price', '>', 200000)
+                        $q->where('sale_price', '>', 400000)
                         ->orWhereNull('sale_price')
-                        ->where('price', '>', 200000);
+                        ->where('price', '>', 400000);
                     });
                     break;
             }
         }
         return $query;
     }
-    private function getHeaderTitleByCategoryType($type)
+    public function getHeaderTitleByCategoryType($type)
     {
         return $type == '0' ? 'BỘ SƯU TẬP VỀ CÂY' : ($type == '1' ? 'BỘ SƯU TẬP VỀ HOA' : 'BỘ SƯU TẬP');
     }
 
-    private function getNewProducts()
+    public function getNewProducts()
     {
         return Product::orderBy('created_at', 'DESC')
             ->where('status', '1')
@@ -184,7 +178,6 @@ class HomeController extends Controller
 
         // Tìm kiếm theo tên sản phẩm hoặc nội dung sản phẩm
         $products = Product::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('content', 'LIKE', "%{$query}%")
             ->where('status', 1)
             ->select('products.*'); // Chọn các cột cần thiết
 

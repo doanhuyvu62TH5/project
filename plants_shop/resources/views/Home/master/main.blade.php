@@ -22,7 +22,7 @@
 <body>
     <style>
         body {
-            font-size: 13px;
+            font-size: 15px;
             background-color: white;
             font-family: 'Times New Roman', Times, serif;
         }
@@ -39,8 +39,8 @@
                                 Xin chào, {{ auth('cus')->user()->name }}
                             </a>
                             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                                <li><a class="dropdown-item" href="{{ route('account.profile') }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{{ route('order.history') }}">Đơn hàng</a></li>
+                                <li><a class="dropdown-item" href="{{ route('account.profile') }}">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="{{ route('order.history') }}">Lịch sử đặt hàng</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -147,7 +147,7 @@
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                         aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="{{ asset('assets') }}/images/home/img/logo/logo-home.png" height="50" width="140"  alt=""></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
                         </div>

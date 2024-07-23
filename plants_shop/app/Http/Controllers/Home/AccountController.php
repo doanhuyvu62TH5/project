@@ -67,7 +67,7 @@ class AccountController extends Controller
             'email' => 'required|email|min:6|max:100|unique:customers',
             'address' => 'required',
             'phone' => 'required|regex:/^[0-9]{10}$/',
-            'password' => 'required|min:4',
+            'password' => 'required|min:6',
             'confirm_password' => 'required|same:password',
         ], [
             'name.required' => 'Vui lòng nhập họ tên!',
@@ -75,8 +75,10 @@ class AccountController extends Controller
             'password.required' => 'Vui lòng nhập mật khẩu!',
             'address.required' => 'Vui lòng nhập địa chỉ!',
             'phone.required' => 'Vui lòng nhập số điện thoại!',
+            'password.min' => 'Mật khẩu ít nhất phải 6 kí tự!',
             'phone.regex' => 'Số điện thoại không chính xác!',
-            'confirm_password' => 'Mật khẩu không trùng khớp!'
+            'confirm_password' => 'Mật khẩu không trùng khớp!',
+            'confirm_password.required' => 'Vui lòng nhập lại mật khẩu!'
         ]);
         $data = $request->all('name', 'email', 'phone', 'address','image');
         $data['password'] = bcrypt($request->password);
@@ -100,10 +102,12 @@ class AccountController extends Controller
         // Validate dữ liệu đầu vào
         $req->validate([
             'current_password' => 'required',
-            'new_password' => 'required',
+            'new_password' => 'required|min:6',
             'confirm_password' => 'required|same:new_password'
         ],
         [
+            'new_password.required' => 'Vui lòng nhập mật khẩu mới!',
+            'new_password.min' => 'Mật khẩu phải tối thiểu 6 kí tự!',
             'confirm_password.same' => 'Mật khẩu mới không khớp nhau!'
         ]);
 
@@ -149,6 +153,15 @@ class AccountController extends Controller
     
     public function check_reset_password($token, Request $request) 
     {
+        $request->validate([
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password',
+        ], [
+            'password.required' => 'Vui lòng nhập mật khẩu!',
+            'password.min' => 'Mật khẩu ít nhất phải 6 kí tự!',
+            'confirm_password.required' => 'Vui lòng nhập lại mật khẩu!',
+            'confirm_password' => 'Mật khẩu không trùng khớp!'
+        ]);
         $customer = Customer::where('remember_token', $token)->first();
         if ($customer) 
         {
@@ -161,7 +174,7 @@ class AccountController extends Controller
                 }
                 $customer->remember_token = \Str::random(40);
                 $customer->save();
-                return redirect()->route('account.login')->with('success', 'Thay đổi mật khẩu thành công! Bạn hãy đăng nhập để trải nghiệm!.');
+                return redirect()->route('account.login')->with('success', 'Thay đổi mật khẩu thành công! Bạn hãy đăng nhập để trải nghiệm!');
             } 
             else 
             {

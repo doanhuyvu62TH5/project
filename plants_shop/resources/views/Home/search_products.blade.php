@@ -36,8 +36,8 @@
                             <option value="" selected disabled hidden>Sắp xếp theo</option>
                             <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
                             <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
-                            <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Ngày tạo cũ nhất</option>
-                            <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Ngày tạo mới nhất</option>
+                            <option value="created_asc" {{ request('sort_by') == 'created_asc' ? 'selected' : '' }}>Sản phẩm từ cũ đến mới</option>
+                            <option value="created_desc" {{ request('sort_by') == 'created_desc' ? 'selected' : '' }}>Sản phẩm từ mới đến cũ</option>
                         </select>
                     </form>
                 </div>
@@ -47,7 +47,9 @@
                 <div class="col">
                     <div class="p-4 text-center">
                         <div class="">
-                            <img src="{{ asset($product->image) }}" height=230 class="card-img-top zoom-image" alt="...">
+                            <a href="{{ route('home.product', $product->id) }}">
+                                <img src="{{ asset($product->image) }}" height=230 class="card-img-top zoom-image" alt="...">
+                            </a>
                             <div class="card-body">
                                 <a href="{{ route('home.product', $product->id) }}"
                                     class="text-decoration-none text-dark">

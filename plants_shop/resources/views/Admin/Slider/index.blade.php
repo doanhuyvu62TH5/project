@@ -22,7 +22,7 @@
                 @foreach ($sliders as $sl)
                     <tr>
                         <td class="align-middle">
-                            {{ ($sliders->currentPage() - 1) * $sliders->perPage() + $loop->index + 1 }}</td>
+                            {{ $loop->index + 1 }}</td>
                         <td class="align-middle">
                             <img src="{{ asset($sl->image) }}" width="200" height="100" alt="">
                         </td>

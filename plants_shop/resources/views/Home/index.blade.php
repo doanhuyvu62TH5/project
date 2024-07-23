@@ -503,10 +503,10 @@
                                 <div class="p-2">
                                     <div class="card" style="width: 100%">
                                         <img src="{{ asset($blog->image) }}"
-                                            class="card-img-top" height="250" alt="...">
+                                            class="card-img-top" height="240" alt="...">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $blog->title }}</h5>
-                                            <p class="card-text">{!! Str::limit($blog->content, 100, '...') !!}</p>
+                                            <p class="card-text">{!! Str::limit($blog->content, 90, '...') !!}</p>
                                         </div>
                                         <div class="card-body">
                                             <a href="{{ route('home.blog',$blog->id) }}" class="card-link text-danger text-decoration-none">Xem thêm...</a>

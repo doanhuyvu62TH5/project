@@ -58,8 +58,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=2"
-                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Đã
-                                    đóng gói</a>
+                                    class="list-group-item text-deration-none list-group-item-action bg-transparent second-text fw-bold">Chờ vận chuyển</a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.orders.index') }}?status=3"
@@ -121,9 +120,7 @@
                                 <i class="fas fa-user me-2"></i>{{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.logout') }}">Đăng xuất</a></li>
                             </ul>
                         </li>
                     </ul>

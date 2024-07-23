@@ -81,6 +81,8 @@ class CheckoutController extends Controller
                     'product_id' => $cart->product_id,
                     'price' => $cart->price,
                     'quantity' => $cart->quantity
+                    // 'product_name' => $product->name,
+                    // 'product_price' => $product->price,
                 ];
                 OrderDetail::create($orderDetailData);
             }
@@ -121,9 +123,6 @@ class CheckoutController extends Controller
             }
             return redirect()->route('order.history')->with('ok', 'Hủy đơn hàng thành công!');
         }
-
-        // Gửi email thông báo hủy đơn hàng (nếu cần)
-        // Mail::to($auth->email)->send(new OrderCancelledMail($order));
         return redirect()->back()->with('no', 'Đơn hàng của bạn không thể hủy vì thời gian bạn đặt quá hạn!');
     }
 

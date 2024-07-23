@@ -1,11 +1,4 @@
-<div style="border: 3px solid green; padding: 15px; background: lightgreen; width:600px; margin: auto">
-    <h3>Heloo {{ $customer->name }}</h3>
+<h3>Xin chào {{ $customer->name }}!</h3>
     <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quis et natus cupiditate, illo pariatur incidunt cumque non laudantium obcaecati dicta nostrum rerum qui repudiandae id sint. Id, obcaecati dolores.
-    </p>
-
-    <p>
-        <a href="{{ route('account.reset_password', $customer->remember_token) }}" style="display: inline-block; padding: 7px 25px; color: #fff; background: darkblue">Click here to get new password</a>
-    </p>
-
-</div>
+        <a href="{{ route('account.reset_password', $customer->remember_token) }}">Vui lòng click vào đường dẫn để thiết lập lại mật khẩu mới!</a>
+    </p>    
